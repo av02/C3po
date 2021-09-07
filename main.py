@@ -2,7 +2,7 @@ import discord
 from discord import utils
 import coc
 from coc import utils
-import sqlite3
+#import sqlite3 # version locale
 import configparser
 import os
 import psycopg2
@@ -27,7 +27,7 @@ onedips INTEGER DEFAULT 0, blackdips INTEGER DEFAULT 0, th INTEGER, PRIMARY KEY(
 con.commit()
 con.close()
 print("opé réussie")      
-con= sqlite3.connect(config["bddlink"])
+con= psycopg2.connect(config["bddlink"],sslmode='require')
 cur.execute("SELECT tagIG FROM nommage")
 for l in cur:
     tagsJoueurs.append(l[0])
@@ -66,14 +66,14 @@ class discordClient(discord.Client):
             except coc.GatewayError:
                 return await message.channel.send("une erreur inconue s'est produite dans la vérification du tag :(")
             else:
-                connectionBDD = sqlite3.connect(config["bddlink"])
+                connectionBDD = psycopg2.connect(config["bddlink"],sslmode='require')
                 Curseur = connectionBDD.cursor()
 
                 try:
                     Curseur.execute("INSERT INTO nommage VALUES (?,?,?,?)",(tag,idDiscord,player.name,player.town_hall))
                     connectionBDD.commit()
                     connectionBDD.close()
-                except sqlite3.IntegrityError:
+                except psycopg2.IntegrityError:
                     await message.channel.send("déjà enregistré par le passé")
                 else:
                     cocClient.add_player_updates(tag)
@@ -84,7 +84,7 @@ class discordClient(discord.Client):
                 return await message.channel.send("merci de tag __une__ personne")
             idDiscord=message.mentions[0].id
             pseudo=message.mentions[0].display_name
-            connectionBDD = sqlite3.connect(config["bddlink"])
+            connectionBDD= psycopg2.connect(config["bddlink"],sslmode='require')
             Curseur = connectionBDD.cursor()
             Curseur.execute("SELECT tagIG,PseudoIG FROM nommage where idDiscord = (?)",(idDiscord,))
             tags=[]
@@ -108,7 +108,7 @@ class discordClient(discord.Client):
         if commande== "VL" or commande== "vl":# probleme de recuperation de member a partir member.id
             """commandes en SQL"""
             await message.channel.send("pas encore opé^^")
-            con = sqlite3.connect(config["bddlink"])
+            con= psycopg2.connect(config["bddlink"],sslmode='require')
             cur=con.cursor()
             cur.execute("""SELECT n.idDiscord,s.Perf,s.bi,s.one,s.black,s.Perfdips,s.bidips,s.onedips,s.blackdips,s.donne,s.recu FROM nommage n,scores s WHERE n.tagIG=s.tag AND s.th={} ORDER BY s.Perf ASC ,s.bi ASC""".format(args[1]))
             res=[]
@@ -157,7 +157,7 @@ async def on_clan_member_received(old,new):
 @cocClient.event
 @coc.PlayerEvents.name(tags= tagsJoueurs)
 async def on_name_change(old,new):
-    con= sqlite3.connect(config["bddlink"])
+    con= psycopg2.connect(config["bddlink"],sslmode='require')
     cur= con.cursor()
     cur.execute("UPDATE nommage SET pseudoIG = (?) WHERE tagIG= (?)",(new.name,new.tag))
     con.commit()
@@ -165,14 +165,14 @@ async def on_name_change(old,new):
 @cocClient.event
 @coc.PlayerEvents.town_hall(tags= tagsJoueurs)
 async def on_th_change(old,new):
-    con= sqlite3.connect(config["bddlink"])
+    con= psycopg2.connect(config["bddlink"],sslmode='require')
     cur= con.cursor()
     cur.execute("UPDATE nommage SET th = (?) WHERE tagIG= (?)",(new.townhall,new.tag))
     con.commit()
     con.close()
 
 def ajouter_bdd(tag,etoiles=None,recu=None,donne=None,dips=False,th=None):#TODO:pour les dons
-    connectionBDD = sqlite3.connect(config["bddlink"])
+    connectionBDD= psycopg2.connect(config["bddlink"],sslmode='require')
     Curseur = connectionBDD.cursor()
     Curseur.execute("SELECT COUNT (*) FROM (SELECT tag FROM `scores` WHERE tag=(?))",(tag,))#[0]==1#on prend le nb de tag egaux a celui de l'attaque, 1=> deja dans Bdd; 0=>pas encore dans BDD
     for r in Curseur:
