@@ -14,13 +14,13 @@ config={"Coc":{"mail":os.environ.get("mail"),
        }
 clan_tags=["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2PYR2V202","#2Y2UVR99P","#2L0JQYUPU","#2LLCPYV9P","#2YU08J8UU"]# mettre ça dans une bdd
 tagsJoueurs=[]
-con= sqlite3.connect("stockage.db")
-cur = con.cursor()
-cur.execute("SELECT tagIG FROM nommage")
-for l in cur:
-    tagsJoueurs.append(l[0])
-con.commit()
-con.close()
+#con= sqlite3.connect("stockage.db")
+#cur = con.cursor()
+#cur.execute("SELECT tagIG FROM nommage")
+#for l in cur:
+#    tagsJoueurs.append(l[0])
+#con.commit()
+#con.close()
 
 # connection client coc
 cocClient= coc.login(email=config["Coc"]["mail"],password=config["Coc"]["password"],client=coc.EventsClient)#TODO: changer les mails....
