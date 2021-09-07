@@ -61,7 +61,7 @@ class discordClient(discord.Client):
                 Curseur = connectionBDD.cursor()
 
                 try:
-                    Curseur.execute("INSERT INTO nommage VALUES (?,?,?,?)",(tag,idDiscord,player.name,player.town_hall))
+                    Curseur.execute("INSERT INTO nommage VALUES (%s,%s,%s,%s)",(tag,idDiscord,player.name,player.town_hall))
                     connectionBDD.commit()
                     connectionBDD.close()
                 except psycopg2.IntegrityError:
@@ -77,7 +77,7 @@ class discordClient(discord.Client):
             pseudo=message.mentions[0].display_name
             connectionBDD= psycopg2.connect(config["bddlink"],sslmode='require')
             Curseur = connectionBDD.cursor()
-            Curseur.execute("SELECT tagIG,PseudoIG FROM nommage where idDiscord = (?)",(idDiscord,))
+            Curseur.execute("SELECT tagIG,PseudoIG FROM nommage where idDiscord = (%s)",(idDiscord,))
             tags=[]
             for l in Curseur:
                 tags.append(l[0])
@@ -150,7 +150,7 @@ async def on_clan_member_received(old,new):
 async def on_name_change(old,new):
     con= psycopg2.connect(config["bddlink"],sslmode='require')
     cur= con.cursor()
-    cur.execute("UPDATE nommage SET pseudoIG = (?) WHERE tagIG= (?)",(new.name,new.tag))
+    cur.execute("UPDATE nommage SET pseudoIG = (%s) WHERE tagIG= (%s)",(new.name,new.tag))
     con.commit()
     con.close()
 @cocClient.event
@@ -158,43 +158,43 @@ async def on_name_change(old,new):
 async def on_th_change(old,new):
     con= psycopg2.connect(config["bddlink"],sslmode='require')
     cur= con.cursor()
-    cur.execute("UPDATE nommage SET th = (?) WHERE tagIG= (?)",(new.townhall,new.tag))
+    cur.execute("UPDATE nommage SET th = (%s) WHERE tagIG= (%s)",(new.townhall,new.tag))
     con.commit()
     con.close()
 
 def ajouter_bdd(tag,etoiles=None,recu=None,donne=None,dips=False,th=None):#TODO:pour les dons
     connectionBDD= psycopg2.connect(config["bddlink"],sslmode='require')
     Curseur = connectionBDD.cursor()
-    Curseur.execute("SELECT COUNT (*) FROM (SELECT tag FROM `scores` WHERE tag=(?))",(tag,))#[0]==1#on prend le nb de tag egaux a celui de l'attaque, 1=> deja dans Bdd; 0=>pas encore dans BDD
+    Curseur.execute("SELECT COUNT (*) FROM (SELECT tag FROM `scores` WHERE tag=(%s))",(tag,))#[0]==1#on prend le nb de tag egaux a celui de l'attaque, 1=> deja dans Bdd; 0=>pas encore dans BDD
     for r in Curseur:
         nb=r[0]
     if not nb==1:
-        Curseur.execute("INSERT INTO scores (tag,th) VALUES (?,?)",(tag,th))
+        Curseur.execute("INSERT INTO scores (tag,th) VALUES (%s,%s)",(tag,th))
         connectionBDD.commit()
     if etoiles is not None and not dips:
-        Curseur.execute("SELECT black,one,bi,Perf FROM scores WHERE tag=(?) AND th=(?)",(tag,th))
+        Curseur.execute("SELECT black,one,bi,Perf FROM scores WHERE tag=(%s) AND th=(%s)",(tag,th))
         for r in Curseur:
             Score = list(r)
             Score[etoiles]+=1
-        Curseur.execute("UPDATE scores SET black=(?),one=(?),bi=(?),Perf=(?) WHERE tag=(?) AND th=(?)",(Score[0],Score[1],Score[2],Score[3],tag,th))
+        Curseur.execute("UPDATE scores SET black=(%s),one=(%s),bi=(%s),Perf=(%s) WHERE tag=(%s) AND th=(%s)",(Score[0],Score[1],Score[2],Score[3],tag,th))
     elif etoiles is not None and dips:
-        Curseur.execute("SELECT blackdips,onedips,bidips,Perfdips FROM scores WHERE tag=(?) AND th=(?)",(tag,th))
+        Curseur.execute("SELECT blackdips,onedips,bidips,Perfdips FROM scores WHERE tag=(%s) AND th=(%s)",(tag,th))
         for r in Curseur:
             Score = list(r)
             Score[etoiles]+=1
-        Curseur.execute("UPDATE scores SET blackdips=(?),onedips=(?),bidips=(?),Perfdips=(?) WHERE tag=(?) AND th=(?)",(Score[0],Score[1],Score[2],Score[3],tag,th))
+        Curseur.execute("UPDATE scores SET blackdips=(%s),onedips=(%s),bidips=(%s),Perfdips=(%s) WHERE tag=(%s) AND th=(%s)",(Score[0],Score[1],Score[2],Score[3],tag,th))
     elif donne is not None:
-        Curseur.execute("SELECT donne FROM scores WHERE tag=(?) AND th=(?)",(tag,th))
+        Curseur.execute("SELECT donne FROM scores WHERE tag=(%s) AND th=(%s)",(tag,th))
         for r in Curseur:
             don = list(r)[0]
             don+=donne 
-        Curseur.execute("UPDATE scores SET donne=(?) WHERE tag=(?) AND th=(?)",(don,tag,th))
+        Curseur.execute("UPDATE scores SET donne=(%s) WHERE tag=(%s) AND th=(%s)",(don,tag,th))
     elif recu is not None:
-        Curseur.execute("SELECT recu FROM scores WHERE tag=(?) AND th=(?)",(tag,th))
+        Curseur.execute("SELECT recu FROM scores WHERE tag=(%s) AND th=(%s)",(tag,th))
         for r in Curseur:
             anteRecu = list(r)[0]
             anteRecu+=recu 
-        Curseur.execute("UPDATE scores SET recu=(?) WHERE tag=(?) AND th=(?)",(anteRecu,tag,th))
+        Curseur.execute("UPDATE scores SET recu=(%s) WHERE tag=(%s) AND th=(%s)",(anteRecu,tag,th))
     connectionBDD.commit()
     connectionBDD.close()
 
