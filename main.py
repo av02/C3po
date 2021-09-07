@@ -10,17 +10,18 @@ import os
 config={"Coc":{"mail":os.environ.get("mail"),
               "password":os.environ.get("password")},
         "Discord":{"token":os.environ.get("Token"),
-                  "prefix":os.environ.get("prefix")}
+                  "prefix":os.environ.get("prefix")},
+        "bddlink":os.environ.get("DATABASE_URL")
        }
 clan_tags=["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2PYR2V202","#2Y2UVR99P","#2L0JQYUPU","#2LLCPYV9P","#2YU08J8UU"]# mettre ça dans une bdd
 tagsJoueurs=[]
-#con= sqlite3.connect("stockage.db")
-#cur = con.cursor()
-#cur.execute("SELECT tagIG FROM nommage")
-#for l in cur:
-#    tagsJoueurs.append(l[0])
-#con.commit()
-#con.close()
+con= sqlite3.connect(config["bddlink"])
+cur = con.cursor()
+cur.execute("SELECT tagIG FROM nommage")
+for l in cur:
+    tagsJoueurs.append(l[0])
+con.commit()
+con.close()
 
 # connection client coc
 cocClient= coc.login(email=config["Coc"]["mail"],password=config["Coc"]["password"],client=coc.EventsClient)#TODO: changer les mails....
@@ -54,7 +55,7 @@ class discordClient(discord.Client):
             except coc.GatewayError:
                 return await message.channel.send("une erreur inconue s'est produite dans la vérification du tag :(")
             else:
-                connectionBDD = sqlite3.connect("stockage.db")
+                connectionBDD = sqlite3.connect(config["bddlink"])
                 Curseur = connectionBDD.cursor()
 
                 try:
@@ -72,7 +73,7 @@ class discordClient(discord.Client):
                 return await message.channel.send("merci de tag __une__ personne")
             idDiscord=message.mentions[0].id
             pseudo=message.mentions[0].display_name
-            connectionBDD = sqlite3.connect("stockage.db")
+            connectionBDD = sqlite3.connect(config["bddlink"])
             Curseur = connectionBDD.cursor()
             Curseur.execute("SELECT tagIG,PseudoIG FROM nommage where idDiscord = (?)",(idDiscord,))
             tags=[]
@@ -96,7 +97,7 @@ class discordClient(discord.Client):
         if commande== "VL" or commande== "vl":# probleme de recuperation de member a partir member.id
             """commandes en SQL"""
             await message.channel.send("pas encore opé^^")
-            con = sqlite3.connect("stockage.db")
+            con = sqlite3.connect(config["bddlink"])
             cur=con.cursor()
             cur.execute("""SELECT n.idDiscord,s.Perf,s.bi,s.one,s.black,s.Perfdips,s.bidips,s.onedips,s.blackdips,s.donne,s.recu FROM nommage n,scores s WHERE n.tagIG=s.tag AND s.th={} ORDER BY s.Perf ASC ,s.bi ASC""".format(args[1]))
             res=[]
@@ -145,7 +146,7 @@ async def on_clan_member_received(old,new):
 @cocClient.event
 @coc.PlayerEvents.name(tags= tagsJoueurs)
 async def on_name_change(old,new):
-    con= sqlite3.connect("stockage.db")
+    con= sqlite3.connect(config["bddlink"])
     cur= con.cursor()
     cur.execute("UPDATE nommage SET pseudoIG = (?) WHERE tagIG= (?)",(new.name,new.tag))
     con.commit()
@@ -153,14 +154,14 @@ async def on_name_change(old,new):
 @cocClient.event
 @coc.PlayerEvents.town_hall(tags= tagsJoueurs)
 async def on_th_change(old,new):
-    con= sqlite3.connect("stockage.db")
+    con= sqlite3.connect(config["bddlink"])
     cur= con.cursor()
     cur.execute("UPDATE nommage SET th = (?) WHERE tagIG= (?)",(new.townhall,new.tag))
     con.commit()
     con.close()
 
 def ajouter_bdd(tag,etoiles=None,recu=None,donne=None,dips=False,th=None):#TODO:pour les dons
-    connectionBDD = sqlite3.connect("stockage.db")
+    connectionBDD = sqlite3.connect(config["bddlink"])
     Curseur = connectionBDD.cursor()
     Curseur.execute("SELECT COUNT (*) FROM (SELECT tag FROM `scores` WHERE tag=(?))",(tag,))#[0]==1#on prend le nb de tag egaux a celui de l'attaque, 1=> deja dans Bdd; 0=>pas encore dans BDD
     for r in Curseur:
