@@ -4,10 +4,14 @@ import coc
 from coc import utils
 import sqlite3
 import configparser
+import os
 
 # import donnés
-config=configparser.ConfigParser()
-config.read("config")
+config={"Coc":{"mail":os.environ.get("mail"),
+              "password":os.environ.get("password")},
+        "Discord":{"token":os.environ.get("Token"),
+                  "prefix":os.environ.get("prefix")}
+       }
 clan_tags=["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2PYR2V202","#2Y2UVR99P","#2L0JQYUPU","#2LLCPYV9P","#2YU08J8UU"]# mettre ça dans une bdd
 tagsJoueurs=[]
 con= sqlite3.connect("stockage.db")
