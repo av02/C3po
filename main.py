@@ -103,13 +103,15 @@ class discordClient(discord.Client):
             cur=con.cursor()
             cur.execute("""SELECT n.idDiscord,s.Perf,s.bi,s.one,s.black,s.Perfdips,s.bidips,s.onedips,s.blackdips,s.donne,s.recu FROM nommage n,scores s WHERE n.tagIG=s.tag AND s.th={} ORDER BY s.Perf ASC ,s.bi ASC""".format(args[1]))
             res=[]
-            reponse="""```pseudo          3|2|1|0| dips: 3|2|1|0|| ratio"""
+            reponse="""
+            ```pseudo          3|2|1|0| dips: 3|2|1|0|| ratio"""
             
             for l in cur:
                 res.append(l)
                 member= await message.guild.fetch_member(int(l[0]))
                 reponse+="\n{} {}|{}|{}|{}   ||||   {}|{}|{}|{}||    {}".format(member.display_name,l[1],l[2],l[3],l[4],l[5],l[6],l[7],l[8],l[9]/l[10] if l[10]!=0 else "NA")
-            await message.channel.send(reponse+"```")
+            await message.channel.send(reponse+"
+                                       ```")
             con.close()
 @cocClient.event
 @coc.WarEvents.war_attack(tags=clan_tags)
@@ -165,7 +167,7 @@ async def on_th_change(old,new):
 def ajouter_bdd(tag,etoiles=None,recu=None,donne=None,dips=False,th=None):#TODO:pour les dons
     connectionBDD= psycopg2.connect(config["bddlink"],sslmode='require')
     Curseur = connectionBDD.cursor()
-    Curseur.execute("SELECT COUNT (*) FROM (SELECT tag FROM `scores` WHERE tag=(%s))",(tag,))#[0]==1#on prend le nb de tag egaux a celui de l'attaque, 1=> deja dans Bdd; 0=>pas encore dans BDD
+    Curseur.execute("SELECT COUNT (*) FROM (SELECT tag FROM scores WHERE tag=(%s))",(tag,))#[0]==1#on prend le nb de tag egaux a celui de l'attaque, 1=> deja dans Bdd; 0=>pas encore dans BDD
     for r in Curseur:
         nb=r[0]
     if not nb==1:
