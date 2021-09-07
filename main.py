@@ -77,7 +77,7 @@ class discordClient(discord.Client):
             pseudo=message.mentions[0].display_name
             connectionBDD= psycopg2.connect(config["bddlink"],sslmode='require')
             Curseur = connectionBDD.cursor()
-            Curseur.execute("SELECT tagIG,PseudoIG FROM nommage where idDiscord = (%s)",(idDiscord,))
+            Curseur.execute("SELECT tagIG,PseudoIG FROM nommage where idDiscord = (%s)",(str(idDiscord),))
             tags=[]
             for l in Curseur:
                 tags.append(l[0])
