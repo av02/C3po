@@ -5,6 +5,7 @@ from coc import utils
 import sqlite3
 import configparser
 import os
+import psycopg2
 
 # import donnés
 config={"Coc":{"mail":os.environ.get("mail"),
@@ -15,7 +16,7 @@ config={"Coc":{"mail":os.environ.get("mail"),
        }
 clan_tags=["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2PYR2V202","#2Y2UVR99P","#2L0JQYUPU","#2LLCPYV9P","#2YU08J8UU"]# mettre ça dans une bdd
 tagsJoueurs=[]
-con= sqlite3.connect(config["bddlink"])
+con= psycopg2.connect(config["bddlink"],sslmode='require')
 cur = con.cursor()
 print("ope en cour")
 cur.execute("""CREATE TABLE "nommage" ( `tagIG` TEXT, `IdDiscord` TEXT, `pseudoIG` TEXT, `th` INTEGER, PRIMARY KEY(`tagIG`) )""")
