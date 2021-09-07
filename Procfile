@@ -1,1 +1,1 @@
-Worker: python3.7 main.py
+Web: python3.7 main.py
