@@ -1,3 +1,4 @@
 discord.py
 coc.py
 psycopg2-binary
+psycopg2
