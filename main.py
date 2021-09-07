@@ -18,6 +18,7 @@ clan_tags=["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2P
 tagsJoueurs=[]
      
 con= psycopg2.connect(config["bddlink"],sslmode='require')
+cur = con.cursor()
 cur.execute("SELECT tagIG FROM nommage")
 for l in cur:
     tagsJoueurs.append(l[0])
