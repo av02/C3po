@@ -19,11 +19,11 @@ tagsJoueurs=[]
 con= psycopg2.connect(config["bddlink"],sslmode='require')
 cur = con.cursor()
 print("ope en cour")
-cur.execute("""CREATE TABLE "nommage" ( `tagIG` TEXT, `IdDiscord` TEXT, `pseudoIG` TEXT, `th` INTEGER, PRIMARY KEY(`tagIG`) )""")
+cur.execute("""CREATE TABLE "nommage" ( tagIG TEXT, IdDiscord TEXT, pseudoIG TEXT, th INTEGER, PRIMARY KEY(tagIG) )""")
 print("millieu")
-cur.execute("""CREATE TABLE "scores" ( `tag` TEXT NOT NULL, `Perf` INTEGER DEFAULT 0, `bi` INTEGER DEFAULT 0, `one` INTEGER DEFAULT 0, 
-`black` INTEGER DEFAULT 0, `donne` INTEGER DEFAULT 0, `recu` INTEGER DEFAULT 0, `Perfdips` INTEGER DEFAULT 0, `bidips` INTEGER DEFAULT 0,
-`onedips` INTEGER DEFAULT 0, `blackdips` INTEGER DEFAULT 0, `th` INTEGER, PRIMARY KEY(`tag`,`th`) )""")
+cur.execute("""CREATE TABLE "scores" ( tag TEXT NOT NULL, Perf INTEGER DEFAULT 0, bi INTEGER DEFAULT 0, one INTEGER DEFAULT 0, 
+black INTEGER DEFAULT 0, donne INTEGER DEFAULT 0, recu INTEGER DEFAULT 0, Perfdips INTEGER DEFAULT 0, bidips INTEGER DEFAULT 0,
+onedips INTEGER DEFAULT 0, blackdips INTEGER DEFAULT 0, th INTEGER, PRIMARY KEY(tag,th) )""")
 con.commit()
 con.close()
 print("opé réussie")      
