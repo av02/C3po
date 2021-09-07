@@ -166,7 +166,7 @@ async def on_th_change(old,new):
 def ajouter_bdd(tag,etoiles=None,recu=None,donne=None,dips=False,th=None):#TODO:pour les dons
     connectionBDD= psycopg2.connect(config["bddlink"],sslmode='require')
     Curseur = connectionBDD.cursor()
-    Curseur.execute("SELECT COUNT (*) FROM (SELECT tag FROM scores WHERE tag=(%s))",(tag,))#[0]==1#on prend le nb de tag egaux a celui de l'attaque, 1=> deja dans Bdd; 0=>pas encore dans BDD
+    Curseur.execute("SELECT COUNT (*) AS all FROM (SELECT tag FROM scores WHERE tag=(%s)) AS T",(tag,))#[0]==1#on prend le nb de tag egaux a celui de l'attaque, 1=> deja dans Bdd; 0=>pas encore dans BDD
     for r in Curseur:
         nb=r[0]
     if not nb==1:
