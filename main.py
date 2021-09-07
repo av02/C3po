@@ -17,8 +17,16 @@ clan_tags=["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2P
 tagsJoueurs=[]
 con= sqlite3.connect(config["bddlink"])
 cur = con.cursor()
+print("ope en cour")
 cur.execute("""CREATE TABLE "nommage" ( `tagIG` TEXT, `IdDiscord` TEXT, `pseudoIG` TEXT, `th` INTEGER, PRIMARY KEY(`tagIG`) )"""")
-cur.execute("""CREATE TABLE "scores" ( `tag` TEXT NOT NULL, `Perf` INTEGER DEFAULT 0, `bi` INTEGER DEFAULT 0, `one` INTEGER DEFAULT 0, `black` INTEGER DEFAULT 0, `donne` INTEGER DEFAULT 0, `recu` INTEGER DEFAULT 0, `Perfdips` INTEGER DEFAULT 0, `bidips` INTEGER DEFAULT 0, `onedips` INTEGER DEFAULT 0, `blackdips` INTEGER DEFAULT 0, `th` INTEGER, PRIMARY KEY(`tag`,`th`) )""")
+print("millieu")
+cur.execute("""CREATE TABLE "scores" ( `tag` TEXT NOT NULL, `Perf` INTEGER DEFAULT 0, `bi` INTEGER DEFAULT 0, `one` INTEGER DEFAULT 0, 
+`black` INTEGER DEFAULT 0, `donne` INTEGER DEFAULT 0, `recu` INTEGER DEFAULT 0, `Perfdips` INTEGER DEFAULT 0, `bidips` INTEGER DEFAULT 0,
+`onedips` INTEGER DEFAULT 0, `blackdips` INTEGER DEFAULT 0, `th` INTEGER, PRIMARY KEY(`tag`,`th`) )""")
+con.commit()
+con.close()
+print("opé réussie")      
+con= sqlite3.connect(config["bddlink"])
 cur.execute("SELECT tagIG FROM nommage")
 for l in cur:
     tagsJoueurs.append(l[0])
