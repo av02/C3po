@@ -110,8 +110,7 @@ class discordClient(discord.Client):
                 res.append(l)
                 member= await message.guild.fetch_member(int(l[0]))
                 reponse+="\n{} {}|{}|{}|{}   ||||   {}|{}|{}|{}||    {}".format(member.display_name,l[1],l[2],l[3],l[4],l[5],l[6],l[7],l[8],l[9]/l[10] if l[10]!=0 else "NA")
-            await message.channel.send(reponse+"
-                                       ```")
+            await message.channel.send(reponse+"```")
             con.close()
 @cocClient.event
 @coc.WarEvents.war_attack(tags=clan_tags)
