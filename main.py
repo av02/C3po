@@ -16,17 +16,7 @@ config={"Coc":{"mail":os.environ.get("mail"),
        }
 clan_tags=["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2PYR2V202","#2Y2UVR99P","#2L0JQYUPU","#2LLCPYV9P","#2YU08J8UU"]# mettre ça dans une bdd
 tagsJoueurs=[]
-con= psycopg2.connect(config["bddlink"],sslmode='require')
-cur = con.cursor()
-print("ope en cour")
-cur.execute("""CREATE TABLE "nommage" ( tagIG TEXT, IdDiscord TEXT, pseudoIG TEXT, th INTEGER, PRIMARY KEY(tagIG) )""")
-print("millieu")
-cur.execute("""CREATE TABLE "scores" ( tag TEXT NOT NULL, Perf INTEGER DEFAULT 0, bi INTEGER DEFAULT 0, one INTEGER DEFAULT 0, 
-black INTEGER DEFAULT 0, donne INTEGER DEFAULT 0, recu INTEGER DEFAULT 0, Perfdips INTEGER DEFAULT 0, bidips INTEGER DEFAULT 0,
-onedips INTEGER DEFAULT 0, blackdips INTEGER DEFAULT 0, th INTEGER, PRIMARY KEY(tag,th) )""")
-con.commit()
-con.close()
-print("opé réussie")      
+     
 con= psycopg2.connect(config["bddlink"],sslmode='require')
 cur.execute("SELECT tagIG FROM nommage")
 for l in cur:
