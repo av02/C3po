@@ -210,5 +210,5 @@ def ajouter_bdd(tag,etoiles=None,recu=None,donne=None,dips=False,th=None):#TODO:
 
 
 
-if __name__==__main__:
+if __name__=="__main__":
     main()
