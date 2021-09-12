@@ -2,8 +2,6 @@ import discord
 from discord import utils
 import coc
 from coc import utils
-#import sqlite3 # version locale
-import configparser
 import os
 import psycopg2
 
@@ -16,17 +14,7 @@ config={"Coc":{"mail":os.environ.get("mail"),
        }
 clan_tags=["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2PYR2V202","#2Y2UVR99P","#2L0JQYUPU","#2LLCPYV9P","#2YU08J8UU"]# mettre ça dans une bdd
 tagsJoueurs=[]
-     
-con= psycopg2.connect(config["bddlink"],sslmode='require')
-cur = con.cursor()
-cur.execute("SELECT tagIG FROM nommage")
-for l in cur:
-    tagsJoueurs.append(l[0])
-con.commit()
-con.close()
 
-# connection client coc
-cocClient= coc.login(email=config["Coc"]["mail"],password=config["Coc"]["password"],client=coc.EventsClient)#TODO: changer les mails....
 
 # bot discord
 class discordClient(discord.Client):
@@ -112,56 +100,76 @@ class discordClient(discord.Client):
                 reponse+="\n{} {}|{}|{}|{}   ||||   {}|{}|{}|{}||    {}".format(member.display_name,l[1],l[2],l[3],l[4],l[5],l[6],l[7],l[8],l[9]/l[10] if l[10]!=0 else "NA")
             await message.channel.send(reponse+"```")
             con.close()
-@cocClient.event
-@coc.WarEvents.war_attack(tags=clan_tags)
-async def current_war_stats(attack, war):
-    print("an attack occured",attack.attacker.name,"de",attack.attacker.clan.name,"a fait:",attack.stars,"étoiles")
-    if attack.attacker.clan.tag in clan_tags and attack.attacker.town_hall>=attack.defender.town_hall:
-        print("tag:",attack.attacker_tag,"etoiles:",attack.stars,"th",attack.attacker.town_hall,attack.defender.town_hall,sep="\n\n")
-        ajouter_bdd(tag=attack.attacker_tag,
-                    etoiles=attack.stars,
-                    dips=attack.attacker.town_hall!=attack.defender.town_hall,
-                    th=attack.attacker.town_hall)
 
 
-
-
-@cocClient.event  
-@coc.ClanEvents.member_donations(tags=clan_tags)
-async def on_clan_member_donation(old,new):#TODO controller les odns négatifs
-    print("on a ", old," qui a donné ",new.donations-old.donations,"troupes dans ",old.clan)
-    if old.clan.tag!=new.clan.tag:
-        print("quitté clan ",old.clan.name,"nouveau:",new.clan.name)
-        return
-    prof=await cocClient.get_player(old.tag)
-    ajouter_bdd(old.tag,donne=new.donations-old.donations,th=prof.town_hall)
-
-@cocClient.event  
-@coc.ClanEvents.member_received(tags=clan_tags)
-async def on_clan_member_received(old,new):
-    print("on a ", old," qui a reçu ",new.received-old.received,"troupes dans ",old.clan)
-    if old.clan.tag!=new.clan.tag:
-        return
-    prof=await cocClient.get_player(old.tag)
-    ajouter_bdd(old.tag,recu=new.received-old.received,th=prof.town_hall)
-
-
-@cocClient.event
-@coc.PlayerEvents.name(tags= tagsJoueurs)
-async def on_name_change(old,new):
+def main():
+    # on recupere l'ensemble des tags liés a des joueurs enregistrés de l'empire
     con= psycopg2.connect(config["bddlink"],sslmode='require')
-    cur= con.cursor()
-    cur.execute("UPDATE nommage SET pseudoIG = (%s) WHERE tagIG= (%s)",(new.name,new.tag))
-    con.commit()
+    cur = con.cursor()
+    cur.execute("SELECT tagIG FROM nommage")
+    for l in cur:
+        tagsJoueurs.append(l[0])
     con.close()
-@cocClient.event
-@coc.PlayerEvents.town_hall(tags= tagsJoueurs)
-async def on_th_change(old,new):
-    con= psycopg2.connect(config["bddlink"],sslmode='require')
-    cur= con.cursor()
-    cur.execute("UPDATE nommage SET th = (%s) WHERE tagIG= (%s)",(new.townhall,new.tag))
-    con.commit()
-    con.close()
+
+    # connection client coc, non bloquant
+    cocClient= coc.login(email=config["Coc"]["mail"],
+                        password=config["Coc"]["password"],
+                        client=coc.EventsClient)
+
+    @cocClient.event# quand une attaque de guerre survient
+    @coc.WarEvents.war_attack(tags=clan_tags)
+    async def current_war_stats(attack, war):
+        print("un attaque survint:",attack.attacker.name,"de",attack.attacker.clan.name,"a fait:",attack.stars,"étoiles")
+        if attack.attacker.clan.tag in clan_tags and attack.attacker.town_hall>=attack.defender.town_hall:# on controle qu'il est dans un de nos clans
+            print("tag:",attack.attacker_tag,"etoiles:",attack.stars,"th",attack.attacker.town_hall,attack.defender.town_hall,sep="\n\n")
+            ajouter_bdd(tag=attack.attacker_tag,
+                        etoiles=attack.stars,
+                        dips=attack.attacker.town_hall!=attack.defender.town_hall,
+                        th=attack.attacker.town_hall)# on ajoute a la bdd
+
+
+
+
+    @cocClient.event  
+    @coc.ClanEvents.member_donations(tags=clan_tags)
+    async def on_clan_member_donation(old,new):#TODO controller les odns négatifs
+        print("on a ", old," qui a donné ",new.donations-old.donations,"troupes dans ",old.clan)
+        if new.donations<old.donations:# si donné negatifs, alors c'est que debut saison ou quitté le clan
+            return
+        profil=await cocClient.get_player(old.tag)# on recupere le profil
+        ajouter_bdd(old.tag,donne=new.donations-old.donations,th=profil.town_hall)# on ajoute a la base de donnés
+
+
+    @cocClient.event#mise a jour de la bdd quand un membre reçoit
+    @coc.ClanEvents.member_received(tags=clan_tags)
+    async def on_clan_member_received(old,new):
+        print("on a ", old," qui a reçu ",new.received-old.received,"troupes dans ",old.clan)# pour les logs, aucun interet
+        if new.received<old.received:# si le joueur a des reçus negatifs, soit quitté le clan, soit debut de saison
+            return
+        profil = await cocClient.get_player(old.tag)# on recupere le profil 
+        ajouter_bdd(old.tag,recu=new.received-old.received,th=profil.town_hall)# on ajoute dans la base de données!!
+
+
+    @cocClient.event#mise a jour de la bdd quand un membre change de pseudo
+    @coc.PlayerEvents.name(tags= tagsJoueurs)
+    async def on_name_change(old,new):
+        con= psycopg2.connect(config["bddlink"],sslmode='require')
+        cur= con.cursor()
+        cur.execute("UPDATE nommage SET pseudoIG = (%s) WHERE tagIG= (%s)",(new.name,new.tag))
+        con.commit()
+        con.close()
+    @cocClient.event# mise a jour de la bdd quand un membre change d'hdv
+    @coc.PlayerEvents.town_hall(tags= tagsJoueurs)
+    async def on_th_change(old,new):
+        con= psycopg2.connect(config["bddlink"],sslmode='require')
+        cur= con.cursor()
+        cur.execute("UPDATE nommage SET th = (%s) WHERE tagIG= (%s)",(new.townhall,new.tag))
+        con.commit()
+        con.close()
+
+
+
+    discordClient().run(config["Discord"]["token"])#commande blocante pour lancer le bot
 
 def ajouter_bdd(tag,etoiles=None,recu=None,donne=None,dips=False,th=None):#TODO:pour les dons
     connectionBDD= psycopg2.connect(config["bddlink"],sslmode='require')
@@ -192,6 +200,7 @@ def ajouter_bdd(tag,etoiles=None,recu=None,donne=None,dips=False,th=None):#TODO:
         Curseur.execute("UPDATE scores SET donne=(%s) WHERE tag=(%s) AND th=(%s)",(don,tag,th))
     elif recu is not None:
         Curseur.execute("SELECT recu FROM scores WHERE tag=(%s) AND th=(%s)",(tag,th))
+        anteRecu=0
         for r in Curseur:
             anteRecu = list(r)[0]
             anteRecu+=recu 
@@ -201,4 +210,5 @@ def ajouter_bdd(tag,etoiles=None,recu=None,donne=None,dips=False,th=None):#TODO:
 
 
 
-discordClient().run(config["Discord"]["token"])
+if __name__==__main__:
+    main()
