@@ -188,6 +188,7 @@ def ajouter_bdd(tag,etoiles=None,recu=None,donne=None,dips=False,th=None):#TODO:
         Curseur.execute("UPDATE scores SET black=(%s),one=(%s),bi=(%s),Perf=(%s) WHERE tag=(%s) AND th=(%s)",(Score[0],Score[1],Score[2],Score[3],tag,th))
     elif etoiles is not None and dips:
         Curseur.execute("SELECT blackdips,onedips,bidips,Perfdips FROM scores WHERE tag=(%s) AND th=(%s)",(tag,th))
+        Score=[]
         for r in Curseur:
             Score = list(r)
             Score[etoiles]+=1
