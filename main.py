@@ -14,6 +14,10 @@ config={"Coc":{"mail":os.environ.get("mail"),
        }
 clan_tags=["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2PYR2V202","#2Y2UVR99P","#2L0JQYUPU","#2LLCPYV9P","#2YU08J8UU"]# mettre ça dans une bdd
 tagsJoueurs=[]
+# connection client coc, non bloquant
+cocClient= coc.login(email=config["Coc"]["mail"],
+                     password=config["Coc"]["password"],
+                     client=coc.EventsClient)
 
 
 # bot discord
@@ -111,11 +115,7 @@ def main():
         tagsJoueurs.append(l[0])
     con.close()
 
-    # connection client coc, non bloquant
-    cocClient= coc.login(email=config["Coc"]["mail"],
-                        password=config["Coc"]["password"],
-                        client=coc.EventsClient)
-
+    
     @cocClient.event# quand une attaque de guerre survient
     @coc.WarEvents.war_attack(tags=clan_tags)
     async def current_war_stats(attack, war):
