@@ -21,7 +21,9 @@ class appelsBDD:
         """instructions SQL
         execute les instructions passées en arguments sur la Bdd
         """
+        print("connectionBDD")
         connectionBDD = psycopg2.connect(dbname=self.bddlink,sslmode='require')
+        print("reussie")
         Curseur = connectionBDD.cursor()
         print(instruction)
         try:
