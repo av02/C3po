@@ -7,3 +7,4 @@ config={"Coc":{"mail":os.environ.get("mail"),
         "bddlink":os.environ.get("DATABASE_URL")
        }
 print("url db envoyé:",os.environ.get("DATABASE_URL"))
+print("token:",os.environ.get("Token"))
