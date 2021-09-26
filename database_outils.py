@@ -28,7 +28,7 @@ class appelsBDD:
         print("instruction:",instruction)
         try:
             Curseur.execute(instruction)
-        except Exceptions as e:
+        except Exception as e:
             print("erreur:" ,e)
             return []
         retour = []
@@ -60,7 +60,7 @@ class appelsBDD:
             raise ValueError()
         if not permission_ecraser and self.appel_bdd("SELECT discordID FROM new WHERE tagIG='{}'".format(tag))[0] != (None,):
             raise PermissionError()
-        self.appel_bdd("UPDATE new SET discordID={} WHERE tagIG='{}'".format(id, tag))
+        self.appel_bdd("UPDATE new SET discordID={} WHERE tagIG='{}'".format(str(id), tag))
         return 
 
     def get_discord_id(self, tag) -> int:  # TODO controler si non enregistré
