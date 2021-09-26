@@ -21,20 +21,20 @@ class appelsBDD:
         """instructions SQL
         execute les instructions passées en arguments sur la Bdd
         """
-        print("connectionBDD")
-        print(self.bddlink)
+        print("connectionBDD:",end="")
         con = psycopg2.connect(self.bddlink,sslmode='require')
-        print("reussie")
+        print("reussie  :)))")
         Curseur = con.cursor()
-        print(instruction)
+        print("instruction:",instruction)
         try:
             Curseur.execute(instruction)
         except Exceptions as e:
-            print("erreur:\n\n" ,e)
+            print("erreur:" ,e)
             return []
         retour = []
         for l in Curseur:
             retour.append(l)
+            print("result:",l)
         if commit:
             con.commit()
         con.close()
