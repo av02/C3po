@@ -79,7 +79,7 @@ class appelsBDD:
         self.appel_bdd(
             """UPDATE new SET clan='{}' WHERE tagIG='{}'""".format(clan, tag))
 
-    def up_hdv(self, tag, th):
+    def up_hdv(self, tag, th):# a deplacer vers hdv ante, hdv-1 == dips
         """a appeler dans le cas d'un changement d'hdv
         modifie l'hdv du joueur, deplace les attaques vers hdv -1 
         reset les def/hdv idem
@@ -101,25 +101,20 @@ class appelsBDD:
         """
         self.check_presence_database(tag,th,pseudo,clan)
         fin_dips = "-1" if dips else ""  # si c'est un dips, on change la catégorie dans la bdd
-        print("iteration n°1:")
-
         def _transcription_etoiles_strbdd(nbetoiles):
             return ["blackhdv", "onehdv", "bihdv", "perfhdv"][nbetoiles]
-        print("iteration n°:2")
         valeurs_anterieures = self.appel_bdd("""SELECT nbattaqueshdv{},{} 
                                             FROM new WHERE tagIG='{}'""".format(fin_dips,
                                                                                     _transcription_etoiles_strbdd(
                                                                                         etoiles)+fin_dips,
                                                                                     tag))[0]
-        print("iteration n°:3")
-        self.appel_bdd("""UPDATE new SET 'nbattaqueshdv{}'={}, '{}'={} 
-                        WHERE tagIG='{}'""".format(fin_dips,
+        self.appel_bdd("""UPDATE new SET "nbattaqueshdv{}"={}, "{}"={} 
+                        WHERE tagIG="{}" """.format(fin_dips,
                                                      valeurs_anterieures[0]+1,
                                                      _transcription_etoiles_strbdd(
                                                          etoiles)+fin_dips,
                                                      valeurs_anterieures[1]+1,
                                                      tag))
-        print("iteration n°:4")
 
     def add_def_gdc(self, tag, perf: bool):
         """N'APPELER QUE SI LES HDV SONT ÉGAUX
