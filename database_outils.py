@@ -22,6 +22,7 @@ class appelsBDD:
         execute les instructions passées en arguments sur la Bdd
         """
         print("connectionBDD")
+        print(self.bddlink)
         connectionBDD = psycopg2.connect(dbname=self.bddlink,sslmode='require')
         print("reussie")
         Curseur = connectionBDD.cursor()
