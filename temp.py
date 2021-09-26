@@ -9,8 +9,8 @@ Curseur.execute("""CREATE TABLE "new" ( `tagIG` TEXT, `discordID` INTEGER, `pseu
                 `nbattaqueshdv-1` INTEGER DEFAULT 0, `perfhdv-1` INTEGER DEFAULT 0, `bihdv-1` INTEGER DEFAULT 0, `onehdv-1` INTEGER DEFAULT 0, `blackhdv-1` INTEGER DEFAULT 0, 
                 `perfdefhdv` INTEGER DEFAULT 0, `nbdefhdv` INTEGER DEFAULT 0, `clan` TEXT, `attaqueshdvante` INTEGER, `perfhdvante` INTEGER, `bihdvante` INTEGER, 
                 `onehdvante` INTEGER, `blackhdvante` INTEGER, PRIMARY KEY(`tagIG`) )""")
-Curseur.execute("INSERT INTO new  (tagIG,thIG,pseudoIG,discordID,donne,recu,nbattaqueshdv,perfhdv,bihdv,onehdv,blackhdv,'nbattaqueshdv-1','perfhdv-1','bihdv-1','onehdv-1','blackhdv-1') 
+Curseur.execute("""INSERT INTO new  (tagIG,thIG,pseudoIG,discordID,donne,recu,nbattaqueshdv,perfhdv,bihdv,onehdv,blackhdv,'nbattaqueshdv-1','perfhdv-1','bihdv-1','onehdv-1','blackhdv-1') 
 SELECT scores.tag,MAX(scores.th),MIN(pseudoIG),MIN(IdDiscord),SUM(donne),SUM(recu),perf+bi+one+black,perf,bi,one,black,perfdips+bidips+onedips+blackdips,perfdips,bidips,onedips,blackdips
 					FROM 'scores' LEFT JOIN 'nommage' ON  'scores'.'tag'='nommage'.'tagIG' AND 'scores'.'th'='nommage'.'th'
-		GROUP BY scores.tag")
+		GROUP BY scores.tag""")
 connectionBDD.close()
