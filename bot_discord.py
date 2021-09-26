@@ -35,7 +35,7 @@ class discordClient(discord.Client):
             pass
         if commande== "VL" or commande== "vl":# probleme de recuperation de member a partir member.id
             """commandes en SQL"""
-            await message.channel.send("pas encore opé^^")
+            return await message.channel.send("pas encore opérationel, prochaine etape^^")
             con= psycopg2.connect(config["bddlink"],sslmode='require')
             cur=con.cursor()
             cur.execute("""SELECT n.idDiscord,s.Perf,s.bi,s.one,s.black,s.Perfdips,s.bidips,s.onedips,s.blackdips,s.donne,s.recu FROM nommage n,scores s WHERE n.tagIG=s.tag AND s.th={} ORDER BY s.Perf ASC ,s.bi ASC""".format(args[1]))
