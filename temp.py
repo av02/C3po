@@ -2,7 +2,7 @@ import os
 import psycopg2
 
 
-connectionBDD = psycopg2.connect(dbname=os.environ.get("DATABASE_URL"),sslmode='require')
+connectionBDD = psycopg2.connect(os.environ.get("DATABASE_URL"),sslmode='require')
 Curseur = connectionBDD.cursor()
 Curseur.execute("""CREATE TABLE "new" ( `tagIG` TEXT, `discordID` INTEGER, `pseudoIG` TEXT, `thIG` INTEGER, `donne` INTEGER DEFAULT 0, `recu` INTEGER DEFAULT 0,
                 `nbattaqueshdv` INTEGER DEFAULT 0, `perfhdv` INTEGER DEFAULT 0, `bihdv` INTEGER DEFAULT 0, `onehdv` INTEGER DEFAULT 0, `blackhdv` INTEGER DEFAULT 0,
