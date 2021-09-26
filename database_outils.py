@@ -29,12 +29,15 @@ class appelsBDD:
         try:
             Curseur.execute(instruction)
         except Exception as e:
-            print("erreur:" ,e)
+            print("erreur d'éxecution!!!!:" ,e,end="\n"*5)
             return []
         retour = []
-        for l in Curseur:
-            retour.append(l)
-            print("result:",l)
+        try:
+            for l in Curseur:
+                retour.append(l)
+                print("result:",l)
+        except Exception as e:
+            print("erreur de lecture!!!!:" ,e,end="\n"*5)
         if commit:
             con.commit()
         con.close()
@@ -130,11 +133,15 @@ class appelsBDD:
     def add_don(self, tag, dons,th,pseudo,clan):
         """ajoute dons au dons associés au tag
         """
+        print("adddon",end='')
         self.check_presence_database(tag,th,pseudo,clan)
+        print("adddon, presence ok",end='')
         valeur_anterieur = self.appel_bdd("""SELECT donne FROM new 
                                         WHERE tagIG='{}'""".format(tag))[0][0]
+        print("adddon valeur anterieure",end='')
         self.appel_bdd("""UPDATE new SET donne={} WHERE tagIG='{}'""".format(
             int(valeur_anterieur)+dons, tag))
+        print("adddon fin exe",end='')
 
     def add_recu(self, tag, recu,th,pseudo,clan):
         """ajoute recu au recu associés au tag
