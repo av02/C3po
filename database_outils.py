@@ -23,9 +23,9 @@ class appelsBDD:
         """
         print("connectionBDD")
         print(self.bddlink)
-        connectionBDD = psycopg2.connect(dbname=self.bddlink,sslmode='require')
+        con = psycopg2.connect(self.bddlink,sslmode='require')
         print("reussie")
-        Curseur = connectionBDD.cursor()
+        Curseur = con.cursor()
         print(instruction)
         try:
             Curseur.execute(instruction)
@@ -36,8 +36,8 @@ class appelsBDD:
         for l in Curseur:
             retour.append(l)
         if commit:
-            connectionBDD.commit()
-        connectionBDD.close()
+            con.commit()
+        con.close()
         return retour
 
     def set_cocClient(self,cocClient):#utilité?????
