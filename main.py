@@ -13,7 +13,7 @@ config={"Coc":{"mail":os.environ.get("mail"),
         "bddlink":os.environ.get("DATABASE_URL")
        }
 
-print("\033[92m\n\n\nV1, database url:"os.environ.get("DATABASE_URL"),"\033[0m\n\n\n\n\n")
+print("\033[92m\n\n\nV1, database url:",os.environ.get("DATABASE_URL"),"\033[0m\n\n\n\n\n")
 clan_tags=["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2PYR2V202","#2Y2UVR99P","#2L0JQYUPU","#2LLCPYV9P","#2YU08J8UU"]# mettre ça dans une bdd
 tagsJoueurs=[]
 # connection client coc, non bloquant
