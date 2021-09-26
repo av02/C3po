@@ -23,7 +23,12 @@ class appelsBDD:
         """
         connectionBDD = psycopg2.connect(dbname=self.bddlink,sslmode='require')
         Curseur = connectionBDD.cursor()
-        Curseur.execute(instruction)
+        print(instruction)
+        try:
+            Curseur.execute(instruction)
+        except exceptions as e:
+            print("erreur:\n\n" ,e)
+            return []
         retour = []
         for l in Curseur:
             retour.append(l)
