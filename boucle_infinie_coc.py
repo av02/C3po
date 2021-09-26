@@ -46,7 +46,7 @@ def boucle_infinie_coc(config,connection_bdd):
         if new.received<old.received:# si le joueur a des reçus negatifs, soit quitté le clan, soit debut de saison
             return
         profil = await cocClient.get_player(old.tag)# on recupere le profil 
-        connection_bdd.add_don(old.tag,new.received-old.received,profil.town_hall,profil.name,old.clan.tag)
+        connection_bdd.add_recu(old.tag,new.received-old.received,profil.town_hall,profil.name,old.clan.tag)
         
 
 
