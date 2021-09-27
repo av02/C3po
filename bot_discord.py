@@ -35,6 +35,7 @@ class discordClient(discord.Client):
             pass
         if commande== "VL" or commande== "vl":# probleme de recuperation de member a partir member.id
             """commandes en SQL"""
+            return await commandes.dispatch.VL.VL(self,message,args)
             return await message.channel.send("pas encore opérationel, prochaine etape^^")
             con= psycopg2.connect(config["bddlink"],sslmode='require')
             cur=con.cursor()
