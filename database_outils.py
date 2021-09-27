@@ -37,10 +37,12 @@ class appelsBDD:
                 retour.append(l)
                 print("result:",l)
         except Exception as e:
-            print("erreur de lecture!!!!:" ,e,end="\n"*5)
+            print("erreur de lecture!!!!:" ,e)
         if commit:
             con.commit()
+            print("sauvegardée")
         con.close()
+        print("connection fermée",end="\n"*5)
         return retour
 
     def set_cocClient(self,cocClient):#utilité?????
@@ -112,7 +114,7 @@ class appelsBDD:
                                                                                         etoiles)+fin_dips,
                                                                                     tag))[0]
         self.appel_bdd("""UPDATE new SET "nbattaqueshdv{}"={}, "{}"={} 
-                        WHERE tagIG="{}" """.format(fin_dips,
+                        WHERE tagIG='{}'""".format(fin_dips,
                                                      valeurs_anterieures[0]+1,
                                                      _transcription_etoiles_strbdd(
                                                          etoiles)+fin_dips,
