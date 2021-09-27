@@ -32,11 +32,11 @@ async def VL(DiscordClient,message,args):
             discordmember = await DiscordClient.fetch_member(int(e[1]))
             nom = discordmember.display_name
         reponse+="\n{}|{}|{}|{}|{}|{}|{}".format(display_str_calibrated("ggggrrrr",33),
+                                              display_str_calibrated(str(e[4]),3),
                                               display_str_calibrated(str(e[5]),3),
                                               display_str_calibrated(str(e[6]),3),
                                               display_str_calibrated(str(e[7]),3),
-                                              display_str_calibrated(str(e[8]),3),
-                                              display_str_calibrated(str(e[4]),3),
+                                              display_str_calibrated(str(e[3]),3),
                                               e[0])
     reponse+="""```"""
     return await message.channel.send(reponse)
