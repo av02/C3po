@@ -173,10 +173,10 @@ class appelsBDD:
 
     def get_classement_attaques(self, hdv, *, dips=False, limit=10, clan=None, nb_etoiles=3) -> list:
         """renvoir les meilleurs selons les critères"""
-        fin_dips = "hdv-1" if dips else ""
+        fin_dips = "-1" if dips else ""
         requete_clan = ",clan="+clan if clan is not None else ""
         str_score = ["blackhdv", "onehdv", "bihdv", "perfhdv"][nb_etoiles]
-        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,nbattaques{1},perfhdv{1},bihdv{1},onehdv{1},blackhdv{1} FROM new WHERE thIG={0}{3} ORDER BY 
+        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,nbattaqueshdv{1},perfhdv{1},bihdv{1},onehdv{1},blackhdv{1} FROM new WHERE thIG={0}{3} ORDER BY 
                               {4}{1}/nbattaques{1} DESC LIMIT {2} """.format(hdv, fin_dips, limit, requete_clan, str_score))
 
     def get_classement_defenses(self, hdv, *, limit=10, clan=None) -> list:
