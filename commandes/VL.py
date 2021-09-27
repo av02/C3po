@@ -1,19 +1,19 @@
-def display_str_calibrated(chaine:str,longeur:int)->str:
+def display_str_calibrated(chaine:str,longueur:int)->str:
     """renvoie une chaine str calibrée
 
     Args:
         chaine ([str]): [chaine a travailler]
-        longeur ([type]): [longeur de la chaine a renvoyer]
+        longueur ([type]): [longeur de la chaine a renvoyer]
 
     Returns:
         [str]: [chaine, avec une longeur de longeur]
         chaine vide si trop long
     """    
-    if len(chaine)==longeur:
+    if len(chaine)==longueur:
         return chaine
-    if len(chaine)<longeur:
+    if len(chaine)<longueur:
         return chaine+(" "*(longueur-len(chaine)))
-    return " "*longeur
+    return " "*longueur
 
 async def VL(DiscordClient,message,args):
     if len(args)==1 or int(args[1])>15 or int(args[1]) < 2 :
