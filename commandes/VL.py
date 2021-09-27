@@ -16,7 +16,7 @@ def display_str_calibrated(chaine:str,longeur:int)->str:
     return " "*longeur
 
 async def VL(DiscordClient,message,args):
-    if args==[] or int(args[1])>15 or int(args[1]) < 2 :
+    if len(args)==1 or int(args[1])>15 or int(args[1]) < 2 :
         return
     dips = False
     if len(args)>2 and args[2]=="dips":
