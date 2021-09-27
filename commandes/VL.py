@@ -22,7 +22,7 @@ async def VL(DiscordClient,message,args):
     if len(args)>1 and args[1]=="dips":
         dips=True
     liste=DiscordClient.connectionBDD.get_classement_attaques(int(args[0]), dips, limit=10, clan=None, nb_etoiles=3)
-    if len(liste)=0:
+    if len(liste)==0:
         return await message.channel.send("pas de donnés")
     reponse = "      __**classement des membres hdv {}{}**__".format(int(args[0])," dips" if dips else "")
     reponse +="```{}| 3 | 2 | 1 | 0 |nb |tag".format(display_str_calibrated("pseudo",33))
