@@ -23,14 +23,14 @@ async def VL(DiscordClient,message,args):
         dips=True
     liste=DiscordClient.connectionBDD.get_classement_attaques(int(args[0]), dips, limit=10, clan=None, nb_etoiles=3)
     if len(liste)=0:
-        return message.channel.send("pas de donnés")
+        return await message.channel.send("pas de donnés")
     reponse = "      __**classement des membres hdv {}{}**__".format(int(args[0])," dips" if dips else "")
     reponse +="```{}| 3 | 2 | 1 | 0 |nb |tag".format(display_str_calibrated("pseudo",33))
     for e in liste:
         nom=e[2]
         if e[2] is not None:
-            discormember=DiscordClient.fetch_member(int(e[1]))
-            nom = discormember.display_name
+            discordmember = await DiscordClient.fetch_member(int(e[1]))
+            nom = discordmember.display_name
         reponse+="\n{}|{}|{}|{}|{}|{}|{}".format(display_str_calibrated(nom,33),
                                               display_str_calibrated(str(e[5]),3),
                                               display_str_calibrated(str(e[6]),3),
@@ -39,4 +39,4 @@ async def VL(DiscordClient,message,args):
                                               display_str_calibrated(str(e[4]),3),
                                               e[0])
     reponse+="""```"""
-    message.channel.send(reponse)
+    return await message.channel.send(reponse)
