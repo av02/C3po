@@ -30,7 +30,7 @@ async def VL(DiscordClient,message,args):
         nom=await DiscordClient.cocClient.get_player(e[0])
         nom=nom.name
         if e[2] is not None:
-            discordmember = await DiscordClient.fetch_member(int(e[1]))
+            discordmember = await message.guild.fetch_member(int(e[1]))
             nom = discordmember.display_name
         reponse+="\n{}|{}|{}|{}|{}|{}|{}".format(display_str_calibrated(nom,33),
                                               display_str_calibrated(str(e[4]),3),
