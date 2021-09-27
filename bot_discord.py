@@ -20,7 +20,7 @@ class discordClient(discord.Client):
         if commande =="ping":
             await message.channel.send("bien connecté")
         if commande=="trophés":
-            await message.channel.send("{0.name} est a {0.trophies} trophés".format(await cocClient.get_player(args[1])))
+            await message.channel.send("{0.name} est a {0.trophies} trophés".format(await self.cocClient.get_player(args[1])))
         if commande == "ajouter"or commande == "claim" or commande == "add" :
             """ajouter un tag a un discord, #coc+@xx#XXXX/me"""
             return await commandes.dispatch.claim.claim(self,self.connectionBDD,args,message)
