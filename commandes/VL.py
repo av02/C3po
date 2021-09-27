@@ -26,7 +26,7 @@ async def VL(DiscordClient,message,args):
         return await message.channel.send("pas de donnés")
     reponse = "      __**classement des membres hdv {}{}**__".format(int(args[1])," dips" if dips else "")
     reponse +="```{}| 3 | 2 | 1 | 0 |nb |tag".format(display_str_calibrated("pseudo",33))
-    for e in liste:
+    async for e in liste:
         nom=await DiscordClient.cocClient.get_player(e[0])
         nom=nom.name
         if e[2] is not None:
