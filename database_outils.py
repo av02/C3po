@@ -53,7 +53,7 @@ class appelsBDD:
         sinon , l'ajoute avec l'hdv et le pseudo 
         """
         if len(self.appel_bdd("SELECT * FROM new WHERE tagIG = '{}'".format(tag))) == 0:
-            self.appel_bdd("INSERT INTO nommage (tagIG,pseudoIG,thIG,clan) VALUES ('{}','{}',{},'{}')".format(
+            self.appel_bdd("INSERT INTO new (tagIG,pseudoIG,thIG,clan) VALUES ('{}','{}',{},'{}')".format(
                 tag, pseudo, th, clan))
         return
 
@@ -128,7 +128,7 @@ class appelsBDD:
         dans la colone nbperfdef
         """
         valeurs_anterieures = self.appel_bdd(
-            """SELECT nbdefhdv,perfdefhdv FROM nommage WHERE tagIG='{}'""".format(tag))[0]
+            """SELECT nbdefhdv,perfdefhdv FROM new WHERE tagIG='{}'""".format(tag))[0]
         self.appel_bdd("""UPDATE new SET nbdefhdv={},perfdefhdv={} WHERE tagIG='{}'""".format(
             valeurs_anterieures[0]+1, valeurs_anterieures[1]+int(perf), tag))
 
