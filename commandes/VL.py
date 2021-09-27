@@ -31,7 +31,7 @@ async def VL(DiscordClient,message,args):
         if e[2] is not None:
             discordmember = await DiscordClient.fetch_member(int(e[1]))
             nom = discordmember.display_name
-        reponse+="\n{}|{}|{}|{}|{}|{}|{}".format(display_str_calibrated(nom,33),
+        reponse+="\n{}|{}|{}|{}|{}|{}|{}".format(display_str_calibrated("ggggrrrr",33),
                                               display_str_calibrated(str(e[5]),3),
                                               display_str_calibrated(str(e[6]),3),
                                               display_str_calibrated(str(e[7]),3),
