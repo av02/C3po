@@ -177,7 +177,7 @@ class appelsBDD:
         requete_clan = ",clan="+clan if clan is not None else ""
         str_score = ["blackhdv", "onehdv", "bihdv", "perfhdv"][nb_etoiles]
         return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,nbattaqueshdv{1},perfhdv{1},bihdv{1},onehdv{1},blackhdv{1} FROM new WHERE thIG={0}{3} ORDER BY 
-                              {4}{1}+0.0/NULLIF(nbattaqueshdv{1},0) ASC LIMIT {2} """.format(hdv, fin_dips, limit, requete_clan, str_score))
+                              {4}{1}+0.0/NULLIF(nbattaqueshdv{1},0) DESC LIMIT {2} """.format(hdv, fin_dips, limit, requete_clan, str_score))
 
     def get_classement_defenses(self, hdv, *, limit=10, clan=None) -> list:
         """renvoie la liste de tuple des 10 meilleurs defs sur l'hdv"""
