@@ -163,7 +163,7 @@ class appelsBDD:
         """renvoie une liste des comptes associés a cet identifiant, sous forme d'une liste de tupple
         (tagIG [0],discordID [1],pseudoIG [2],thIG [3], donne[4],recu [5],nbattaques[6],perf[7],bi[8],one[9],black[10],nbdips[11],perfdips[12],bidips[13],onedips[14],blackdips[15],perfdefs[16],nbdefs[17],clan[18)
         """
-        return self.appel_bdd("""SELECT * FROM new WHERE discordID={}""".format(idDiscord))
+        return self.appel_bdd("""SELECT * FROM new WHERE discordID={}""".format(str(idDiscord)))
 
     def get_data(self, tag) -> tuple:
         """renvoie un tuple des donnés  du compte associé a ce tag, sous forme d'un tupple
