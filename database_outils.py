@@ -176,7 +176,7 @@ class appelsBDD:
         fin_dips = "-1" if dips else ""
         requete_clan = ",clan="+clan if clan is not None else ""
         str_score = ["blackhdv", "onehdv", "bihdv", "perfhdv"][nb_etoiles]
-        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,nbattaqueshdv{1},perfhdv{1},bihdv{1},onehdv{1},blackhdv{1},({4}{1}+0.0/(nbattaqueshdv{1}+0.0000001)) as X FROM new WHERE thIG={0}{3} ORDER BY 
+        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,nbattaqueshdv{1},perfhdv{1},bihdv{1},onehdv{1},blackhdv{1},(({4}{1}+0.0)/(nbattaqueshdv{1}+0.0000001)) as X FROM new WHERE thIG={0}{3} ORDER BY 
                               X DESC LIMIT {2} """.format(hdv, fin_dips, limit, requete_clan, str_score))
 
     def get_classement_defenses(self, hdv, *, limit=10, clan=None) -> list:
