@@ -12,11 +12,12 @@ def main():
     #connection Bdd, non bloquant
     connectionBDD=database_outils.appelsBDD(config["bddlink"])
 
-    #lancement des evenements coc
-    cocClient=boucle_infinie_coc.boucle_infinie_coc(config,connectionBDD)
-    
     discordClient=bot_discord.discordClient(connectionBDD,cocClient)
-    #cocClient.set_discord_client(discordClient)
+    
+    
+    #lancement des evenements coc
+    cocClient=boucle_infinie_coc.boucle_infinie_coc(config,connectionBDD,discordClient)
+    
     discordClient.run(config["Discord"]["token"])#commande blocante pour lancer le bot
 
     
