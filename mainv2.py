@@ -8,15 +8,19 @@ from config import config
 
 
 def main():
+    cocClient= coc.login(email=config["Coc"]["mail"],
+                        password=config["Coc"]["password"],
+                        client=coc.EventsClient)
     
     #connection Bdd, non bloquant
     connectionBDD=database_outils.appelsBDD(config["bddlink"])
-
+    connectionBDD.set_cocClient(cocClient)
+    #définition du bot
     discordClient=bot_discord.discordClient(connectionBDD,cocClient)
     
     
     #lancement des evenements coc
-    cocClient=boucle_infinie_coc.boucle_infinie_coc(config,connectionBDD,discordClient)
+    boucle_infinie_coc.boucle_infinie_coc(config,connectionBDD,discordClient,cocClient)
     
     discordClient.run(config["Discord"]["token"])#commande blocante pour lancer le bot
 
