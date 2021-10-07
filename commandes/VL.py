@@ -26,19 +26,20 @@ async def VL(DiscordClient,message,args):
         if len(liste)==0:
             return await message.channel.send("pas de donnés")
         reponse = "      __**classement des membres hdv {}{}**__".format(int(args[1])," dips" if dips else "")
-        reponse +="```{}| 3 | 2 | 1 | 0 |nb |tag".format(display_str_calibrated("pseudo",33))
+        reponse +="```{}| 3 | 2 | 1 | 0 |nb| % |tag".format(display_str_calibrated("pseudo",33))
         for e in liste:
             nom=await DiscordClient.cocClient.get_player(e[0])
             nom=nom.name
             if e[1] is not None:
                 discordmember = await message.guild.fetch_member(int(e[1]))
                 nom = discordmember.display_name
-            reponse+="\n{}|{}|{}|{}|{}|{}|{}".format(display_str_calibrated(nom,33),
+            reponse+="\n{}|{}|{}|{}|{}|{}|{}|{}".format(display_str_calibrated(nom,33),
                                                   display_str_calibrated(str(e[4]),3),
                                                   display_str_calibrated(str(e[5]),3),
                                                   display_str_calibrated(str(e[6]),3),
                                                   display_str_calibrated(str(e[7]),3),
                                                   display_str_calibrated(str(e[3]),3),
+                                                  display_str_calibrated(str(e[9],3),
                                                   e[0])
         reponse+="""```"""
         return await message.channel.send(reponse)
