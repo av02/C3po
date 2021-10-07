@@ -55,7 +55,7 @@ async def def_leader(DiscordClient,message,args):
     reponse = "      __**classement des defs des membres hdv {}**__".format(int(args[1]))
     reponse +="```{}| perf | pas perf | total | % |tag".format(display_str_calibrated("pseudo",33))
     for e in liste:
-        nom=e[2]
+        nom=e[2] if e[2] is not None else "XXpseudoXX""
         if e[1] is not None:
             discordmember=await DiscordClient.fetch_member(int(e[1]))
             nom = discordmember.display_name
