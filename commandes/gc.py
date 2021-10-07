@@ -26,5 +26,5 @@ async def gc(DiscordClient, message,args):#TODO: ajouter le cas de l'autotag, pa
         rep.add_field(name=player.name,value="<:HdvBot:884202091793506324> Hdv : {} \n<:ExpBot:884202964896608266> Niveau : {} \n<:TagBot:884204003070705754> Tag : {}".format(player.town_hall,player.exp_level,player.tag))
     rep.set_image(url="https://media.discordapp.net/attachments/859386512129654794/884100318936330261/comptes_lie.png")
     rep.set_thumbnail(url=message.mentions[0].avatar_url)
-    rep.set_footer(text="Développement av#2616 | Design YohSama | Empire Galactique YohKun#7447",icon_url="https://cdn.discordapp.com/avatars/397116327887896576/93f6ce8dde153200b213ba4ec531dd8f.webp?size=128")
+    rep.set_footer(text="Développement av#2616 | Design YohKun#7447 | Empire Galactique",icon_url="https://cdn.discordapp.com/avatars/397116327887896576/93f6ce8dde153200b213ba4ec531dd8f.webp?size=128")
     await message.channel.send(embed=rep)
