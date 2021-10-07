@@ -15,7 +15,9 @@ def main():
     #lancement des evenements coc
     cocClient=boucle_infinie_coc.boucle_infinie_coc(config,connectionBDD)
     
-    bot_discord.discordClient(connectionBDD,cocClient).run(config["Discord"]["token"])#commande blocante pour lancer le bot
+    discordClient=bot_discord.discordClient(connectionBDD,cocClient)
+    cocClient.set_discord_client(discordClient)
+    discordClient.run(config["Discord"]["token"])#commande blocante pour lancer le bot
 
     
 
