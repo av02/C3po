@@ -13,7 +13,7 @@ def display_str_calibrated(chaine:str,longueur:int)->str:
         return chaine
     if len(chaine)<longueur:
         return chaine+(" "*(longueur-len(chaine)))
-    return " "*longueur
+    return chaine[:longueur]
 
 async def VL(DiscordClient,message,args):
     async with message.channel.typing():
