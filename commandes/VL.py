@@ -39,7 +39,7 @@ async def VL(DiscordClient,message,args):
                                                   display_str_calibrated(str(e[6]),3),
                                                   display_str_calibrated(str(e[7]),3),
                                                   display_str_calibrated(str(e[3]),3),
-                                                  display_str_calibrated(str(e[9]),3),
+                                                  display_str_calibrated(str(e[8]*100)+"%",3),
                                                   e[0])
         reponse+="""```"""
         return await message.channel.send(reponse)
