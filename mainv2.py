@@ -4,7 +4,7 @@ import boucle_infinie_coc
 import bot_discord
 # import donnés
 from config import config
-
+import coc
 
 
 def main():
