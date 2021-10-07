@@ -47,7 +47,7 @@ async def VL(DiscordClient,message,args):
     
     
 async def def_leader(DiscordClient,message,args):
-    if args=[] or not args[1] or int(args[1])>15 or int(args[1]) < 2 :
+    if args=[] or not args[1].isdigit() or int(args[1])>15 or int(args[1]) < 2 :
         return
     liste=DiscordClient.connectionBDD.get_classement_defenses(int(args[1]), limit=10, clan=None)
     if len(liste)=0:
