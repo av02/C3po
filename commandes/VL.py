@@ -17,7 +17,7 @@ def display_str_calibrated(chaine:str,longueur:int)->str:
 
 async def VL(DiscordClient,message,args):
     async with message.channel.typing():
-        if len(args)==1 or int(args[1])>15 or int(args[1]) < 2 :
+        if len(args)==1 or  not args[1].isdigit() or int(args[1])>15 or int(args[1]) < 2 :
             return
         dips = False
         if len(args)>2 and args[2]=="dips":
