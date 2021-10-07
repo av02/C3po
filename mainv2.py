@@ -16,7 +16,7 @@ def main():
     cocClient=boucle_infinie_coc.boucle_infinie_coc(config,connectionBDD)
     
     discordClient=bot_discord.discordClient(connectionBDD,cocClient)
-    cocClient.set_discord_client(discordClient)
+    #cocClient.set_discord_client(discordClient)
     discordClient.run(config["Discord"]["token"])#commande blocante pour lancer le bot
 
     
