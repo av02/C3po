@@ -39,7 +39,7 @@ async def VL(DiscordClient,message,args):
                                                   display_str_calibrated(str(e[6]),3),
                                                   display_str_calibrated(str(e[7]),3),
                                                   display_str_calibrated(str(e[3]),3),
-                                                  display_str_calibrated(str(e[8]*100)+"%",3),
+                                                  display_str_calibrated(str(e[8]*100),2)+"%",
                                                   e[0])
         reponse+="""```"""
         return await message.channel.send(reponse)
@@ -64,7 +64,7 @@ async def def_leader(DiscordClient,message,args):
                                               display_str_calibrated(str(e[4]),6),#perfdef
                                               display_str_calibrated(str(e[3]-e[4]),9),#pasperfdef
                                               display_str_calibrated(str(e[3]),7),#total
-                                              display_str_calibrated(str(e[6]*100)+"%",3),#%
+                                              display_str_calibrated(str(e[6]*100),3)+"%",#%
                                               e[0])
     reponse+="""```"""
     await message.channel.send(reponse)
