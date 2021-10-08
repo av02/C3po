@@ -176,14 +176,14 @@ class appelsBDD:
         fin_dips = "-1" if dips else ""
         requete_clan = ",clan="+clan if clan is not None else ""
         str_score = ["blackhdv", "onehdv", "bihdv", "perfhdv"][nb_etoiles]
-        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,"nbattaqueshdv{1}","perfhdv{1}","bihdv{1}","onehdv{1}","blackhdv{1}",(("{4}{1}"+0.0)/("nbattaqueshdv{1}"+0.0000001)) as X FROM new WHERE thIG={0}{3} AND "nbattaqueshdv{1}">4 ORDER BY 
+        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,"nbattaqueshdv{1}","perfhdv{1}","bihdv{1}","onehdv{1}","blackhdv{1}",(("{4}{1}"+0.00000000001)/("nbattaqueshdv{1}"+0.00000000001)) as X FROM new WHERE thIG={0}{3} AND "nbattaqueshdv{1}">4 ORDER BY 
                               X DESC LIMIT {2} """.format(hdv, fin_dips, limit, requete_clan, str_score))
 
     def get_classement_defenses(self, hdv, *, limit=10, clan=None) -> list:
         """renvoie la liste de tuple des 10 meilleurs defs sur l'hdv"""
         requete_clan = ",clan="+clan if clan is not None else ""
-        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,nbdefhdv,perfdefhdv,clan,((perfdefhdv+0.0)/(nbdefhdv+0.00000000001)) AS X FROM new
-                                 WHERE thIG={0}{2} ORDER BY X DESC LIMIT {1}
+        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,nbdefhdv,perfdefhdv,clan,((perfdefhdv+0.00000000001)/(nbdefhdv+0.00000000001)) AS X FROM new
+                                 WHERE thIG={0}{2} AND nbdefhdv >4 ORDER BY X DESC LIMIT {1}
                                 """.format(hdv, limit, requete_clan))
 
     def reduire_dons(self, facteur=2):
