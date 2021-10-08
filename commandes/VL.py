@@ -54,7 +54,7 @@ async def def_leader(DiscordClient,message,args):
     if len(liste)==0:
         return await message.channel.send("pas de donnés")
     reponse = "      __**classement des defs des membres hdv {}**__".format(int(args[1]))
-    reponse +="```{}| perf | pas perf | total | % |tag".format(display_str_calibrated("pseudo",33))
+    reponse +="``` perf | pas perf | total | % |{}|{}".format(display_str_calibrated("tag",7),display_str_calibrated("pseudo",33))
     for e in liste:
         nom=e[2] if e[2] is not None else "XXpseudoXX"
         if e[1] is not None:
@@ -65,6 +65,8 @@ async def def_leader(DiscordClient,message,args):
                                               display_str_calibrated(str(e[3]-e[4]),9),#pasperfdef
                                               display_str_calibrated(str(e[3]),7),#total
                                               display_str_calibrated(str(e[6]*100),3)+"%",#%
-                                              e[0])
+                                              display_str_calibrated(str(e[0],7),#tag
+                                              display_str_calibrated(nom,33)#pseudo
+                                             )
     reponse+="""```"""
     await message.channel.send(reponse)
