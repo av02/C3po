@@ -3,7 +3,7 @@ import database_outils
 
 def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
     clan_tags=["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2PYR2V202","#2Y2UVR99P","#2L0JQYUPU","#2LLCPYV9P","#2YU08J8UU"]# mettre ça dans une bdd
-    tagsJoueurs=[]
+    tagsJoueurs=[]#TODO: ajouter l'ensemble des tags des joueurs de la bdd
     # connection client coc, non bloquant
     
     @cocClient.event# quand une attaque de guerre survient
@@ -62,4 +62,11 @@ def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
     async def on_th_change(old,new):
         print("th change", old.th)
         connection_bdd.up_hdv(old.tag,new.town_hall)
-    return cocClient
+    
+    
+    
+    @cocClient.event  
+    @coc.PlayerEvents.clan(tags=tagsJoueur)
+    async def on_clan_status_change(old,new):
+        print("il y a {} qui a quitté {} ou rejoint {}".format(old.name,old.clan,new.clan))
+        pass
