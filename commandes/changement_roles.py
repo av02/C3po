@@ -1,4 +1,4 @@
-async def add_role(discordClient,discord_id,*clan_rejoints):
+async def maj_role(discordClient,discord_id,*clan_rejoints):
     """ajouter les roles de clan
 
     Args:
