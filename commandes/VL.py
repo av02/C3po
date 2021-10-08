@@ -65,7 +65,7 @@ async def def_leader(DiscordClient,message,args):
                                               display_str_calibrated(str(e[3]-e[4]),9),#pasperfdef
                                               display_str_calibrated(str(e[3]),7),#total
                                               display_str_calibrated(str(e[6]*100),3)+"%",#%
-                                              display_str_calibrated(str(e[0],7),#tag
+                                              display_str_calibrated(str(e[0]),7),#tag
                                               display_str_calibrated(nom,33)#pseudo
                                              )
     reponse+="""```"""
