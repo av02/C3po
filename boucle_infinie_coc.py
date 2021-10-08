@@ -66,7 +66,7 @@ def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
     
     
     @cocClient.event  
-    @coc.PlayerEvents.clan(tags=tagsJoueur)
+    @coc.PlayerEvents.clan(tags=tagsJoueurs)
     async def on_clan_status_change(old,new):
         print("il y a {} qui a quitté {} ou rejoint {}".format(old.name,old.clan,new.clan))
         pass
