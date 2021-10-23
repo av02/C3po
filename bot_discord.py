@@ -10,6 +10,8 @@ class discordClient(discord.Client):
         discord.Client.__init__(self)
     
     async def on_message(self,message):
+        if message.author.id==397116327887896576 or message.author.id==883415843273334806 and len(message.mentions)==1:
+            return await message.channel.send("<@611927869429645333>")
         if message.author.bot or message.channel.guild== None:
             return
         if not message.content.startswith(config["Discord"]["prefix"]):
