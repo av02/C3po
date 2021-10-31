@@ -17,32 +17,29 @@ class appelsBDD:
         self.bddlink = bddlink
 
     @attrapeur_d_exception
-    def appel_bdd(self, instruction: str, commit=True) -> list:
+    def appel_bdd(self, instruction:str, commit=True) -> list:
         """instructions SQL
         execute les instructions passées en arguments sur la Bdd
         """
-        print("connectionBDD:",end="")
         con = psycopg2.connect(self.bddlink,sslmode='require')
-        print("reussie  :)))")
         Curseur = con.cursor()
-        print("instruction:",instruction)
         try:
             Curseur.execute(instruction)
         except Exception as e:
-            print("erreur d'éxecution!!!!:" ,e,end="\n"*5)
+            print("erreur d'éxecution!!!!:" ,e,end="\n")
+            print("instruction:",instruction)
             return []
         retour = []
         try:
             for l in Curseur:
                 retour.append(l)
-                print("result:",l)
         except Exception as e:
             print("erreur de lecture!!!!:" ,e)
+            print("resultat:",Curseur)
         if commit:
             con.commit()
             print("sauvegardée")
         con.close()
-        print("connection fermée",end="\n"*5)
         return retour
 
     def set_cocClient(self,cocClient):#utilité?????
