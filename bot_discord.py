@@ -26,7 +26,8 @@ class discordClient(discord.Client):
             """ajouter un tag a un discord, #coc+@xx#XXXX/me"""
             return await commandes.dispatch.claim.claim(self,self.connectionBDD,args,message)
         
-        
+        if commande == "scan":
+            return await commandes.dispatch.scan.scan(self,self.connectionBDD,args,message)
         
         if commande == "gc":#couleur embed: #F6C471
             """afficher tous les comptes associés a un joueur """
