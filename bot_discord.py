@@ -27,7 +27,7 @@ class discordClient(discord.Client):
             return await commandes.dispatch.claim.claim(self,self.connectionBDD,args,message)
         
         if commande == "scan":
-            return await commandes.dispatch.scan.scan(self,message,args)
+            return await commandes.dispatch.scan.scan(self,self.connectionBDD,message,args)
         
         if commande == "gc":#couleur embed: #F6C471
             """afficher tous les comptes associés a un joueur """
