@@ -9,7 +9,6 @@ async def scan(DiscordClient,dB,message,args):
         liste_comptes = dB.get_comptes_coc(member.id)
         if len(liste_comptes)==0:
             await message.channel.send(f"```{member.id}```{member.display_name} n'a pas de comptes ajoutés")
-            break
         present_dans_l_empire= False
         tags = map(lambda tupple_data:tupple_data[0],liste_comptes)
         async for player in DiscordClient.cocClient.get_players(tags):
