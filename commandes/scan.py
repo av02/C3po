@@ -6,7 +6,7 @@ async def scan(DiscordClient,message,args):
     if not (message.author.id in [611927869429645333,447117251477241857,397116327887896576]):#YOH,CLAIRE ou av
         return
     for member in message.guild.members:
-        liste_comptes = dB.get_compte_coc(member.id)
+        liste_comptes = dB.get_comptes_coc(member.id)
         if len(L)==0:
             await message.channel.send(f"```{member.id}```{member.display_name} n'a pas de comptes ajoutés")
             break
