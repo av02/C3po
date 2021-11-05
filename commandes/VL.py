@@ -25,7 +25,7 @@ async def VL(DiscordClient,message,args):
         clan=None
         if len(args)>2+dips:
             clan = args[2+dips] 
-        
+            
         liste=DiscordClient.connectionBDD.get_classement_attaques(int(args[1]), dips=dips, limit=25, clan=clan, nb_etoiles=3)
         if len(liste)==0:
             return await message.channel.send("pas de donnés")
