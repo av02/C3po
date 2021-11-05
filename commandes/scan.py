@@ -5,10 +5,17 @@ import commandes.dispatch
 async def scan(DiscordClient,dB,message,args):
     if not (message.author.id in [611927869429645333,447117251477241857,397116327887896576]):#YOH,CLAIRE ou av
         return
+    nb_membres = len(message.guild.members)
+    nb_non_ajoutes=0
     for member in message.guild.members:
+        
         liste_comptes = dB.get_comptes_coc(member.id)
-        if len(liste_comptes)==0:
+
+        if member.bot or 729581221616812084 in map(lambda r:r.id,member.roles):#bot ou invité
+            nb_membres-=1
+        elif len(liste_comptes)==0:#non bot et non invité, sans comptes ajoutés
             await message.channel.send(f"```{member.id}```{member.display_name} n'a pas de comptes ajoutés")
+            nb_non_ajoutes+=1
         else:
             present_dans_l_empire= False
             tags = map(lambda tupple_data:tupple_data[0],liste_comptes)
@@ -37,5 +44,7 @@ async def scan(DiscordClient,dB,message,args):
                 await message.channel.send(embed=rep)
 
         
-    await message.channel.send("scan terminé")
+    await message.channel.send(f"""Scan terminé
+                                \nNombre de membres du discord non stormtroopers ni bot sans aucun compte dans l'empire:{nb_non_ajoutes}
+                                \nNombre total de membres du serveur présents dans les clans de l'empire""")
             
