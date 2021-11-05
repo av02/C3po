@@ -5,9 +5,10 @@ from config import config
 
 class discordClient(discord.Client):
     def __init__(self,connectionBDD,cocClient):
+        intents= discord.Intents().all()
         self.cocClient=cocClient
         self.connectionBDD=connectionBDD
-        discord.Client.__init__(self)
+        discord.Client.__init__(self,intents=intents)
     
     async def on_message(self,message):
         if message.author.bot or message.channel.guild== None:
