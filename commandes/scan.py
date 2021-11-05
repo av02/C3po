@@ -7,7 +7,7 @@ async def scan(DiscordClient,dB,message,args):
         return
     for member in message.guild.members:
         liste_comptes = dB.get_comptes_coc(member.id)
-        if len(L)==0:
+        if len(liste_comptes)==0:
             await message.channel.send(f"```{member.id}```{member.display_name} n'a pas de comptes ajoutés")
             break
         present_dans_l_empire= False
