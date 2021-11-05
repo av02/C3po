@@ -3,7 +3,7 @@ import database_outils as dB
 import config as config
 import commandes.dispatch
 async def scan(DiscordClient,message,args):
-    if not message.author.id in [611927869429645333,447117251477241857,397116327887896576]:#YOH,CLAIRE ou av
+    if not (message.author.id in [611927869429645333,447117251477241857,397116327887896576]):#YOH,CLAIRE ou av
         return
     for member in message.guild.members:
         liste_comptes = dB.get_compte_coc(member.id)
