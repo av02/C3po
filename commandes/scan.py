@@ -13,7 +13,7 @@ async def scan(DiscordClient,dB,message,args):
         tags = map(lambda tupple_data:tupple_data[0],liste_comptes)
         async for player in DiscordClient.cocClient.get_players(tags):
             if player.clan is not None:
-                if player.clan.tag in config["liste_clans"]:
+                if player.clan["tag"] in config["liste_clans"]:
                     present_dans_l_empire=True
                     break
             
