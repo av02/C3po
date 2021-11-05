@@ -29,7 +29,7 @@ async def VL(DiscordClient,message,args):
         liste=DiscordClient.connectionBDD.get_classement_attaques(int(args[1]), dips=dips, limit=25, clan=clan, nb_etoiles=3)
         if len(liste)==0:
             return await message.channel.send("pas de donnés")
-                reponse = "      __**classement des membres hdv {}{}{}**__".format(int(args[1])," dips" if dips else ""," "+clan if clan is not None else "")
+        reponse = "      __**classement des membres hdv {}{}{}**__".format(int(args[1])," dips" if dips else ""," "+clan if clan is not None else "")
         reponse +="```{}|⭐⭐⭐| ⭐⭐ | ⭐ | ☆ |nb| % |tag".format(display_str_calibrated("",33))
         for e in liste:
             nom=await DiscordClient.cocClient.get_player(e[0])
