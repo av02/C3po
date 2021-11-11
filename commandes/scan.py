@@ -23,7 +23,7 @@ async def scan(DiscordClient,dB,message,args):
             async for player in DiscordClient.cocClient.get_players(tags):
                 liste_profils.append(player)
                 if player.clan is not None:
-                    print(f"l17:clan tag: {player.clan.tag}")
+                   
                     if player.clan.tag in config.config["liste_clans"]:
                         present_dans_l_empire=True
                         break
@@ -34,7 +34,7 @@ async def scan(DiscordClient,dB,message,args):
                 pseudo=member.display_name
                 rep=discord.Embed(colour=0xf6c471)
                 rep.set_author(name="Profil de "+str(pseudo))
-                print(liste_profils,"liste de tous les profils")
+                
                 
                 liste_profils.sort(reverse= True,key=lambda p:p.town_hall*1000+p.exp_level)   
                 for player in liste_profils:    
