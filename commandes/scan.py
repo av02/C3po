@@ -46,5 +46,5 @@ async def scan(DiscordClient,dB,message,args):
         
     await message.channel.send(f"""Scan terminé
                                 \nNombre de membres du discord non stormtroopers ni bot sans aucun compte dans l'empire:{nb_non_ajoutes}
-                                \nNombre total de membres du serveur présents dans les clans de l'empire""")
+                                \nNombre total de membres du serveur présents dans les clans de l'empire{nb_membres}""")
             
