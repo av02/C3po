@@ -39,6 +39,6 @@ async def claim(client_discord,
         th = player.town_hall
         pseudo= player.name
         clan = player.clan.name if player.clan is not None else None
-        connectionBDD.check_presence_database(self, tag, th, pseudo, clan)
+        connectionBDD.check_presence_database(tag, th, pseudo, clan)
         connectionBDD.add_discord_id(tag,idDiscord,False)#TODO: ajouter une verification de roles
     return await message.channel.send("operation réussie")
