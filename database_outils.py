@@ -11,7 +11,8 @@ def attrapeur_d_exception(fonction_requete):
 
     return fonction_avec_exceptions
 
-        
+def echap_appostrophe(texte):
+    return texte.replace("'","''")
 class appelsBDD:
     def __init__(self, bddlink):
         self.bddlink = bddlink
@@ -52,7 +53,7 @@ class appelsBDD:
         """
         if len(self.appel_bdd("SELECT * FROM new WHERE tagIG = '{}'".format(tag))) == 0:
             self.appel_bdd("INSERT INTO new (tagIG,pseudoIG,thIG,clan) VALUES ('{}','{}',{},'{}')".format(
-                tag, pseudo, th, clan))
+                tag, echap_appostrophe(pseudo), th, clan))
         return
 
     def add_discord_id(self, tag, id, permission_ecraser=False):
@@ -75,7 +76,7 @@ class appelsBDD:
         """modifie le pseudo du joueur, ecrase le précdent
         """
         self.appel_bdd(
-            "UPDATE new SET pseudoIG={} WHERE tagIG='{}'".format(pseudo, tag))
+            "UPDATE new SET pseudoIG={} WHERE tagIG='{}'".format(echap_appostrophe(pseudo), tag))
 
     def edit_clan(self, tag, clan=None):
         """met a jour le clan du joueur avec son nouveau clan"""
@@ -134,7 +135,7 @@ class appelsBDD:
         """ajoute dons au dons associés au tag
         """
         print("adddon",end='')
-        self.check_presence_database(tag,th,pseudo,clan)
+        self.check_presence_database(tag,th,echap_appostrophe(pseudo),clan)
         print("adddon, presence ok",end='')
         valeur_anterieur = self.appel_bdd("""SELECT donne FROM new 
                                         WHERE tagIG='{}'""".format(tag))[0][0]
