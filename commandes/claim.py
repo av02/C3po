@@ -31,9 +31,9 @@ async def claim(client_discord,
     except ValueError:
         try:
             player=await client_discord.cocClient.get_player(tag)
-        except client_discord.cocClient.NotFound:
+        except coc.NotFound:
             return await message.channel.send("tag ne correspondant a aucun joueur")
-        except client_discord.cocClient.Maintenance:
+        except coc.Maintenance:
             return await message.channel.send("maintenance")
         
         th = player.town_hall
