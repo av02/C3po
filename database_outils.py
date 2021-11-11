@@ -33,12 +33,13 @@ class appelsBDD:
         try:
             for l in Curseur:
                 retour.append(l)
+        except psycopg2.ProgrammingError:
+            pass
         except Exception as e:
             print("erreur de lecture!!!!:" ,e)
             print("resultat:",Curseur)
         if commit:
             con.commit()
-            print("sauvegardée")
         con.close()
         return retour
 
