@@ -29,5 +29,16 @@ async def claim(client_discord,
     except PermissionError:
         return await message.channel.send("déjà enregistré par le passé, vous n'avez pas les permissions d'éditer ce lien.")
     except ValueError:
-        return await message.channel.send("merci de rejoindre un clan de l'empire avant de vous enregistrer :)")
+        try:
+            player=await client_discord.cocClient.get_player(tag)
+        except NotFound:
+            return await message.channel.send("tag ne correspondant a aucun joueur")
+        except Maintenance:
+            return await message.channel.send("maintenance")
+        
+        th = player.town_hall
+        pseudo= player.name
+        clan = player.clan.name if player.clan is not None else None
+        connectionBDD.check_presence_database(self, tag, th, pseudo, clan)
+        connectionBDD.add_discord_id(tag,idDiscord,False)#TODO: ajouter une verification de roles
     return await message.channel.send("operation réussie")
