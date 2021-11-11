@@ -19,7 +19,9 @@ async def scan(DiscordClient,dB,message,args):
         else:
             present_dans_l_empire= False
             tags = map(lambda tupple_data:tupple_data[0],liste_comptes)
+            liste_profils=[]
             async for player in DiscordClient.cocClient.get_players(tags):
+                liste_profils.append(player)
                 if player.clan is not None:
                     print(f"l17:clan tag: {player.clan.tag}")
                     if player.clan.tag in config.config["liste_clans"]:
@@ -32,10 +34,8 @@ async def scan(DiscordClient,dB,message,args):
                 pseudo=member.display_name
                 rep=discord.Embed(colour=0xf6c471)
                 rep.set_author(name="Profil de "+str(pseudo))
-                liste_profils=[]
                 print(liste_profils,"liste de tous les profils")
-                async for player in DiscordClient.cocClient.get_players(tags):
-                    liste_profils.append(player)
+                
                 liste_profils.sort(reverse= True,key=lambda p:p.town_hall*1000+p.exp_level)   
                 for player in liste_profils:    
                     rep.add_field(name=player.name,value="<:HdvBot:884202091793506324> Hdv : {} \n<:ExpBot:884202964896608266> Niveau : {} \n<:TagBot:884204003070705754> Tag : {}\n🛡️ Clan : {}".format(player.town_hall,player.exp_level,player.tag,player.clan.name if player.clan is not None else "Pas de clan"))#,ligne_BDD[7]/(ligne_BDD[6]+0.000000000001)*100))
