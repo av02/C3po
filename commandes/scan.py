@@ -33,6 +33,7 @@ async def scan(DiscordClient,dB,message,args):
                 rep=discord.Embed(colour=0xf6c471)
                 rep.set_author(name="Profil de "+str(pseudo))
                 liste_profils=[]
+                print(liste_profils,"liste de tous les profils")
                 async for player in DiscordClient.cocClient.get_players(tags):
                     liste_profils.append(player)
                 liste_profils.sort(reverse= True,key=lambda p:p.town_hall*1000+p.exp_level)   
