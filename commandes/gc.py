@@ -27,7 +27,8 @@ async def gc(DiscordClient, message,args):#TODO: ajouter le cas de l'autotag, pa
         liste_profils.append(player)
     liste_profils.sort(reverse= True,key=lambda p:p.town_hall*1000+p.exp_level)   
     for player in liste_profils:    
-        rep.add_field(name=player.name,value="<:HdvBot:884202091793506324> Hdv : {} \n<:ExpBot:884202964896608266> Niveau : {} \n<:TagBot:884204003070705754> Tag : {}\n🛡️ Clan : {}".format(player.town_hall,player.exp_level,player.tag,player.clan.name if player.clan is not None else "Pas de clan"))#,ligne_BDD[7]/(ligne_BDD[6]+0.000000000001)*100))
+        ratio = ""#TODO:ajouter le ratio des perfs "\n💯 Ratio Perf : {}".format(liste_comptes[]/liste_comptes[]) if liste_compte[player.tag][6] else ""
+        rep.add_field(name=player.name,value="<:HdvBot:884202091793506324> Hdv : {} \n<:ExpBot:884202964896608266> Niveau : {} \n<:TagBot:884204003070705754> Tag : {}\n🛡️ Clan : {}{}".format(player.town_hall,player.exp_level,player.tag,player.clan.name if player.clan is not None else "Pas de clan",ratio))#,ligne_BDD[7]/(ligne_BDD[6]+0.000000000001)*100))
     rep.set_image(url="https://media.discordapp.net/attachments/859386512129654794/884100318936330261/comptes_lie.png")
     rep.set_thumbnail(url=message.mentions[0].avatar_url)
     rep.set_footer(text="Développement av#2616 | Design YohKun#7447 | Empire Galactique",icon_url="https://cdn.discordapp.com/avatars/397116327887896576/93f6ce8dde153200b213ba4ec531dd8f.webp?size=128")
