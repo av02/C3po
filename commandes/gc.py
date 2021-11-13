@@ -26,8 +26,8 @@ async def gc(DiscordClient, message,args):#TODO: ajouter le cas de l'autotag, pa
     liste_profils=[]
     async for player in DiscordClient.cocClient.get_players(tags):
         liste_profils.append(player)
-    liste_profilszip=  list(zip(liste_profils,liste_comptes))
-    liste_profilszip.sort(reverse= True,key=lambda p[0]:p.town_hall*1000+p.exp_level)   
+    liste_profilszip =  list(zip(liste_profils,liste_comptes))
+    liste_profilszip.sort(reverse = True,key = lambda p:p[0].town_hall*1000+p[0].exp_level)   
     for player in liste_profilszip:    
         ratio = "\n💯 Ratio Perf : {}".format(player[1][7]/player[1][6]) if player[1][6]!=0 else "")
         rep.add_field(name=player[0].name,value="<:HdvBot:884202091793506324> Hdv : {} \n<:ExpBot:884202964896608266> Niveau : {} \n<:TagBot:884204003070705754> Tag : {}\n🛡️ Clan : {}{}".format(player[0].town_hall,player[0].exp_level,player[0].tag,player[0].clan.name if player[0].clan is not None else "Pas de clan",ratio))#,ligne_BDD[7]/(ligne_BDD[6]+0.000000000001)*100))
