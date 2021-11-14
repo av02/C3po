@@ -1,7 +1,7 @@
 import coc
 import database_outils
 def demarage(config,connection_bdd,cocClient):
-    tagsJoueurs=connection_bdd.get_all_tag()
+    tagsJoueurs=await connection_bdd.get_all_tag()
     for tag in tagsJoueurs:
         try:
             cocClient.get_player(tag)
