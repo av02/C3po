@@ -3,7 +3,7 @@ import database_outils
 
 def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
     clan_tags=["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2PYR2V202","#2Y2UVR99P","#2L0JQYUPU","#2LLCPYV9P","#2YU08J8UU"]# mettre ça dans une bdd
-    tagsJoueurs=[]#TODO: ajouter l'ensemble des tags des joueurs de la bdd
+    tagsJoueurs=connection_bdd.get_all_tag()
     # connection client coc, non bloquant
     
     @cocClient.event# quand une attaque de guerre survient
