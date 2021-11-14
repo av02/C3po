@@ -192,6 +192,12 @@ class appelsBDD:
     def get_all_tag(self):
         """ renvoie l'ensemble des tags inclus dans la BDD"""
         return map(lambda e:e[0],self.appel_bdd("""SELECT tagig FROM new"""))
+    
+    def edit_clan(self,tag,new_clan_tag):
+        """change le tag du clan du joueur"""
+        return self.appel_bdd("""UPDATE new SET clan = new_clan_tag WHERE tagIG='{}'""".format(tag))
+    
+    
 def main():#pour  des tests locaux
     pass
 
