@@ -27,7 +27,7 @@ class appelsBDD:
         try:
             Curseur.execute(instruction)
         except Exception as e:
-            print("erreur d'éxecution!!!!:" ,e,end="\n")
+            print("\033[93merreur d'éxecution!!!!:" ,e,end="\n")
             print("instruction:",instruction)
             return []
         retour = []
@@ -37,7 +37,7 @@ class appelsBDD:
         except psycopg2.ProgrammingError:
             pass
         except Exception as e:
-            print("erreur de lecture!!!!:" ,e)
+            print("\033[93merreur de lecture!!!!:" ,e)
             print("resultat:",Curseur)
         if commit:
             con.commit()
@@ -91,7 +91,6 @@ class appelsBDD:
         """
         stats = self.appel_bdd(
             "SELECT thIG,nbattaqueshdv,perfhdv,bihdv,onehdv,blackhdv FROM new WHERE tagIG='{}'".format(tag))[0]
-        print("#1")
         if stats[0] != th:
             self.appel_bdd("UPDATE new SET thIG={},'nbattaqueshdvante'={},'perfhdvante'={},'bihdvante'={},'onehdvante'={},'blackhdvante'={}, 'nbattaqueshdv-1'=0,'perfhdv-1'=0,'bihdv-1'=0,'onehdv-1'=0,'blackhdv-1'=0, nbattaqueshdv=0,perfhdv=0,bihdv=0,onehdv=0,blackhdv=0,perfdefhdv=0,nbdefhdv=0 WHERE tagIG='{}'".format(
                 th, stats[1], stats[2], stats[3], stats[4], stats[5], tag))
@@ -120,12 +119,13 @@ class appelsBDD:
                                                      valeurs_anterieures[1]+1,
                                                      tag))
 
-    def add_def_gdc(self, tag, perf: bool):
+    def add_def_gdc(self, tag, perf: bool,pseudo,clan):
         """N'APPELER QUE SI LES HDV SONT ÉGAUX
         ajoutes 1 au nombre total de defs enregistrées, 
         et la valeur numerique associé au booléen perf
         dans la colone nbperfdef
         """
+        self.check_presence_database(tag,th,pseudo,clan)
         valeurs_anterieures = self.appel_bdd(
             """SELECT nbdefhdv,perfdefhdv FROM new WHERE tagIG='{}'""".format(tag))[0]
         self.appel_bdd("""UPDATE new SET nbdefhdv={},perfdefhdv={} WHERE tagIG='{}'""".format(
@@ -134,15 +134,15 @@ class appelsBDD:
     def add_don(self, tag, dons,th,pseudo,clan):
         """ajoute dons au dons associés au tag
         """
-        print("adddon",end='')
+        
         self.check_presence_database(tag,th,echap_appostrophe(pseudo),clan)
-        print("adddon, presence ok",end='')
+        
         valeur_anterieur = self.appel_bdd("""SELECT donne FROM new 
                                         WHERE tagIG='{}'""".format(tag))[0][0]
-        print("adddon valeur anterieure",end='')
+        
         self.appel_bdd("""UPDATE new SET donne={} WHERE tagIG='{}'""".format(
             int(valeur_anterieur)+dons, tag))
-        print("adddon fin exe",end='')
+        
 
     def add_recu(self, tag, recu,th,pseudo,clan):
         """ajoute recu au recu associés au tag
