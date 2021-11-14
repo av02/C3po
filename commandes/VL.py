@@ -96,9 +96,9 @@ async def dons_leader(DiscordClient,message,args):
     for e in liste_dons:
         nom=e[2] if e[2] is not None else "XXpseudoXX"
         
-        if e[1] is not None:
+        if e[0] is not None:
             try:
-                discordmember = await message.guild.fetch_member(int(e[1]))
+                discordmember = await message.guild.fetch_member(int(e[0]))
             except discord.errors.NotFound:
                 pass
             else:
