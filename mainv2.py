@@ -5,6 +5,7 @@ import bot_discord
 # import donnés
 from config import config
 import coc
+import asyncio
 
 
 def main():
@@ -20,7 +21,7 @@ def main():
     
     
     #lancement des evenements coc
-    
+    asyncio.run(boucle_infinie_coc.demarage(config, connectionBDD,cocClient))
     boucle_infinie_coc.boucle_infinie_coc(config,connectionBDD,discordClient,cocClient)
     
     discordClient.run(config["Discord"]["token"])#commande blocante pour lancer le bot
