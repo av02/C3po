@@ -189,7 +189,9 @@ class appelsBDD:
         """divise l'ensemble des dons par facteur"""
         self.appel_bdd(
             """UPDATE new SET donne=donne/{0},recu=recu/{0}""".format(facteur))
-
+    def get_all_tag(self):
+        """ renvoie l'ensemble des tags inclus dans la BDD"""
+        return map(lambda e:e[0],self.appel_bdd("""SELECT tagig FROM new"""))
 def main():#pour  des tests locaux
     pass
 
