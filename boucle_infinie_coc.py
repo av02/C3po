@@ -4,6 +4,7 @@ async def demarage(config,connection_bdd,cocClient):
     
     tagsJoueurs=connection_bdd.get_all_tag()
     for tag in tagsJoueurs:
+        print("\033[96m",tag)
         try:
             p=await cocClient.get_player(tag)
         except coc.errors.notFound:
