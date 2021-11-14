@@ -155,8 +155,8 @@ class appelsBDD:
 
     def classement_dons(self, limit, *, clan=None) -> list:
         """renvoie une liste de tupples (idDiscord,tag,pseudo,donné,recu,ratio)"""
-        requete_clan = "WHERE clan='"+clan+"'" if clan is not None else ""
-        return self.appel_bdd("""SELECT discordID,tagIG,pseudoIG,donne,recu,donne/(recu+0.00000000000001) AS ratio FROM new {} ORDER BY ratio DESC LIMIT {}""".format(requete_clan, limit))
+        requete_clan = " AND clan='"+clan+"'" if clan is not None else ""
+        return self.appel_bdd("""SELECT discordID,tagIG,pseudoIG,donne,recu,donne/(recu+0.00000000000001) AS ratio FROM new WHERE recu>1 {} ORDER BY ratio DESC LIMIT {}""".format(requete_clan, limit))
    
     def get_comptes_coc(self, idDiscord):
         """renvoie une liste des comptes associés a cet identifiant, sous forme d'une liste de tupple
