@@ -79,3 +79,33 @@ async def def_leader(DiscordClient,message,args):
                                              )
     reponse+="""```"""
     await message.channel.send(reponse)
+    
+
+    
+    
+    
+    
+async def dons_leader(DiscordClient,message,args):
+    """ clan: avec le #tag"""
+    clan=args[1] if len(args)>1 else None
+    
+    liste_dons= DiscordClient.connectionBDD.classement_dons( limit=15, clan=clan)#[(idDiscord,tag,pseudo,donné,recu,ratio)]
+    nom_clan="du clan:"+clan
+    reponse = "      __**classement des donateurs {}**__".format(nom_clan)
+    reponse+="\n  don | recu | ratio |   pseudo"
+    for e in liste:
+        nom=e[2] if e[2] is not None else "XXpseudoXX"
+        
+        if e[1] is not None:
+            try:
+                discordmember = await message.guild.fetch_member(int(e[1]))
+            except discord.errors.NotFound:
+                pass
+            else:
+                nom = discordmember.display_name
+            
+        reponse+=f"\n{display_str_calibrated(str(e[3]),6)}|{display_str_calibrated(str(e[4]),6)}|{display_str_calibrated(str(e[5]),6)}:{nom}"
+    reponse+="""```"""
+    await message.channel.send(reponse)
+    
+    
