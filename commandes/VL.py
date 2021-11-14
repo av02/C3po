@@ -90,10 +90,10 @@ async def dons_leader(DiscordClient,message,args):
     clan=args[1] if len(args)>1 else None
     
     liste_dons= DiscordClient.connectionBDD.classement_dons( limit=15, clan=clan)#[(idDiscord,tag,pseudo,donné,recu,ratio)]
-    nom_clan="du clan:"+clan
+    nom_clan="du clan:"+clan if clan is not None else ""
     reponse = "      __**classement des donateurs {}**__".format(nom_clan)
     reponse+="\n  don | recu | ratio |   pseudo"
-    for e in liste:
+    for e in liste_dons:
         nom=e[2] if e[2] is not None else "XXpseudoXX"
         
         if e[1] is not None:
