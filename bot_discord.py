@@ -2,6 +2,7 @@ import discord
 import commandes.dispatch
 import database_outils
 from config import config
+import boucle_infinie_coc
 
 class discordClient(discord.Client):
     def __init__(self,connectionBDD,cocClient):
@@ -9,7 +10,8 @@ class discordClient(discord.Client):
         self.cocClient=cocClient
         self.connectionBDD=connectionBDD
         discord.Client.__init__(self,intents=intents)
-    
+    async def on_ready(self):
+        boucle_infinie_coc.demarage(config, self.connectionBDD,self.cocClient)
     async def on_message(self,message):
         if message.author.bot or message.channel.guild== None:
             return
