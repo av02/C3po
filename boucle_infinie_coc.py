@@ -1,4 +1,5 @@
 import coc
+import coc.errors
 import database_outils
 async def demarage(config,connection_bdd,cocClient):
     
@@ -8,7 +9,7 @@ async def demarage(config,connection_bdd,cocClient):
         try:
             p=await cocClient.get_player(tag)
             print("\033[94m",p.name)
-        except coc.errors.notFound:
+        except coc.errors.NotFound:
             print(f" erreur pour le tag: {tag}")
     #pass
 
