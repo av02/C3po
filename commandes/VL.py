@@ -1,3 +1,4 @@
+import discord
 def display_str_calibrated(chaine:str,longueur:int)->str:
     """renvoie une chaine str calibrée
 
@@ -32,8 +33,12 @@ async def VL(DiscordClient,message,args):
         reponse = "      __**classement des membres hdv {}{}{}**__".format(int(args[1])," dips" if dips else ""," "+clan if clan is not None else "")
         reponse +="```{}|⭐⭐⭐| ⭐⭐ | ⭐ | ☆ |nb| % |tag".format(display_str_calibrated("",33))
         for e in liste:
-            nom=await DiscordClient.cocClient.get_player(e[0])
-            nom=nom.name
+            try:
+                nom=await DiscordClient.cocClient.get_player(e[0])
+            except discord.errors.NotFound:
+                pass
+            else:
+                nom=nom.name
             if e[1] is not None:
                 discordmember = await message.guild.fetch_member(int(e[1]))
                 nom = discordmember.display_name
