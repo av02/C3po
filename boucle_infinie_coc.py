@@ -85,4 +85,5 @@ def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
     @cocClient.event  
     @coc.PlayerEvents.clan(tags=tagsJoueurs)
     async def on_clan_status_change(old,new):
-        connection_bdd.edit_clan(old.tag,new.clan)
+        new_clan_tag = new.clan.tag if new.clan is not None else None
+        connection_bdd.edit_clan(old.tag,new_clan_tag)
