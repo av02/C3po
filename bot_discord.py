@@ -12,6 +12,7 @@ class discordClient(discord.Client):
         discord.Client.__init__(self,intents=intents)
     async def on_ready(self):
         print("\n"*10,"On ready","\n"*10)
+        self.connectionBDD.appel_bdd(DELETE FROM new WHERE tagig='#2YVVLVJV9')
         await boucle_infinie_coc.demarage(config, self.connectionBDD,self.cocClient)
         print("\n"*10,"Fin On ready","\n"*10)
     async def on_message(self,message):
