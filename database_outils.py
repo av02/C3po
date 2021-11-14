@@ -195,7 +195,7 @@ class appelsBDD:
     
     def edit_clan(self,tag,new_clan_tag):
         """change le tag du clan du joueur"""
-        return self.appel_bdd("""UPDATE new SET clan = new_clan_tag WHERE tagIG='{}'""".format(tag))
+        return self.appel_bdd("""UPDATE new SET clan = '{}' WHERE tagIG='{}'""".format(new_clan_tag,tag))
     
     
 def main():#pour  des tests locaux
