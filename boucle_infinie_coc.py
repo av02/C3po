@@ -1,16 +1,19 @@
 import coc
 import coc.errors
 import database_outils
+
+
+
+
+
 async def demarage(config,connection_bdd,cocClient):
     
     tagsJoueurs=connection_bdd.get_all_tag()
     for tag in tagsJoueurs:
-        print("\033[96m",tag)
         try:
             p=await cocClient.get_player(tag)
-            print("\033[94m",p.name)
         except coc.errors.NotFound:
-            print(f" erreur pour le tag: {tag}")
+            print(f"\033[91m erreur pour le tag: {tag} ( certainement compte ban)")
     #pass
 
 def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
