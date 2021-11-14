@@ -44,8 +44,11 @@ def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
                 return
             connection_bdd.add_def_gdc(
                                         attack.defender_tag,
-                                       attack.stars==3
-                                        )
+                                        attack.stars==3,
+                                        attack.defender.town_hall,
+                                        attack.defender.name,
+                                        attack.defender.clan.tag
+                                       )
 
 
 
