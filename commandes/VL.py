@@ -33,15 +33,15 @@ async def VL(DiscordClient,message,args):
         reponse = "      __**classement des membres hdv {}{}{}**__".format(int(args[1])," dips" if dips else ""," "+clan if clan is not None else "")
         reponse +="```{}|⭐⭐⭐| ⭐⭐ | ⭐ | ☆ |nb| % |tag".format(display_str_calibrated("",33))
         for e in liste:
-            try:
-                nom=await DiscordClient.cocClient.get_player(e[0])
-            except discord.errors.NotFound:
-                pass
-            else:
-                nom=nom.name
+            nom=await DiscordClient.cocClient.get_player(e[0])
+            nom=nom.name
             if e[1] is not None:
-                discordmember = await message.guild.fetch_member(int(e[1]))
-                nom = discordmember.display_name
+                try:
+                    discordmember = await message.guild.fetch_member(int(e[1]))
+                except discord.errors.NotFound:
+                    pass
+                else:
+                    nom = discordmember.display_name
             reponse+="\n{}|{}|{}|{}|{}|{}|{}|{}".format(display_str_calibrated(nom,33),
                                                   display_str_calibrated(str(e[4]),3),
                                                   display_str_calibrated(str(e[5]),3),
