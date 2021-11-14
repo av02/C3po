@@ -27,6 +27,7 @@ async def claim(client_discord,
     try:
         connectionBDD.add_discord_id(tag,idDiscord,False)#TODO: ajouter une verification de roles
     except PermissionError:
+        if 821743088296919041 in list(map(lambda r: r.id , message.author.roles)):
         return await message.channel.send("déjà enregistré par le passé, vous n'avez pas les permissions d'éditer ce lien.")
     except ValueError:
         try:
