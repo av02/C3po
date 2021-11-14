@@ -50,6 +50,9 @@ class discordClient(discord.Client):
             
         if commande in ["DL" ,"classementdef"]:
             return await commandes.dispatch.VL.def_leader(self,message,args)
+        
+        if commande== "CD":
+            return await commandes.dispatch.VL.dons_leader(self,message,args)
 
 if __name__=="__main__":
     import database_outils
