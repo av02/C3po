@@ -20,7 +20,7 @@ def main():
     
     
     #lancement des evenements coc
-    boucle_infinie_coc.demarage(config, connectionBDD,cocClient)
+    
     boucle_infinie_coc.boucle_infinie_coc(config,connectionBDD,discordClient,cocClient)
     
     discordClient.run(config["Discord"]["token"])#commande blocante pour lancer le bot
