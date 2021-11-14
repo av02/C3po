@@ -11,8 +11,9 @@ class discordClient(discord.Client):
         self.connectionBDD=connectionBDD
         discord.Client.__init__(self,intents=intents)
     async def on_ready(self):
-        print("\n"*10,"On est là!!!!!!!!!!!!","\n"*10)
+        print("\n"*10,"On ready","\n"*10)
         await boucle_infinie_coc.demarage(config, self.connectionBDD,self.cocClient)
+        print("\n"*10,"Fin On ready","\n"*10)
     async def on_message(self,message):
         if message.author.bot or message.channel.guild== None:
             return
