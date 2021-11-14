@@ -7,6 +7,7 @@ async def demarage(config,connection_bdd,cocClient):
         print("\033[96m",tag)
         try:
             p=await cocClient.get_player(tag)
+            print("\033[94m",p.name)
         except coc.errors.notFound:
             print(f" erreur pour le tag: {tag}")
     #pass
