@@ -1,13 +1,13 @@
 import coc
 import database_outils
-def demarage(config,connection_bdd,cocClient):
-    return 
-    #tagsJoueurs=connection_bdd.get_all_tag()
-    #for tag in tagsJoueurs:
-    #    try:
-    #        await cocClient.get_player(tag)
-    #    except coc.errors.notFound:
-    #        print(f" erreur pour le tag: {tag}")
+async def demarage(config,connection_bdd,cocClient):
+    
+    tagsJoueurs=connection_bdd.get_all_tag()
+    for tag in tagsJoueurs:
+        try:
+            await cocClient.get_player(tag)
+        except coc.errors.notFound:
+            print(f" erreur pour le tag: {tag}")
     #pass
 
 def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
