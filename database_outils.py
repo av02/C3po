@@ -119,7 +119,7 @@ class appelsBDD:
                                                      valeurs_anterieures[1]+1,
                                                      tag))
 
-    def add_def_gdc(self, tag, perf: bool,pseudo,clan):
+    def add_def_gdc(self, tag, perf: bool,th,pseudo,clan):
         """N'APPELER QUE SI LES HDV SONT ÉGAUX
         ajoutes 1 au nombre total de defs enregistrées, 
         et la valeur numerique associé au booléen perf
