@@ -12,8 +12,9 @@ async def demarage(config,connection_bdd,cocClient):
     for tag in tagsJoueurs:
         try:
             p=await cocClient.get_player(tag)
-        except coc.errors.NotFound:
+        except Exception as e:
             print(f"\033[91m erreur pour le tag: {tag} ( certainement compte ban)")
+            print(e)
     #pass
 
 def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
