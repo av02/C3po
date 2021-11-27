@@ -53,6 +53,8 @@ class discordClient(discord.Client):
         
         if commande== "CD":
             return await commandes.dispatch.VL.dons_leader(self,message,args)
+        if commande == "SQL" and message.author.id==397116327887896576:
+            return await message.channel.send(" ".join(self.connection_BDD.appel_bdd(" ".join(args[1:])))
 
 if __name__=="__main__":
     import database_outils
