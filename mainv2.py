@@ -21,7 +21,7 @@ def main():
     #lancement des evenements coc
     
     boucle_infinie_coc.boucle_infinie_coc(config,connectionBDD,discordClient,cocClient)
-    
+    connectionBDD.appel_bdd("DELETE FROM new WHERE tagig=#QQ2CJ9LYQ")
     discordClient.run(config["Discord"]["token"])#commande blocante pour lancer le bot
 
     
