@@ -39,7 +39,7 @@ async def VL(DiscordClient,message,args):
             if e[1] is not None:
                 try:
                     discordmember = await message.guild.fetch_member(int(e[1]))
-                except discord.errors.NotFound:
+                except:# C'est treès très moche de faire ça
                     nom=await DiscordClient.cocClient.get_player(e[0])
                     nom=nom.name
                 else:
