@@ -33,7 +33,7 @@ async def VL(DiscordClient,message,args):
         
         
         reponse = "      __**Classement des membres hdv {}{}{}**__".format(int(args[1])," dips" if dips else ""," "+clan if clan is not None else "")
-        reponse +="\n <:vide:914305895331168317><:__:914303574090088498><:vide:914305895331168317>|<:vide:914305895331168317><:NbAttaque:914304431812644884><:vide:914305895331168317>|<:vide:914305895331168317><:vide:914305895331168317><:vide:914305895331168317><:clan:914303619547947009><:vide:914305895331168317><:vide:914305895331168317><:vide:914305895331168317>|<:vide:914305895331168317>Pseudo"
+        reponse +="\n <:vide:914305895331168317><:__:914303574090088498><:vide:914305895331168317>|<:vide:914305895331168317><:NbAttaque:914304431812644884><:vide:914305895331168317>|<:vide:914305895331168317><:vide:914305895331168317><:vide:914305895331168317><:clan:914303619547947009><:vide:914305895331168317><:vide:914305895331168317><:vide:914305895331168317>|<:vide:914305895331168317>Pseudo```"
         for e in liste:# étape extremement lente, prendre en ram
             nom=await DiscordClient.cocClient.get_player(e[0])
             nom=nom.name
