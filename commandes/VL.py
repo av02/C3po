@@ -46,7 +46,7 @@ async def VL(DiscordClient,message,args):
             else:
                 nom=await DiscordClient.cocClient.get_player(e[0])
                 nom=nom.name
-            reponse+="\n{}|{}|{}|{}".format(display_str_calibrated(str(e[8]*100),2)+"%"+"    ",
+            reponse+="\n{} {} {} {}".format(display_str_calibrated(str(e[8]*100),2)+"%"+"    ",
                                             display_str_calibrated(str(e[3]),8),
                                             display_str_calibrated(str(e[9]),18),
                                             display_str_calibrated(nom,33))
