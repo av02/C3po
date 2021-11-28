@@ -142,6 +142,11 @@ class appelsBDD:
         
         self.appel_bdd("""UPDATE new SET donne={} WHERE tagIG='{}'""".format(
             int(valeur_anterieur)+dons, tag))
+        #valeur_anterieur_mois = self.appel_bdd("""SELECT donmois FROM new 
+        #                                WHERE tagIG='{}'""".format(tag))[0][0]
+        
+        #self.appel_bdd("""UPDATE new SET donmois={} WHERE tagIG='{}'""".format(
+        #    int(valeur_anterieur_mois)+dons, tag))
         
 
     def add_recu(self, tag, recu,th,pseudo,clan):
