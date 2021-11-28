@@ -44,7 +44,7 @@ async def VL(DiscordClient,message,args):
                     nom=nom.name
                 else:
                     nom = discordmember.display_name
-            reponse+="\n{}|{}|{}|{}".format(display_str_calibrated(str(e[8]*100),6)+"%",
+            reponse+="\n{}|{}|{}|{}".format(display_str_calibrated(str(e[8]*100),2)+"%"+"    ",
                                             display_str_calibrated(str(e[3]),8),
                                             display_str_calibrated(str(e[9]),18),
                                             display_str_calibrated(nom,33))
