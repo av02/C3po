@@ -39,11 +39,13 @@ async def VL(DiscordClient,message,args):
             if e[1] is not None:
                 try:
                     discordmember = await message.guild.fetch_member(int(e[1]))
-                except:# C'est treès très moche de faire ça
-                    nom=await DiscordClient.cocClient.get_player(e[0])
-                    nom=nom.name
+                except discord.errors.NotFound:# C'est treès très moche de faire ça
+                    pass
                 else:
                     nom = discordmember.display_name
+            else:
+                nom=await DiscordClient.cocClient.get_player(e[0])
+                nom=nom.name
             reponse+="\n{}|{}|{}|{}".format(display_str_calibrated(str(e[8]*100),2)+"%"+"    ",
                                             display_str_calibrated(str(e[3]),8),
                                             display_str_calibrated(str(e[9]),18),
