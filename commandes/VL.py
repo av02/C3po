@@ -33,7 +33,7 @@ async def VL(DiscordClient,message,args):
         
         
         reponse = "      __**Classement des membres hdv {}{}{}**__".format(int(args[1])," dips" if dips else ""," "+clan if clan is not None else "")
-        reponse +="\n <:vide:914305895331168317><:__:914303574090088498><:vide:914305895331168317>|<:vide:914305895331168317><:NbAttaque:914304431812644884><:vide:914305895331168317>|<:vide:914305895331168317><:vide:914305895331168317><:vide:914305895331168317><:clan:914303619547947009><:vide:914305895331168317><:vide:914305895331168317><:vide:914305895331168317>|<:vide:914305895331168317>Pseudo```"
+        reponse +="\n <:vide:914305895331168317><:100:914301897983262721><:__:914303574090088498><:vide:914305895331168317>|<:vide:914305895331168317><:Hdvbot:914305924259262524><:vide:914305895331168317>|<:vide:914305895331168317><:vide:914305895331168317><:vide:914305895331168317><:clan:914303619547947009><:vide:914305895331168317><:vide:914305895331168317><:vide:914305895331168317>|<:vide:914305895331168317>Pseudo```"
         for e in liste:# étape extremement lente, prendre en ram
             nom=await DiscordClient.cocClient.get_player(e[0])
             nom=nom.name
@@ -44,9 +44,9 @@ async def VL(DiscordClient,message,args):
                     pass
                 else:
                     nom = discordmember.display_name
-            reponse+="\n{}|{}|{}|{}".format(display_str_calibrated(str(e[8]*100),7)+"%",
-                                            display_str_calibrated(str(e[3]),7),
-                                            display_str_calibrated(str(e[9]),16),
+            reponse+="\n{}|{}|{}|{}".format(display_str_calibrated(str(e[8]*100),6)+"%",
+                                            display_str_calibrated(str(e[3]),8),
+                                            display_str_calibrated(str(e[9]),18),
                                             display_str_calibrated(nom,33))
         reponse+="""```"""
         return await message.channel.send(reponse)
