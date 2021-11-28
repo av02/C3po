@@ -29,10 +29,12 @@ async def VL(DiscordClient,message,args):
             
         liste=DiscordClient.connectionBDD.get_classement_attaques(int(args[1]), dips=dips, limit=25, clan=clan, nb_etoiles=3)
         if len(liste)==0:
-            return await message.channel.send("pas de donnés")
-        reponse = "      __**classement des membres hdv {}{}{}**__".format(int(args[1])," dips" if dips else ""," "+clan if clan is not None else "")
-        reponse +="```{}|⭐⭐⭐| ⭐⭐ | ⭐ | ☆ |nb| % |tag".format(display_str_calibrated("",33))
-        for e in liste:
+            return await message.channel.send("Pas de donnés")
+        
+        
+        reponse = "      __**Classement des membres hdv {}{}{}**__".format(int(args[1])," dips" if dips else ""," "+clan if clan is not None else "")
+        reponse +="\n <:vide:914305895331168317><:__:914303574090088498><:vide:914305895331168317>|<:vide:914305895331168317><:NbAttaque:914304431812644884><:vide:914305895331168317>|<:vide:914305895331168317><:vide:914305895331168317><:vide:914305895331168317><:clan:914303619547947009><:vide:914305895331168317><:vide:914305895331168317><:vide:914305895331168317>|<:vide:914305895331168317>Pseudo<:clan:914303619547947009>"
+        for e in liste:# étape extremement lente, prendre en ram
             nom=await DiscordClient.cocClient.get_player(e[0])
             nom=nom.name
             if e[1] is not None:
@@ -42,14 +44,10 @@ async def VL(DiscordClient,message,args):
                     pass
                 else:
                     nom = discordmember.display_name
-            reponse+="\n{}|{}|{}|{}|{}|{}|{}|{}".format(display_str_calibrated(nom,33),
-                                                  display_str_calibrated(str(e[4]),3),
-                                                  display_str_calibrated(str(e[5]),3),
-                                                  display_str_calibrated(str(e[6]),3),
-                                                  display_str_calibrated(str(e[7]),3),
-                                                  display_str_calibrated(str(e[3]),3),
-                                                  display_str_calibrated(str(e[8]*100),2)+"%",
-                                                  e[0])
+            reponse+="\n{}|{}|{}|{}".format(display_str_calibrated(str(e[8]*100),6)+"%",
+                                            display_str_calibrated(str(e[3]),6),
+                                            display_str_calibrated(str(e[9]),8),
+                                            display_str_calibrated(nom,33))
         reponse+="""```"""
         return await message.channel.send(reponse)
 
