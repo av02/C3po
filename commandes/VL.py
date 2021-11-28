@@ -35,7 +35,7 @@ async def VL(DiscordClient,message,args):
         reponse = "      __**Classement des membres hdv {}{}{}**__".format(int(args[1])," dips" if dips else ""," "+clan if clan is not None else "")
         reponse +="\n <:vide:914305895331168317><:ExpBot:914306062847459328><:vide:914305895331168317>|<:vide:914305895331168317><:Hdvbot:914305924259262524><:vide:914305895331168317>|<:vide:914305895331168317><:vide:914305895331168317><:vide:914305895331168317><:Clan1:914327910796632104><:vide:914305895331168317><:vide:914305895331168317><:vide:914305895331168317>|<:vide:914305895331168317><:TagBot:914306033655095316>```"
         for e in liste:# étape extremement lente, prendre en ram
-            
+            nom = ""
             if e[1] is not None:
                 try:
                     discordmember = await message.guild.fetch_member(int(e[1]))
