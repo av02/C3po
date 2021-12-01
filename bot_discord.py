@@ -56,7 +56,7 @@ class discordClient(discord.Client):
         if commande == "decembre":
             return await message.channel.send("\n".join([str(l[0])+" "*4+"`<@"+str(l[1])+">`"
                                                              for l in self.connectionBDD.appel_bdd(
-                   """SELECT SUM(donmois),discordid FROM new WHERE discordid IS NOT NULL GROUP BY discordid ORDER BY SUM(donmois) DESC"""
+                   """SELECT SUM(donmois),discordid FROM new WHERE discordid IS NOT NULL GROUP BY discordid ORDER BY SUM(donmois) DESC LIMIT 25"""
                                                              ) 
                                                         ]) 
                                              )
