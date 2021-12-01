@@ -5,8 +5,13 @@ import bot_discord
 # import donnés
 from config import config
 import coc
+import signal
 
+def sigterm():
+    print("FIN EXECUTION RECUE")
 def main():
+    signal.signal(signal.SIGTERM,sigterm)
+
     cocClient= coc.login(email=config["Coc"]["mail"],
                         password=config["Coc"]["password"],
                         client=coc.EventsClient)
