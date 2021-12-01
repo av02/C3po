@@ -54,8 +54,7 @@ class discordClient(discord.Client):
         if commande== "CD":
             return await commandes.dispatch.VL.dons_leader(self,message,args)
         if commande == "decembre":
-            return await message.channel.send("\n".join([str(l[0])+" "*4+message.guild.get_member(l[1])).display_name
-                                                             for l in self.connectionBDD.appel_bdd(
+            return await message.channel.send("\n".join([str(l[0])+" "*4+message.guild.get_member(l[1])).display_name for l in self.connectionBDD.appel_bdd(
                    """SELECT SUM(donmois),discordid FROM new WHERE discordid IS NOT NULL GROUP BY discordid ORDER BY SUM(donmois) DESC LIMIT 25"""
                                                              ) 
                                                         ]) 
