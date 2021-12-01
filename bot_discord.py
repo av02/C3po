@@ -53,8 +53,16 @@ class discordClient(discord.Client):
         
         if commande== "CD":
             return await commandes.dispatch.VL.dons_leader(self,message,args)
+        if commande == "decembre":
+            return await message.channel.send("\n".join([str(l[0])+" "*4+"`<@"+str(l[1])+">`"
+                                                             for l in self.connectionBDD.appel_bdd(
+                   """SELECT SUM(donmois),discordid FROM new WHERE discordid IS NOT NULL GROUP BY discordid ORDER BY SUM(donmois) DESC"""
+                                                             ) 
+                                                        ]) 
+                                             )
+
         if commande == "SQL" and message.author.id==397116327887896576:
-            return await message.channel.send("\n".join(self.connectionBDD.appel_bdd(" ".join(args[1:]) ) ) )
+            return await message.channel.send("\n".join([" ".join(l) for l in self.connectionBDD.appel_bdd(" ".join(args[1:]) ) ]) )
 
 if __name__=="__main__":
     import database_outils
