@@ -58,9 +58,9 @@ class discordClient(discord.Client):
                    """SELECT SUM(donmois),discordid FROM new WHERE discordid IS NOT NULL GROUP BY discordid ORDER BY SUM(donmois) DESC LIMIT 25"""
                                                              ) 
             print(classement)
-            return await message.channel.send("\n".join([str(l[0])+"    <@"+(message.guild.get_member(int(l[1])).display_name if message.guild.get_member(int(l[1])) is not None else l[1])+">"
+            return await message.channel.send("dons    pseudo\n```"+"\n".join([str(l[0])+"    "+(message.guild.get_member(int(l[1])).display_name if message.guild.get_member(int(l[1])) is not None else l[1])
                                                             for l in classement
-                                                     ]) 
+                                                     ])+"```" 
                                              )
 
         if commande == "SQL" and message.author.id==397116327887896576:
