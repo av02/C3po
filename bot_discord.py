@@ -53,7 +53,7 @@ class discordClient(discord.Client):
         
         if commande== "CD":
             return await commandes.dispatch.VL.dons_leader(self,message,args)
-        if commande == "decembre":
+        if commande == "decembre" and message.author.id in[397116327887896576,611927869429645333,447117251477241857]:
             classement= self.connectionBDD.appel_bdd(
                    """SELECT SUM(donmois),discordid FROM new WHERE discordid IS NOT NULL GROUP BY discordid ORDER BY SUM(donmois) DESC LIMIT 25"""
                                                              ) 
