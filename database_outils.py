@@ -92,7 +92,7 @@ class appelsBDD:
         stats = self.appel_bdd(
             "SELECT thIG,nbattaqueshdv,perfhdv,bihdv,onehdv,blackhdv FROM new WHERE tagIG='{}'".format(tag))[0]
         if stats[0] != th:
-            self.appel_bdd("UPDATE new SET thIG={},'nbattaqueshdvante'={},'perfhdvante'={},'bihdvante'={},'onehdvante'={},'blackhdvante'={}, 'nbattaqueshdv-1'=0,'perfhdv-1'=0,'bihdv-1'=0,'onehdv-1'=0,'blackhdv-1'=0, nbattaqueshdv=0,perfhdv=0,bihdv=0,onehdv=0,blackhdv=0,perfdefhdv=0,nbdefhdv=0 WHERE tagIG='{}'".format(
+            self.appel_bdd("UPDATE new SET thIG={},nbattaqueshdvante={},perfhdvante={},bihdvante={},onehdvante={},blackhdvante={}, nbattaqueshdv-1=0,perfhdv-1=0,bihdv-1=0,onehdv-1=0,blackhdv-1=0, nbattaqueshdv=0,perfhdv=0,bihdv=0,onehdv=0,blackhdv=0,perfdefhdv=0,nbdefhdv=0 WHERE tagIG='{}'".format(
                 th, stats[1], stats[2], stats[3], stats[4], stats[5], tag))
 
     def add_score_gdc(self, tag, etoiles,th,pseudo,clan, dips=False):
