@@ -182,11 +182,15 @@ class appelsBDD:
 
     def get_classement_attaques(self, hdv, *, dips=False, limit=10, clan=None, nb_etoiles=3) -> list:
         """renvoir les meilleurs selons les critères"""
-        fin_dips = "dips" if dips else ""
+        fin_dips = "dips" if dips else "memehdv"
         requete_clan = ",clantag="+clan if clan is not None else ""
-        str_score = ["black{}hdv".format("meme" if fin_dips=="" else ""), "one{}hdv".format("meme" if fin_dips=="" else ""), "bi{}hdv".format("meme" if fin_dips=="" else ""), "perf{}hdv".format("meme" if fin_dips=="" else "")][nb_etoiles]
-        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,"nbattaques{5}hdv{1}","perf{5}hdv{1}","bi{5}hdv{1}","one{5}hdv{1}","black{5}hdv{1}",(("{4}{1}"+0.00000000001)/("nbattaques{5}hdv{1}"+0.00000000001)) as X, clantag FROM empire WHERE thIG={0}{3} AND "nbattaques{5}hdv{1}">10 ORDER BY
-                              X DESC LIMIT {2} """.format(hdv, fin_dips, limit, requete_clan, str_score,"meme" if fin_dips=="" else "")) # TODO : ajouter la verif de clan
+        str_score = ["nbblack", "nbone", "nbbi", "nbperf"][nb_etoiles]
+        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,"nbattaques{1}","nbperf{1}","nbbi{1}","one{1}","black{1}",
+                                    (("{4}{1}"+0.00000000001)/("nbattaques{1}"+0.00000000001)) as X, clantag 
+                                FROM empire 
+                                WHERE thIG={0}{3} AND "nbattaques{1}">10 
+                                ORDER BY   X DESC LIMIT {2} 
+                                """.format(hdv, fin_dips, limit, requete_clan, str_score)) # TODO : ajouter la verif de clan
 
     def get_classement_defenses(self, hdv, *, limit=10, clan=None) -> list:
         """renvoie la liste de tuple des 10 meilleurs defs sur l'hdv"""
