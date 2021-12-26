@@ -51,8 +51,8 @@ class appelsBDD:
         """ verifie si le tag passé en argument est dans la base de donnée 
         sinon , l'ajoute avec l'hdv et le pseudo 
         """
-        if len(self.appel_bdd("SELECT * FROM new WHERE tagIG = '{}'".format(tag))) == 0:
-            self.appel_bdd("INSERT INTO new (tagIG,pseudoIG,thIG,clan) VALUES ('{}','{}',{},'{}')".format(
+        if len(self.appel_bdd("SELECT * FROM empire WHERE tagIG = '{}'".format(tag))) == 0:
+            self.appel_bdd("INSERT INTO empire (tagIG,pseudoIG,thIG,clantag) VALUES ('{}','{}',{},'{}')".format(
                 tag, echap_appostrophe(pseudo), th, clan))
         return
 
@@ -60,28 +60,28 @@ class appelsBDD:
         """ajoute l'identifiant discord associé a un compte
         ecrase le tag précédent si permission_ecraser==True
         """
-        if len(self.appel_bdd("SELECT discordID FROM new WHERE tagIG='{}'".format(tag)))!=1:
+        if len(self.appel_bdd("SELECT discordID FROM empire WHERE tagIG='{}'".format(tag)))!=1:
             raise ValueError()
-        if not permission_ecraser and self.appel_bdd("SELECT discordID FROM new WHERE tagIG='{}'".format(tag))[0] != (None,):
+        if not permission_ecraser and self.appel_bdd("SELECT discordID FROM empire WHERE tagIG='{}'".format(tag))[0] != (None,):
             raise PermissionError()
-        self.appel_bdd("UPDATE new SET discordID={} WHERE tagIG='{}'".format(str(id), tag))
+        self.appel_bdd("UPDATE empire SET discordID={} WHERE tagIG='{}'".format(str(id), tag))
         return 
 
     def get_discord_id(self, tag) -> int:  # TODO controler si non enregistré
         """renvoie l'identifiant discord , None si non enregistré
         """
-        return int(self.appel_bdd("SELECT discordID FROM new WHERE tagIG='{}'".format(tag))[0][0])
+        return int(self.appel_bdd("SELECT discordID FROM empire WHERE tagIG='{}'".format(tag))[0][0])
 
     def edit_pseudo(self, tag, pseudo):
         """modifie le pseudo du joueur, ecrase le précdent
         """
         self.appel_bdd(
-            "UPDATE new SET pseudoIG={} WHERE tagIG='{}'".format(echap_appostrophe(pseudo), tag))
+            "UPDATE empire SET pseudoIG={} WHERE tagIG='{}'".format(echap_appostrophe(pseudo), tag))
 
     def edit_clan(self, tag, clan=None):
         """met a jour le clan du joueur avec son nouveau clan"""
         self.appel_bdd(
-            """UPDATE new SET clan={} WHERE tagIG='{}'""".format(clan, tag))
+            """UPDATE empire SET clantag={} WHERE tagIG='{}'""".format(clan, tag))
 
     def up_hdv(self, tag, th):# a deplacer vers hdv ante, hdv-1 == dips
         """a appeler dans le cas d'un changement d'hdv
@@ -90,9 +90,9 @@ class appelsBDD:
         ecrase le précdent
         """
         stats = self.appel_bdd(
-            "SELECT thIG,nbattaqueshdv,perfhdv,bihdv,onehdv,blackhdv FROM new WHERE tagIG='{}'".format(tag))[0]
+            "SELECT thIG,nbattaquesmemehdv,nbperfmemehdv,nbbimemehdv,nbonememehdv,nbblackmemehdv FROM empire WHERE tagIG='{}'".format(tag))[0]
         if stats[0] != th:
-            self.appel_bdd("UPDATE new SET thIG={},nbattaqueshdvante={},perfhdvante={},bihdvante={},onehdvante={},blackhdvante={}, nbattaqueshdv-1=0,perfhdv-1=0,bihdv-1=0,onehdv-1=0,blackhdv-1=0, nbattaqueshdv=0,perfhdv=0,bihdv=0,onehdv=0,blackhdv=0,perfdefhdv=0,nbdefhdv=0 WHERE tagIG='{}'".format(
+            self.appel_bdd("UPDATE empire SET thIG={},nbattaqueshdvanterieur={},nbperfhdvanterieur={},nbbihdvanterieur={},nbonehdvanterieur={},nbblackhdvanterieur={}, nbattaquesdips=0,nbperfdips=0,nbbidips=0,nbonedips=0,nbblackdips=0, nbattaquesmemehdv=0,nbperfmemehdv=0,nbbimemehdv=0,nbonememehdv=0,nbblackmemehdv=0,nbperfdefmemehdv=0,nbdefmemehdv=0 WHERE tagIG='{}'".format(
                 th, stats[1], stats[2], stats[3], stats[4], stats[5], tag))
 
     def add_score_gdc(self, tag, etoiles,th,pseudo,clan, dips=False):
@@ -103,16 +103,17 @@ class appelsBDD:
         ne pas appeler si Δhdv>1
         """
         self.check_presence_database(tag,th,pseudo,clan)
-        fin_dips = "-1" if dips else ""  # si c'est un dips, on change la catégorie dans la bdd
+        fin_dips = "dips" if dips else ""  # si c'est un dips, on change la catégorie dans la bdd
         def _transcription_etoiles_strbdd(nbetoiles):
-            return ["blackhdv", "onehdv", "bihdv", "perfhdv"][nbetoiles]
-        valeurs_anterieures = self.appel_bdd("""SELECT nbattaqueshdv{},{} 
-                                            FROM new WHERE tagIG='{}'""".format(fin_dips,
+            return ["nbblack{}hdv".format("meme" if fin_dips="" else ""), "nbone{}hdv".format("meme" if fin_dips="" else ""), "nbbi{}hdv".format("meme" if fin_dips="" else ""), "nbperf{}hdv".format("meme" if fin_dips="" else "")][nbetoiles]
+        valeurs_anterieures = self.appel_bdd("""SELECT nbattaques{}hdv{},{} 
+                                            FROM empire WHERE tagIG='{}'""".format("meme" if fin_dips="" else "",fin_dips,
                                                                                     _transcription_etoiles_strbdd(
                                                                                         etoiles)+fin_dips,
                                                                                     tag))[0]
-        self.appel_bdd("""UPDATE new SET "nbattaqueshdv{}"={}, "{}"={} 
-                        WHERE tagIG='{}'""".format(fin_dips,
+        self.appel_bdd("""UPDATE empire SET "nbattaques{}hdv{}"={}, "{}"={} 
+                        WHERE tagIG='{}'""".format("meme" if fin_dips="" else "",
+                                                     fin_dips,
                                                      valeurs_anterieures[0]+1,
                                                      _transcription_etoiles_strbdd(
                                                          etoiles)+fin_dips,
@@ -127,8 +128,8 @@ class appelsBDD:
         """
         self.check_presence_database(tag,th,pseudo,clan)
         valeurs_anterieures = self.appel_bdd(
-            """SELECT nbdefhdv,perfdefhdv FROM new WHERE tagIG='{}'""".format(tag))[0]
-        self.appel_bdd("""UPDATE new SET nbdefhdv={},perfdefhdv={} WHERE tagIG='{}'""".format(
+            """SELECT nbdefmemehdv,nbperfdefmemehdv FROM empire WHERE tagIG='{}'""".format(tag))[0]
+        self.appel_bdd("""UPDATE empire SET nbdefmemehdv={},nbperfdefmemehdv={} WHERE tagIG='{}'""".format(
             valeurs_anterieures[0]+1, valeurs_anterieures[1]+int(perf), tag))
 
     def add_don(self, tag, dons,th,pseudo,clan):
@@ -137,10 +138,10 @@ class appelsBDD:
         
         self.check_presence_database(tag,th,echap_appostrophe(pseudo),clan)
         
-        valeur_anterieur = self.appel_bdd("""SELECT donne FROM new 
+        valeur_anterieur = self.appel_bdd("""SELECT donne FROM empire 
                                         WHERE tagIG='{}'""".format(tag))[0][0]
         
-        self.appel_bdd("""UPDATE new SET donne={} WHERE tagIG='{}'""".format(
+        self.appel_bdd("""UPDATE empire SET donne={} WHERE tagIG='{}'""".format(
             int(valeur_anterieur)+dons, tag))
         valeur_anterieur_mois = self.appel_bdd("""SELECT donmois FROM new 
                                         WHERE tagIG='{}'""".format(tag))[0][0]
@@ -154,54 +155,54 @@ class appelsBDD:
         """ajoute recu au recu associés au tag
         """
         self.check_presence_database(tag,th,pseudo,clan)
-        valeur_anterieur = self.appel_bdd("""SELECT recu FROM new 
+        valeur_anterieur = self.appel_bdd("""SELECT recu FROM empire 
                                         WHERE tagIG='{}'""".format(tag))[0][0]
-        self.appel_bdd("""UPDATE new SET recu={} WHERE tagIG='{}'""".format(
+        self.appel_bdd("""UPDATE empire SET recu={} WHERE tagIG='{}'""".format(
             int(valeur_anterieur)+recu, tag))
 
     def classement_dons(self, limit, *, clan=None) -> list:
         """renvoie une liste de tupples (idDiscord,tag,pseudo,donné,recu,ratio)"""
-        requete_clan = " AND clan='"+clan+"'" if clan is not None else ""
-        return self.appel_bdd("""SELECT  discordid ,MIN(tagig) AS TAGIG,MAX(pseudoig) AS pseudo,SUM(donne) AS DON ,SUM(recu) AS recu,(SUM(donne)+0.00000000000001)/(SUM(recu)+0.00000000000001) AS ratio FROM new WHERE  discordid IS NOT NULL {} GROUP BY discordid ORDER BY DON DESC LIMIT {}""".format(requete_clan, limit))
+        requete_clan = " AND clantag='"+clan+"'" if clan is not None else ""
+        return self.appel_bdd("""SELECT  discordid ,MIN(tagig) AS TAGIG,MAX(pseudoig) AS pseudo,SUM(donne) AS DON ,SUM(recu) AS recu,(SUM(donne)+0.00000000000001)/(SUM(recu)+0.00000000000001) AS ratio FROM empire WHERE  discordid IS NOT NULL {} GROUP BY discordid ORDER BY DON DESC LIMIT {}""".format(requete_clan, limit))
    
     def get_comptes_coc(self, idDiscord):
         """renvoie une liste des comptes associés a cet identifiant, sous forme d'une liste de tupple
         (tagIG [0],discordID [1],pseudoIG [2],thIG [3], donne[4],recu [5],nbattaques[6],perf[7],bi[8],one[9],black[10],nbdips[11],perfdips[12],bidips[13],onedips[14],blackdips[15],perfdefs[16],nbdefs[17],clan[18)
         """
-        return self.appel_bdd("""SELECT * FROM new WHERE discordID='{}'""".format(str(idDiscord)))
+        return self.appel_bdd("""SELECT * FROM empire WHERE discordID='{}'""".format(str(idDiscord)))
 
     def get_data(self, tag) -> tuple:
         """renvoie un tuple des donnés  du compte associé a ce tag, sous forme d'un tupple
         (tagIG [0],discordID [1],pseudoIG [2],thIG [3], donne[4],recu [5],nbattaques[6],perf[7],bi[8],one[9],black[10],nbdips[11],perfdips[12],bidips[13],onedips[14],blackdips[15],perfdefs[16],nbdefs[17],clan[18])
         """
-        return self.appel_bdd("""SELECT * FROM new WHERE tagIG='{}'""".format(tag))[0]
+        return self.appel_bdd("""SELECT * FROM empire WHERE tagIG='{}'""".format(tag))[0]
 
     def get_classement_attaques(self, hdv, *, dips=False, limit=10, clan=None, nb_etoiles=3) -> list:
         """renvoir les meilleurs selons les critères"""
-        fin_dips = "-1" if dips else ""
-        requete_clan = ",clan="+clan if clan is not None else ""
-        str_score = ["blackhdv", "onehdv", "bihdv", "perfhdv"][nb_etoiles]
-        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,"nbattaqueshdv{1}","perfhdv{1}","bihdv{1}","onehdv{1}","blackhdv{1}",(("{4}{1}"+0.00000000001)/("nbattaqueshdv{1}"+0.00000000001)) as X, Clan FROM new WHERE thIG={0}{3} AND "nbattaqueshdv{1}">10 ORDER BY
-                              X DESC LIMIT {2} """.format(hdv, fin_dips, limit, requete_clan, str_score)) # TODO : ajouter la verif de clan
+        fin_dips = "dips" if dips else ""
+        requete_clan = ",clantag="+clan if clan is not None else ""
+        str_score = ["black{}hdv".format("meme" if fin_dips="" else ""), "one{}hdv".format("meme" if fin_dips="" else ""), "bi{}hdv".format("meme" if fin_dips="" else ""), "perf{}hdv".format("meme" if fin_dips="" else "")][nb_etoiles]
+        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,"nbattaques{5}hdv{1}","perf{5}hdv{1}","bi{5}hdv{1}","one{5}hdv{1}","black{5}hdv{1}",(("{4}{1}"+0.00000000001)/("nbattaques{5}hdv{1}"+0.00000000001)) as X, clantag FROM empire WHERE thIG={0}{3} AND "nbattaques{5}hdv{1}">10 ORDER BY
+                              X DESC LIMIT {2} """.format(hdv, fin_dips, limit, requete_clan, str_score,"meme" if fin_dips="" else "")) # TODO : ajouter la verif de clan
 
     def get_classement_defenses(self, hdv, *, limit=10, clan=None) -> list:
         """renvoie la liste de tuple des 10 meilleurs defs sur l'hdv"""
-        requete_clan = ",clan="+clan if clan is not None else ""
-        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,nbdefhdv,perfdefhdv,clan,((perfdefhdv+0.00000000001)/(nbdefhdv+0.00000000001)) AS X FROM new
-                                 WHERE thIG={0}{2} AND nbdefhdv >4 ORDER BY X DESC LIMIT {1}
+        requete_clan = ",clantag="+clan if clan is not None else ""
+        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,nbdefmemehdv,nbperfdefmemehdv,clantag,((nbperfdefmemehdv+0.00000000001)/(nbdefmemehdv+0.00000000001)) AS X FROM empire
+                                 WHERE thIG={0}{2} AND nbdefmemehdv >4 ORDER BY X DESC LIMIT {1}
                                 """.format(hdv, limit, requete_clan))
 
     def reduire_dons(self, facteur=2):
         """divise l'ensemble des dons par facteur"""
         self.appel_bdd(
-            """UPDATE new SET donne=donne/{0},recu=recu/{0}""".format(facteur))
+            """UPDATE empire SET donne=donne/{0},recu=recu/{0}""".format(facteur))
     def get_all_tag(self):
         """ renvoie l'ensemble des tags inclus dans la BDD"""
-        return map(lambda e:e[0],self.appel_bdd("""SELECT tagig FROM new"""))
+        return map(lambda e:e[0],self.appel_bdd("""SELECT tagig FROM empire"""))
     
-    def edit_clan(self,tag,new_clan_tag):
+    def edit_clan(self,tag,empire_clan_tag):
         """change le tag du clan du joueur"""
-        return self.appel_bdd("""UPDATE new SET clan = '{}' WHERE tagIG='{}'""".format(new_clan_tag,tag))
+        return self.appel_bdd("""UPDATE empire SET clantag = '{}' WHERE tagIG='{}'""".format(empire_clan_tag,tag))
     
     
 def main():#pour  des tests locaux
@@ -209,3 +210,5 @@ def main():#pour  des tests locaux
 
 if __name__=="__main__":
     main()
+    
+
