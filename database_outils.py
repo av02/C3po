@@ -52,7 +52,13 @@ class appelsBDD:
         sinon , l'ajoute avec l'hdv et le pseudo 
         """
         if len(self.appel_bdd("SELECT * FROM empire WHERE tagIG = '{}'".format(tag))) == 0:
-            self.appel_bdd("INSERT INTO empire (tagIG,pseudoIG,thIG,clantag) VALUES ('{}','{}',{},'{}')".format(
+            self.appel_bdd("""INSERT INTO empire (tagIG,pseudoIG,thIG,clantag,
+                                donne,recu,
+                                nbattaquesmemehdv,nbperfmemehdv,nbbimemehdv,nbonememehdv,nbblackmemehdv,
+                                nbattaquesdips,nbperfdips,nbbidips,nbonedips,nbblackdips,
+                                nbattaqueshdvanterieur,nbperfhdvanterieur,nbbihdvanterieur,nbonehdvanterieur,nbblackhdvanterieur,
+                                nbperfdefmemehdv,nbdefmemehdv) 
+                           VALUES ('{}','{}',{},'{}',    0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0,  0,0)""".format(
                 tag, echap_appostrophe(pseudo), th, clan))
         return
 
