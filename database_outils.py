@@ -109,23 +109,20 @@ class appelsBDD:
         ne pas appeler si Δhdv>1
         """
         self.check_presence_database(tag,th,pseudo,clan)
-        fin_dips = "dips" if dips else ""  # si c'est un dips, on change la catégorie dans la bdd
+        fin_dips = "dips" if dips else "memehdv"  # si c'est un dips, on change la catégorie dans la bdd
         def _transcription_etoiles_strbdd(nbetoiles):
-            return ["nbblack{}hdv".format("meme" if fin_dips=="" else ""), "nbone{}hdv".format("meme" if fin_dips=="" else ""), "nbbi{}hdv".format("meme" if fin_dips=="" else ""), "nbperf{}hdv".format("meme" if fin_dips=="" else "")][nbetoiles]
-        valeurs_anterieures = self.appel_bdd("""SELECT nbattaques{}hdv{},{} 
-                                            FROM empire WHERE tagIG='{}'""".format("meme" if fin_dips=="" else "",fin_dips,
-                                                                                    _transcription_etoiles_strbdd(
-                                                                                        etoiles)+fin_dips,
-                                                                                    tag))[0]
-        self.appel_bdd("""UPDATE empire SET "nbattaques{}hdv{}"={}, "{}"={} 
-                        WHERE tagIG='{}'""".format("meme" if fin_dips=="" else "",
-                                                     fin_dips,
+            return ["nbblack", "nbone", "nbbi", "nbperf"][nbetoiles]
+        valeurs_anterieures = self.appel_bdd("""SELECT nbattaques{},{} 
+                                            FROM empire WHERE tagIG='{}'""".format(_transcription_etoiles_strbdd(
+                                                                                                                etoiles) +fin_dips,
+                                                                                                            tag))[0]
+        self.appel_bdd("""UPDATE empire SET "nbattaques{}"={}, "{}"={} 
+                        WHERE tagIG='{}'""".format( fin_dips,
                                                      valeurs_anterieures[0]+1,
                                                      _transcription_etoiles_strbdd(
-                                                         etoiles)+fin_dips,
+                                                                             etoiles)+fin_dips,
                                                      valeurs_anterieures[1]+1,
                                                      tag))
-
     def add_def_gdc(self, tag, perf: bool,th,pseudo,clan):
         """N'APPELER QUE SI LES HDV SONT ÉGAUX
         ajoutes 1 au nombre total de defs enregistrées, 
