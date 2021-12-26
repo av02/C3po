@@ -76,7 +76,7 @@ class appelsBDD:
         """modifie le pseudo du joueur, ecrase le précdent
         """
         self.appel_bdd(
-            "UPDATE empire SET pseudoIG={} WHERE tagIG='{}'".format(echap_appostrophe(pseudo), tag))
+            "UPDATE empire SET pseudoIG='{}' WHERE tagIG='{}'".format(echap_appostrophe(pseudo), tag))
 
     def edit_clan(self, tag, clan=None):
         """met a jour le clan du joueur avec son nouveau clan"""
@@ -192,14 +192,22 @@ class appelsBDD:
                                  WHERE thIG={0}{2} AND nbdefmemehdv >4 ORDER BY X DESC LIMIT {1}
                                 """.format(hdv, limit, requete_clan))
 
+    
+    
     def reduire_dons(self, facteur=2):
         """divise l'ensemble des dons par facteur"""
         self.appel_bdd(
             """UPDATE empire SET donne=donne/{0},recu=recu/{0}""".format(facteur))
+    
+    
+    
     def get_all_tag(self):
         """ renvoie l'ensemble des tags inclus dans la BDD"""
         return map(lambda e:e[0],self.appel_bdd("""SELECT tagig FROM empire"""))
     
+   
+
+
     def edit_clan(self,tag,empire_clan_tag):
         """change le tag du clan du joueur"""
         return self.appel_bdd("""UPDATE empire SET clantag = '{}' WHERE tagIG='{}'""".format(empire_clan_tag,tag))
