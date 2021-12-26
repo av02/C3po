@@ -112,7 +112,7 @@ class appelsBDD:
                                                                                         etoiles)+fin_dips,
                                                                                     tag))[0]
         self.appel_bdd("""UPDATE empire SET "nbattaques{}hdv{}"={}, "{}"={} 
-                        WHERE tagIG='{}'""".format("meme" if fin_dips="" else "",
+                        WHERE tagIG='{}'""".format("meme" if fin_dips=="" else "",
                                                      fin_dips,
                                                      valeurs_anterieures[0]+1,
                                                      _transcription_etoiles_strbdd(
