@@ -117,6 +117,10 @@ class appelsBDD:
                                                                                    _transcription_etoiles_strbdd(
                                                                                                                 etoiles) +fin_dips,
                                                                                                             tag))[0]
+        if valeurs_anterieures[0] is None:
+            valeurs_anterieures[0]=0
+        if valeurs_anterieures[1] is None:
+            valeurs_anterieures[1]=0
         self.appel_bdd("""UPDATE empire SET "nbattaques{}"={}, "{}"={} 
                         WHERE tagIG='{}'""".format( fin_dips,
                                                      valeurs_anterieures[0]+1,
@@ -124,6 +128,8 @@ class appelsBDD:
                                                                              etoiles)+fin_dips,
                                                      valeurs_anterieures[1]+1,
                                                      tag))
+        
+        
     def add_def_gdc(self, tag, perf: bool,th,pseudo,clan):
         """N'APPELER QUE SI LES HDV SONT ÉGAUX
         ajoutes 1 au nombre total de defs enregistrées, 
