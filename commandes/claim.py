@@ -1,5 +1,5 @@
 import coc
-
+from config import *
 
 async def claim(client_discord,
                 connectionBDD,
@@ -33,6 +33,7 @@ async def claim(client_discord,
             player=await client_discord.cocClient.get_player(tag)
         except coc.NotFound:
             return await message.channel.send("tag ne correspondant a aucun joueur")
+          
         except coc.Maintenance:
             return await message.channel.send("maintenance")
         
@@ -42,3 +43,34 @@ async def claim(client_discord,
         connectionBDD.check_presence_database(tag, th, pseudo, clan)
         connectionBDD.add_discord_id(tag,idDiscord,False)#TODO: ajouter une verification de roles
     return await message.channel.send("operation réussie")
+
+
+async def unclaim(client_discord,
+
+
+                        connectionBDD,
+                        args,
+                        message):
+    """[permet de délier un joueur de la bdd]
+
+    Args:
+        client_discord ([discord.Client]): [un client pour l'API discord]
+        connectionBDD ([database_outils.appelsBDD]): [un connecteur a la BDD]
+        args ([list]): [les arguments de la commande]
+        message ([discord.message]): [le message génerateur]
+    Returns:
+        [None]: [rien]
+    """
+    if len(args) != 2 and len(message.mentions) != 0:
+        return await message.channel.send("nombre d'arguments incorect")
+    tag=coc.utils.correct_tag(args[1])
+    
+    #on verifie qu'on a 2 arguments, la commande, le tag 
+    for role in message.author.roles :
+        if role.id in config["liste_roles_administratifs"]:
+            try:
+                connectionBDD.add_discord_id(tag,None,True)
+            except ValueError:
+                return await message.channel.send("ce joueur n'existe pas a mes yeux")
+            else:
+                return await message.channel.send("operation réussie")
