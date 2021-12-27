@@ -17,7 +17,7 @@ def main():
                         password=config["Coc"]["password"],
                         client=coc.EventsClient,
                         key_count =10,
-                        throttle_limit=100)
+                        throttle_limit=30)
     
     #connection Bdd, non bloquant
     connectionBDD=database_outils.appelsBDD(config["bddlink"],config["liste_clans"])
