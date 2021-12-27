@@ -113,7 +113,8 @@ class appelsBDD:
         def _transcription_etoiles_strbdd(nbetoiles):
             return ["nbblack", "nbone", "nbbi", "nbperf"][nbetoiles]
         valeurs_anterieures = self.appel_bdd("""SELECT nbattaques{},{} 
-                                            FROM empire WHERE tagIG='{}'""".format(_transcription_etoiles_strbdd(
+                                            FROM empire WHERE tagIG='{}'""".format(fin_dips,
+                                                                                   _transcription_etoiles_strbdd(
                                                                                                                 etoiles) +fin_dips,
                                                                                                             tag))[0]
         self.appel_bdd("""UPDATE empire SET "nbattaques{}"={}, "{}"={} 
