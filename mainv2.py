@@ -17,7 +17,7 @@ def main():
                         client=coc.EventsClient)
     
     #connection Bdd, non bloquant
-    connectionBDD=database_outils.appelsBDD(config["bddlink"])
+    connectionBDD=database_outils.appelsBDD(config["bddlink"],config["liste_clans"])
     connectionBDD.set_cocClient(cocClient)
     #définition du bot
     discordClient=bot_discord.discordClient(connectionBDD,cocClient)
