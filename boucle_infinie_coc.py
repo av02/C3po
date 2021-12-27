@@ -9,7 +9,7 @@ import database_outils
 async def demarage(config,connection_bdd,cocClient):
     
     tagsJoueurs=connection_bdd.get_all_tag()
-    async for player in coc_client.get_players(tagsJoueurs):
+    async for player in cocClient.get_players(tagsJoueurs):
         connection_bdd.maj_info(player.tag,player.clan.tag if player.clan is not None else None,player.town_hall)
 
 def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
