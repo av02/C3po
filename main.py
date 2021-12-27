@@ -11,7 +11,7 @@ def sigterm():
     print("FIN EXECUTION RECUE")
 def main():
     
-    signal.signal(signal.SIGKILL,lambda:print("SIGNAL DE FIN EXECUTION RECU"))
+    #signal.signal(signal.SIGKILL,lambda:print("SIGNAL DE FIN EXECUTION RECU"))
 
     cocClient= coc.login(email=config["Coc"]["mail"],
                         password=config["Coc"]["password"],
