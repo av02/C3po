@@ -10,6 +10,7 @@ async def demarage(config,connection_bdd,cocClient):
     
     tagsJoueurs=connection_bdd.get_all_tag()
     async for player in cocClient.get_players(tagsJoueurs):
+        print("majplayer")
         connection_bdd.maj_info(tag=player.tag,
                                 clan=player.clan.tag if player.clan is not None else None,
                                 pseudo=player.name,
