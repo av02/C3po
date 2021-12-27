@@ -74,4 +74,4 @@ async def unclaim(client_discord,
                 return await message.channel.send("ce joueur n'existe pas a mes yeux")
             else:
                 return await message.channel.send("operation réussie")
-  return await message.channel.send("vous n'avez pas les permissions")
+    return await message.channel.send("vous n'avez pas les permissions")
