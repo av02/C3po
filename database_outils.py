@@ -188,7 +188,7 @@ class appelsBDD:
         return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,"nbattaques{1}","nbperf{1}","nbbi{1}","nbone{1}","nbblack{1}",
                                     (("{4}{1}"+0.00000000001)/("nbattaques{1}"+0.00000000001)) as X, clantag 
                                 FROM empire 
-                                WHERE thIG={0}{3} AND "nbattaques{1}">10 
+                                WHERE thIG={0}{3} AND "nbattaques{1}">10  AND clantag NOT LIKE('éxterieur')
                                 ORDER BY   X DESC LIMIT {2} 
                                 """.format(hdv, fin_dips, limit, requete_clan, str_score)) # TODO : ajouter la verif de clan
 
@@ -196,7 +196,7 @@ class appelsBDD:
         """renvoie la liste de tuple des 10 meilleurs defs sur l'hdv"""
         requete_clan = ",clantag="+clan if clan is not None else ""
         return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,nbdefmemehdv,nbperfdefmemehdv,clantag,((nbperfdefmemehdv+0.00000000001)/(nbdefmemehdv+0.00000000001)) AS X FROM empire
-                                 WHERE thIG={0}{2} AND nbdefmemehdv >4 ORDER BY X DESC LIMIT {1}
+                                 WHERE thIG={0}{2} AND nbdefmemehdv >4 AND clantag NOT LIKE('éxterieur') ORDER BY X DESC LIMIT {1}
                                 """.format(hdv, limit, requete_clan))
 
     
