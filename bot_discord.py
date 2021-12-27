@@ -33,6 +33,9 @@ class discordClient(discord.Client):
         if commande in ["ajouter","claim","add"]:
               return await commandes.dispatch.claim.claim(self,self.connectionBDD,args,message)
         
+        if commande in ["retirer","unclaim"]:
+              return await commandes.dispatch.claim.unclaim(self,self.connectionBDD,args,message)
+        
         if commande == "scan":
             return await commandes.dispatch.scan.scan(self,self.connectionBDD,message,args)
         
