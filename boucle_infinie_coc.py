@@ -9,16 +9,11 @@ import database_outils
 async def demarage(config,connection_bdd,cocClient):
     
     tagsJoueurs=connection_bdd.get_all_tag()
-    for tag in tagsJoueurs:
-        try:
-            p=await cocClient.get_player(tag)
-        except Exception as e:
-            print(f"\033[91m erreur pour le tag: {tag} ( certainement compte ban)")
-            print(e)
-    #pass
+    async for player in coc_client.get_players(tagsJoueurs):
+        connection_bdd.maj_info(player.tag,player.clan.tag if player.clan is not None else None,player.town_hall)
 
 def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
-    clan_tags = ["#2PU29PYPR","#29Q29PRY9","#29U9YR0QP","#2LL0UCY89","#2LR9RP20J","#2PYR2V202","#2Y2UVR99P","#2L0JQYUPU","#2LLCPYV9P","#2YU08J8UU","#2LVCU2QQ8"]# mettre ça dans une bdd
+    clan_tags = config["liste_clans"]
     tagsJoueurs = connection_bdd.get_all_tag()
     # connection client coc, non bloquant
     
