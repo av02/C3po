@@ -217,8 +217,8 @@ class appelsBDD:
 
     def edit_clan(self,tag,empire_clan_tag):
         """change le tag du clan du joueur"""
-        if tag is None:
-            tag="éxterieur"
+        if empire_clan_tag is None:
+            empire_clan_tag="éxterieur"
         return self.appel_bdd("""UPDATE empire SET clantag = '{}' WHERE tagIG='{}'""".format(empire_clan_tag,tag))
    
     def maj_info(self,tag,clan,pseudo,town_hall):
