@@ -14,9 +14,9 @@ def attrapeur_d_exception(fonction_requete):
 def echap_appostrophe(texte):
     return texte.replace("'","''")
 class appelsBDD:
-    def __init__(self, bddlink):
+    def __init__(self, bddlink,liste_tag_clans):
         self.bddlink = bddlink
-
+        self.liste_tag_clans=liste_tag_clans
     @attrapeur_d_exception
     def appel_bdd(self, instruction:str, commit=True) -> list:
         """instructions SQL
@@ -218,6 +218,18 @@ class appelsBDD:
     def edit_clan(self,tag,empire_clan_tag):
         """change le tag du clan du joueur"""
         return self.appel_bdd("""UPDATE empire SET clantag = '{}' WHERE tagIG='{}'""".format(empire_clan_tag,tag))
+   
+    def maj_info(self,tag,clan,pseudo,town_hall):
+        """mise a jour des elements dans la bdd
+
+        Args:
+            clan ([str,None]): [tag du clan du joueur]
+            pseudo ([str]): [pseudo coc du joueur]
+            town_hall ([int]): [hdv du joueur]
+        """
+        self.edit_pseudo(tag,pseudo)
+        self.edit_clan(tag,clan if clan in self.liste_tag_clans else None)
+        self.up_hdv(tag,town_hall)
     
     
 def main():#pour  des tests locaux
