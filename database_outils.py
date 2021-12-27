@@ -185,7 +185,7 @@ class appelsBDD:
         fin_dips = "dips" if dips else "memehdv"
         requete_clan = ",clantag="+clan if clan is not None else ""
         str_score = ["nbblack", "nbone", "nbbi", "nbperf"][nb_etoiles]
-        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,"nbattaques{1}","nbperf{1}","nbbi{1}","one{1}","black{1}",
+        return self.appel_bdd("""SELECT tagIG,discordID,pseudoIG,"nbattaques{1}","nbperf{1}","nbbi{1}","onbne{1}","nbblack{1}",
                                     (("{4}{1}"+0.00000000001)/("nbattaques{1}"+0.00000000001)) as X, clantag 
                                 FROM empire 
                                 WHERE thIG={0}{3} AND "nbattaques{1}">10 
