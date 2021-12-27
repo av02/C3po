@@ -6,7 +6,7 @@ import bot_discord
 from config import config
 import coc
 import signal
-
+for:
 def sigterm():
     print("FIN EXECUTION RECUE")
 def main():
