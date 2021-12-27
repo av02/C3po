@@ -32,7 +32,7 @@ def main():
     discordClient.run(config["Discord"]["token"])#commande blocante pour lancer le bot
 
     
-
+print("check 0")
 
 if __name__=="__main__":
     main()
