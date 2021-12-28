@@ -18,7 +18,11 @@ config={"Coc":{"mail":os.environ.get("mail"),
                        "#2YU08J8UU",
                        "#2LVCU2QQ8"
                       ],
-        "liste_roles_administratifs":[
+        "liste_id_administratifs":[
+                                  611927869429645333,#yoh
+                                  447117251477241857,#claire
+                                  397116327887896576#av
+                                   
                                       ],
         "dico_roles_clans":{"#2PU29PYPR":777258978157264906
                             }
