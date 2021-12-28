@@ -66,12 +66,12 @@ async def unclaim(client_discord,
     tag=coc.utils.correct_tag(args[1])
     
     #on verifie qu'on a 2 arguments, la commande, le tag 
-    for role in message.author.roles :
-        if role.id in config["liste_roles_administratifs"]:
-            try:
-                connectionBDD.add_discord_id(tag,None,True)
-            except ValueError:
-                return await message.channel.send("ce joueur n'existe pas a mes yeux")
-            else:
-                return await message.channel.send("operation réussie")
+    
+      if message.author.id in config["liste_id_administratifs"]:
+        try:
+          connectionBDD.add_discord_id(tag,None,True)
+        except ValueError:
+          return await message.channel.send("ce joueur n'existe pas a mes yeux")
+        else:
+          return await message.channel.send("operation réussie")
     return await message.channel.send("vous n'avez pas les permissions")
