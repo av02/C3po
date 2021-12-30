@@ -118,9 +118,10 @@ class appelsBDD:
                                                                                                                 etoiles) +fin_dips,
                                                                                                             tag))[0]
         if valeurs_anterieures[0] is None:
-            valeurs_anterieures[0]=0
+            
+            valeurs_anterieures=(0,valeurs_anterieures[1])
         if valeurs_anterieures[1] is None:
-            valeurs_anterieures[1]=0
+            valeurs_anterieures=(valeurs_anterieures[0],0)
         self.appel_bdd("""UPDATE empire SET "nbattaques{}"={}, "{}"={} 
                         WHERE tagIG='{}'""".format( fin_dips,
                                                      valeurs_anterieures[0]+1,
