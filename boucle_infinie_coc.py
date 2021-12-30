@@ -80,7 +80,7 @@ def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
     @cocClient.event# mise a jour de la bdd quand un membre change d'hdv
     @coc.PlayerEvents.town_hall(tags= tagsJoueurs)
     async def on_th_change(old,new):
-        print("\033[96mth change", old.town_hall)
+        print("\033[96mth change", old.town_hall,"pour:",old.name)
         connection_bdd.up_hdv(old.tag,new.town_hall)
     
     
