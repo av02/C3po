@@ -1,4 +1,6 @@
-async def maj_role(discordClient,discord_id,*clan_rejoints):
+from config import config
+
+async def maj_role(client_discord,discord_id,*tags_clans_rejoints):
     """ajouter les roles de clan
 
     Args:
@@ -6,23 +8,39 @@ async def maj_role(discordClient,discord_id,*clan_rejoints):
         discord_id ([int]): [l'identifiant du joueur]
         clan_rejoint ([list]):[liste des tags des differents clans de l'empire du joueur]
     """    
-    #get les roles de l'user 
-    #comparer avec les roles
-    #maj des roles
-    LISTE_CLANS=["#2PU29PYPR"]
-    LISTE_ID_ROLES_CLANS=[777258978157264906]
-    guild = discordClient.get_guild(729401132643909684)
-    discord_user = await guild.fetch_member(discord_id)
-    liste_roles_clans_discord = list(set(map(lambda role:role.id,discord_user.roles))&set(LISTE_ID_ROLES_CLANS)) #on prend une liste qui contient les roles associés aux clans que le joueur a 
-    #TODO DONE:il faut sup les roles de liste_role qui sont pas dans clan_rejoint, et ajouter les reciproques
-    liste_clans_rejoints = [LISTE_ID_ROLES_CLANS[LISTE_CLANS.index(x)] for x in clan_rejoints]
-    liste_clans_en_trop=list(set(liste_roles_clans_discord)-set(liste_clans_rejoints))
-    liste_clans_a_ajouter=list(set(liste_clans_rejoints)-set(liste_roles_clans_discord))
-    #TODO: ajouter/retirer les roles
-    if liste_clans_en_trop==[]:
-        roles = [role for role in guild.role if role.id in liste_clans_en_trop]
-        await discord_user.remove_roles(roles,reason="bot: clan quitté")
-    if liste_clans_a_ajouter==[]:
+    serveur_empire = client_discord.get_guild(config["id_serveur_discord"])
+    if serveur_empire is None:
+        return print("erreur dans maj_role, serveur introuvable")
+    compte_membre_discord = serveur_empire.get_member(discord_id)
+    if compte_membre_discord is None:
+        return 
+    liste_roles_initiale = compte_membre_discord.roles
+    LISTE_ID_ROLES_CLANS = [r.id_role_associe for r in config["liste_clan_empire"]]                           
+    liste_roles_clans_rejoints = [clan.id_role_associe for clan in config["liste_clan_empire"] if clan.tag in tags_clans_rejoints]
+    liste_roles_clans_iniale = list(set(
+                                     map(lambda role:role.id,liste_roles_initiale)
+                                        )&set(LISTE_ID_ROLES_CLANS))
+
+    liste_roles_clans_en_trop=list(set(liste_roles_clans_iniale)-set(liste_roles_clans_rejoints))
+    liste_roles_clans_a_ajouter=list(set(liste_roles_clans_rejoints)-set(liste_roles_clans_iniale))
+
+    if liste_clans_en_trop!=[]:
+        roles = [role for role in serveur_empire.role if role.id in liste_clans_en_trop]
+        try:
+            await discord_user.remove_roles(roles,reason="bot: clan quitté")
+        except Forbidden:
+            print("\033[91m Permissions manquantes pour supprimer des roles a:",compte_membre_discord.id)
+        except HTTPException:
+            print("probleme résau avec la supression de roles a:",compte_membre_discord.id)
+    if liste_clans_a_ajouter!=[]:
         roles = [role for role in guild.role if role.id in liste_clans_a_ajouter]
-        await discord_user.add_roles(roles,reason="bot: clan rejoint")
+        try:
+            await discord_user.add_roles(roles,reason="bot: clan rejoint")
+        except Forbidden:
+            print("\033[91m Permissions manquantes pour ajouter des roles a:",compte_membre_discord.id)
+        except HTTPException:
+            print("probleme résau avec la ajouter de roles a:",compte_membre_discord.id)
+    if liste_roles_clans_rejoints==[]:#Cas stormtrooper
+        pass
+
     
