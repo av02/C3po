@@ -36,6 +36,9 @@ class discordClient(discord.Client):
         if commande in ["retirer","unclaim"]:
               return await commandes.dispatch.claim.unclaim(self,self.connectionBDD,args,message)
         
+        if commande in ["add_clan"]:
+              return await commandes.dispatch.claim.add_clan(self,self.cocClient,self.connectionBDD,args,message)
+        
         if commande == "scan":
             return await commandes.dispatch.scan.scan(self,self.connectionBDD,message,args)
         
