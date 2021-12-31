@@ -262,7 +262,7 @@ class appelsBDD:
         if len(self.appel_bdd(f"""SELECT * FROM clans_empire WHERE tag LIKE('{tag}')"""))>=1:
             raise ValueError("clan déjà dans la base de données")
         self.appel_bdd(f"""
-                        INSERT INTO clans_empire (tag,nom,id_role_discord) VALUES '{tag}','{nom}','{id_role_discord}'""")
+                        INSERT INTO clans_empire (tag,nom,id_role_discord) VALUES ('{tag}','{nom}','{id_role_discord}')""")
 
     def get_all_clans(self):
         liste_clans = self.appel_bdd(f"""SELECT tag,nom,id_role_discord FROM clans_empire """)
