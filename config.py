@@ -25,6 +25,7 @@ config={"Coc":{"mail":os.environ.get("mail"),
                                    
                                       ],
         "dico_roles_clans":{"#2PU29PYPR":777258978157264906
-                            }
+                            },
+        "liste_clan_empire":[]#contient des Clans_empire
 
        }
