@@ -1,4 +1,5 @@
 import coc
+import discord
 from config import *
 
 async def claim(client_discord,
@@ -75,3 +76,40 @@ async def unclaim(client_discord,
       else:
         return await message.channel.send("operation réussie")
       return await message.channel.send("vous n'avez pas les permissions")
+
+    
+    
+  
+async def add_clan(client_discord,
+
+                        ClientCOC,
+                        connectionBDD,
+                        args,
+                        message):
+  if len(args) != 3 and len(message.raw_role_mentions) != 1:
+    return await message.channel.send("nombre d'arguments incorect")
+  tag=coc.utils.correct_tag(args[1])
+  try: 
+    clan = await ClientCOC.get_clan(tag)
+  except NotFound:
+    return await message.channel.send("On me dit dans l'oreillette que ce clan n'existe pas ")
+  except Maintenance:
+    return await message.channel.send("Il y a actuellement une maintenance de l'api")
+  except GatewayError:
+    return await message.channel.send("erreur de gateway")
+  #on verifie qu'on a 2 arguments, la commande, le tag 
+  if discord.utils.find(lambda role:role.id==message.raw_role_mentions[0],message.guild.roles) is None:
+    return await message.channel.send("merci d'indiquer un role valide")
+  if message.author.id in config["liste_id_administratifs"]:
+    try:
+      connectionBDD.add_clan(args[1],clan.name,str(message.raw_role_mentions[0]))
+    except ValueError:
+      return await message.channel.send("vous n'avez pas les permissions")
+    else:
+      return await message.channel.send("operation réussie")
+      
+
+
+
+
+
