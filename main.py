@@ -22,6 +22,8 @@ def main():
     #connection Bdd, non bloquant
     connectionBDD=database_outils.appelsBDD(config["bddlink"],config["liste_clans"])
     connectionBDD.set_cocClient(cocClient)
+    
+    config["liste_clan_empire"]=connectionBDD.get_all_clans()
     #définition du bot
     discordClient=bot_discord.discordClient(connectionBDD,cocClient)
     
