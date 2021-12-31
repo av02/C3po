@@ -18,7 +18,7 @@ class Clan_empire:
     def __init__(self,tag,nom,id_role_associe):
         self.tag = tag
         self.nom = nom
-        self.id_role_associé = id_role_associe
+        self.id_role_associé = int(id_role_associe)
 
 class appelsBDD:
     def __init__(self, bddlink,liste_tag_clans):
