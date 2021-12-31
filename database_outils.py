@@ -13,6 +13,13 @@ def attrapeur_d_exception(fonction_requete):
 
 def echap_appostrophe(texte):
     return texte.replace("'","''")
+
+class Clan_empire:
+    def __init__(self,tag,nom,id_role_associe):
+        self.tag = tag
+        self.nom = nom
+        self.id_role_associé = id_role_associe
+
 class appelsBDD:
     def __init__(self, bddlink,liste_tag_clans):
         self.bddlink = bddlink
@@ -248,7 +255,16 @@ class appelsBDD:
         self.edit_pseudo(tag,pseudo)
         self.edit_clan(tag,clan if clan in self.liste_tag_clans else None)
         self.up_hdv(tag,town_hall)
-    
+
+    def add_clan(self,tag,nom,id_role_discord):
+        if len(self.appel_bdd(f"""SELECT * FROM clans_empire WHERE tag LIKE{tag}"""))>=1:
+            raise ValueError("clan déjà dans la base de données")
+        self.appel_bdd(f"""
+                        INSERT INTO clans_empire (tag,nom,id_role_discord) VALUES {tag},{nom},{id_role_discord}""")
+
+    def get_all_clans(self):
+        liste_clans = self.appel_bdd(f"""SELECT tag,nom,id_role_discord FROM clans_empire """)
+        return [Clan_empire(*clan) for clan in liste_clans]
     
 def main():#pour  des tests locaux
     pass
