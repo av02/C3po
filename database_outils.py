@@ -77,6 +77,8 @@ class appelsBDD:
             raise ValueError()
         if not permission_ecraser and self.appel_bdd("SELECT discordID FROM empire WHERE tagIG='{}'".format(tag))[0] != (None,):
             raise PermissionError()
+        if id is None:
+            id="NULL"
         self.appel_bdd("UPDATE empire SET discordID={} WHERE tagIG='{}'".format(str(id), tag))
         return 
 
