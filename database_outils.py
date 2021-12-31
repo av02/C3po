@@ -139,7 +139,14 @@ class appelsBDD:
         """
         self.check_presence_database(tag,th,pseudo,clan)
         valeurs_anterieures = self.appel_bdd(
-            """SELECT nbdefmemehdv,nbperfdefmemehdv FROM empire WHERE tagIG='{}'""".format(tag))[0]
+            """SELECT nbdefmemehdv,nbperfdefmemehdv FROM empire WHERE tagIG='{}'""".format(tag)
+                                            )[0]
+        if valeurs_anterieures[0] is None:
+            
+            valeurs_anterieures=(0,valeurs_anterieures[1])
+        if valeurs_anterieures[1] is None:
+            valeurs_anterieures=(valeurs_anterieures[0],0)
+           
         self.appel_bdd("""UPDATE empire SET nbdefmemehdv={},nbperfdefmemehdv={} WHERE tagIG='{}'""".format(
             valeurs_anterieures[0]+1, valeurs_anterieures[1]+int(perf), tag))
 
