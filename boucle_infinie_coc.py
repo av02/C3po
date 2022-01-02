@@ -6,20 +6,16 @@ import database_outils
 
 
 
-async def demarage(config,connection_bdd,cocClient):
+async def demarage(config,connection_bdd,cocClient,discordClient):
     
     tagsJoueurs=connection_bdd.get_all_tag()
     for tag in tagsJoueurs:
-        try:
-            await cocClient.get_player(tag)
-        except NotFound :
-            print("\n"*5,"erreur pour le tag:",tag,"\n"*5)
-        except Exception as e :
-            print("\n"*5,"erreur pour le tag:",tag,"\n"*5,"exception:",e,"\n"*5)
-        else:
-            print("tag correct:",tag)
-        finally:
-            print("tag:",tag)
+        
+        
+        profil = await cocClient.get_player(tag)
+        if profil is None:
+            print("\n\n\n\n\n\nce tag fous la merde:",tag)
+            discordClient.get_user(397116327887896576).send(f"ce tag fous la merde:{tag}")
     async for player in cocClient.get_players(tagsJoueurs):
         
         connection_bdd.maj_info(tag=player.tag,
