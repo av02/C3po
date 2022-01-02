@@ -9,6 +9,13 @@ import database_outils
 async def demarage(config,connection_bdd,cocClient):
     
     tagsJoueurs=connection_bdd.get_all_tag()
+    for tag in tagsJoueurs:
+        try:
+            cocClient.get_player(tag)
+        except NotFound :
+            print("\n"*5,"erreur pour le tag:",tag,"\n"*5)
+        except Exception as e :
+            print("\n"*5,"erreur pour le tag:",tag,"\n"*5,"exception:",e,"\n"*5)
     async for player in cocClient.get_players(tagsJoueurs):
         
         connection_bdd.maj_info(tag=player.tag,
