@@ -18,6 +18,8 @@ async def demarage(config,connection_bdd,cocClient):
             print("\n"*5,"erreur pour le tag:",tag,"\n"*5,"exception:",e,"\n"*5)
         else:
             print("tag correct:",tag)
+        finally:
+            print("tag:",tag)
     async for player in cocClient.get_players(tagsJoueurs):
         
         connection_bdd.maj_info(tag=player.tag,
