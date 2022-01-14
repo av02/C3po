@@ -13,7 +13,7 @@ async def demarage(config,connection_bdd,cocClient,discordClient):
         
         try:
             profil = await cocClient.get_player(tag)
-        except NotFound:
+        except coc.errors.NotFound:
         #if profil is None:
             print("\n\n\n\n\n\nce tag fous la merde:",tag)
             discordClient.get_user(397116327887896576).send(f"ce tag fous la merde:{tag}")
