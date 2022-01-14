@@ -1,9 +1,9 @@
 import discord
 
-import config as config
+import config 
 import commandes.dispatch
 async def scan(DiscordClient,dB,message,args):
-    if not (message.author.id in config["liste_id_administratifs"]):
+    if not (message.author.id in config.config["liste_id_administratifs"]):
         return
     nb_membres = len(message.guild.members)
     nb_non_ajoutes=0
