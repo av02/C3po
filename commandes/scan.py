@@ -3,7 +3,7 @@ import discord
 import config as config
 import commandes.dispatch
 async def scan(DiscordClient,dB,message,args):
-    if not (message.author.id in [611927869429645333,447117251477241857,397116327887896576]):#YOH,CLAIRE ou av
+    if not (message.author.id in config["liste_id_administratifs"]):
         return
     nb_membres = len(message.guild.members)
     nb_non_ajoutes=0
@@ -11,10 +11,10 @@ async def scan(DiscordClient,dB,message,args):
         
         liste_comptes = dB.get_comptes_coc(member.id)
 
-        if member.bot or 729581221616812084 in map(lambda r:r.id,member.roles):#bot ou invité
+        if member.bot or 729581221616812084 in map(lambda r:r.id,member.roles) or 830742603187617842 in map(lambda r:r.id,member.roles):#bot ou stormtrooper ou padawan
             nb_membres-=1
         elif len(liste_comptes)==0:#non bot et non invité, sans comptes ajoutés
-            await message.channel.send(f"```{member.id}```{member.display_name} n'a pas de comptes ajoutés")
+            await message.channel.send(f"```{member.id}```<@{member.id}>{member.display_name} n'a pas de comptes ajoutés")
             nb_non_ajoutes+=1
         else:
             present_dans_l_empire= False
@@ -28,7 +28,7 @@ async def scan(DiscordClient,dB,message,args):
                         present_dans_l_empire=True
                         break
 
-            if not present_dans_l_empire:
+            if not present_dans_l_empire and "in" in args:
                 await message.channel.send(f"```{member.id}```{member.display_name} n'a pas de comptes dans l'empire")
                 idDiscord=member.id
                 pseudo=member.display_name
@@ -46,6 +46,6 @@ async def scan(DiscordClient,dB,message,args):
 
         
     await message.channel.send(f"""Scan terminé
-                                \nNombre de membres du discord non stormtroopers ni bot sans aucun compte dans l'empire:{nb_non_ajoutes}
+                                \nNombre de membres du discord non stormtroopers ni bot sans aucun compte ajoutés:{nb_non_ajoutes}
                                 \nNombre total de membres du serveur présents dans les clans de l'empire{nb_membres}""")
             
