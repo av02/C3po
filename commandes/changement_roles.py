@@ -1,4 +1,5 @@
 from config import config
+from discord.DiscordException import *
 
 async def maj_role(client_discord,discord_id,*tags_clans_rejoints):
     """ajouter les roles de clan
