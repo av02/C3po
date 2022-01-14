@@ -1,6 +1,5 @@
 from config import config
-from discord.DiscordException import *
-
+import discord
 async def maj_role(client_discord,discord_id,*tags_clans_rejoints):
     """ajouter les roles de clan
 
@@ -29,17 +28,17 @@ async def maj_role(client_discord,discord_id,*tags_clans_rejoints):
         roles = [role for role in serveur_empire.role if role.id in liste_clans_en_trop]
         try:
             await discord_user.remove_roles(roles,reason="bot: clan quitté")
-        except Forbidden:
+        except discord.Forbidden:
             print("\033[91m Permissions manquantes pour supprimer des roles a:",compte_membre_discord.id)
-        except HTTPException:
+        except discord.HTTPException:
             print("probleme résau avec la supression de roles a:",compte_membre_discord.id)
     if liste_clans_a_ajouter!=[]:
         roles = [role for role in guild.role if role.id in liste_clans_a_ajouter]
         try:
             await discord_user.add_roles(roles,reason="bot: clan rejoint")
-        except Forbidden:
+        except discord.Forbidden:
             print("\033[91m Permissions manquantes pour ajouter des roles a:",compte_membre_discord.id)
-        except HTTPException:
+        except discolrd.HTTPException:
             print("probleme résau avec la ajouter de roles a:",compte_membre_discord.id)
     if liste_roles_clans_rejoints==[]:#Cas stormtrooper
         pass
