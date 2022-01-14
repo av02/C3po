@@ -70,7 +70,7 @@ class discordClient(discord.Client):
                                              )
 
         if commande == "SQL" and message.author.id==397116327887896576:
-            return await message.channel.send("\n".join([" ".join(l) for l in self.connectionBDD.appel_bdd(" ".join(args[1:]) ) ]) )
+            return await message.channel.send("résultat:\n".join([" ".join(l) for l in self.connectionBDD.appel_bdd(" ".join(args[1:]) ) ]) )
 
 if __name__=="__main__":
     import database_outils
