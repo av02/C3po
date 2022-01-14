@@ -33,7 +33,7 @@ config={"Coc":{"mail":os.environ.get("mail"),
                                   707204926849417357,#Xebec
                                   397116327887896576#av
                                    
-                                      ]
+                                      ],
         "dico_roles_clans":{"#2PU29PYPR":777258978157264906
                             },
         "liste_clan_empire":[],#contient des Clans_empire
