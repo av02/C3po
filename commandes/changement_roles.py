@@ -44,3 +44,5 @@ async def maj_role(client_discord,discord_id,*tags_clans_rejoints):
         pass
 
     
+
+    
