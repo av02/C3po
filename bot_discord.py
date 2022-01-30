@@ -17,6 +17,8 @@ class discordClient(discord.Client):
         await boucle_infinie_coc.demarage(config, self.connectionBDD,self.cocClient,self)
         
     async def on_message(self,message):
+        if message.channel.id == 935491719825330186 and "1663" in message.content:
+            message.channel.send("https://upload.wikimedia.org/wikipedia/commons/0/00/Logo_Bi%C3%A8re_1664_en_2021.png")
         if message.author.bot or message.channel.guild== None or not message.content.startswith(config["Discord"]["prefix"]):
             return
         
