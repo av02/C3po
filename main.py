@@ -10,9 +10,9 @@ import signal
 def sigterm():
     print("FIN EXECUTION RECUE")
 def main():
-    
-    #signal.signal(signal.SIGKILL,lambda:print("SIGNAL DE FIN EXECUTION RECU"))
-
+    print("l13 main")
+    signal.signal(signal.SIGKILL,sigterm)
+    print("l15 main")
     cocClient= coc.login(email=config["Coc"]["mail"],
                         password=config["Coc"]["password"],
                         client=coc.EventsClient,
