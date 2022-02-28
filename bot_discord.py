@@ -17,8 +17,6 @@ class discordClient(discord.Client):
         await boucle_infinie_coc.demarage(config, self.connectionBDD,self.cocClient,self)
         
     async def on_message(self,message):
-        if message.channel.id == 935491719825330186 and "1663" in message.content:
-            message.channel.send("https://upload.wikimedia.org/wikipedia/commons/0/00/Logo_Bi%C3%A8re_1664_en_2021.png")
         if message.author.bot or message.channel.guild== None or not message.content.startswith(config["Discord"]["prefix"]):
             return
         
@@ -61,21 +59,11 @@ class discordClient(discord.Client):
         
         if commande== "CD":
             return await commandes.dispatch.VL.dons_leader(self,message,args)
-        if commande == "decembre" and message.author.id in[397116327887896576,611927869429645333,447117251477241857]:
-            classement= self.connectionBDD.appel_bdd(
-                   """SELECT SUM(donmois),discordid FROM new WHERE discordid IS NOT NULL GROUP BY discordid ORDER BY SUM(donmois) DESC LIMIT 25"""
-                                                             ) 
-            print(classement)
-            return await message.channel.send("dons    pseudo\n```"+"\n".join([str(l[0])+"    "+(message.guild.get_member(int(l[1])).display_name if message.guild.get_member(int(l[1])) is not None else l[1])
-                                                            for l in classement
-                                                     ])+"```" 
+        
+        if commande == "SQL" and message.author.id==397116327887896576:
+            return await message.channel.send("résultat:\n"+" ".join(
+                                                self.connectionBDD.appel_bdd(" ".join(args[1:])
+                                                                            )
+                                                                      ) 
                                              )
 
-        if commande == "SQL" and message.author.id==397116327887896576:
-            return await message.channel.send("résultat:\n"+" ".join(l) for l in self.connectionBDD.appel_bdd(" ".join(args[1:]) ))
-
-if __name__=="__main__":
-    import database_outils
-    from config import config
-    discordClient(database_outils.appelsBDD("stockagev2.db")).run(config["Discord"]["token"])
-    
