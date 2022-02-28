@@ -7,12 +7,14 @@ from config import config
 import coc
 import signal
 
-def sigterm(arg1,arg2):
+def handler_sigterm(arg1,arg2):
     print("FIN EXECUTION RECUE")
+    
+print("l13 main")
+signal.signal(signal.SIGTERM,handler_sigterm)
+print("l15 main")
 def main():
-    print("l13 main")
-    signal.signal(signal.SIGTERM,sigterm)
-    print("l15 main")
+    
     cocClient= coc.login(email=config["Coc"]["mail"],
                         password=config["Coc"]["password"],
                         client=coc.EventsClient,
