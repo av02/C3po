@@ -6,29 +6,30 @@ config={"Coc":{"mail":os.environ.get("mail"),
                   "prefix":os.environ.get("prefix")},
         "bddlink":os.environ.get("DATABASE_URL"),
         "liste_clans":[
-                       "#2PU29PYPR",
-                       "#29Q29PRY9",
-                       "#29U9YR0QP",
-                       "#2LL0UCY89",
-                       "#2LR9RP20J",
-                       "#2PYR2V202",
-                       "#2Y2UVR99P",
-                       "#2L0JQYUPU",
-                       "#2LLCPYV9P",
-                       "#2YU08J8UU",
-                       "#2LVCU2QQ8"
+                       "#2PU29PYPR",#Yoda
+                       "#29Q29PRY9",#Yoda Academy
+                       "#29U9YR0QP",#Tatooine
+                       "#2LL0UCY89",#Endor
+                       "#2LR9RP20J",#Ylesia
+                       "#2YL9PLJR2",#Coruscant
+                       "#2Y2UVR99P",#Kamino
+                       "#2L0JQYUPU",#FeeNiX
+                       "#2LLCPYV9P",#Naboo
+                       "#2YU08J8UU",#E-Yoda
+                       "#2LVCU2QQ8",#Hoth
+                       "#2LVCUJLU0"#E-Yoda 2
                       ],
         "liste_id_administratifs":[
                                   611927869429645333,#yoh
                                   447117251477241857,#claire
-                                  684654438429884446,#Dieu
+                                  
                                   397116327887896576#av
                                    
                                       ],
         "liste_sous_admins":[
                                   611927869429645333,#yoh
                                   447117251477241857,#claire
-                                  684654438429884446,#Dieu
+                                  
                                   568527448677810208,#Thorn
                                   707204926849417357,#Xebec
                                   397116327887896576#av
