@@ -11,7 +11,7 @@ def sigterm():
     print("FIN EXECUTION RECUE")
 def main():
     print("l13 main")
-    signal.signal(signal.SIGKILL,sigterm)
+    signal.signal(signal.SIGTERM,sigterm)
     print("l15 main")
     cocClient= coc.login(email=config["Coc"]["mail"],
                         password=config["Coc"]["password"],
