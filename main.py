@@ -7,7 +7,7 @@ from config import config
 import coc
 import signal
 
-def sigterm():
+def sigterm(arg1,arg2):
     print("FIN EXECUTION RECUE")
 def main():
     print("l13 main")
