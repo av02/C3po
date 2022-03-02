@@ -16,7 +16,7 @@ class discordClient(discord.Client):
         self.loop = self.cocClient.loop
     
     def handler_sigterm(self):
-        print("Signal fin execution attrapé!!!!!!","\n"*10)
+        print("\n"*10,"\033[91mSignal fin execution attrapé!!!!!!","\n"*10)
         self.loop.stop()
     
     
