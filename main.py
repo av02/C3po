@@ -20,7 +20,7 @@ def main():
                         client=coc.EventsClient,
                         key_count =10,
                         throttle_limit=30)
-    
+    cocClient.loop.add_signal_handler(signal.SIGINT,handler_sigterm)
     #connection Bdd, non bloquant
     connectionBDD=database_outils.appelsBDD(config["bddlink"],config["liste_clans"])
     connectionBDD.set_cocClient(cocClient)
