@@ -11,10 +11,17 @@ class discordClient(discord.Client):
         self.cocClient=cocClient
         self.connectionBDD=connectionBDD
         discord.Client.__init__(self,intents=intents)
-        
+        self.loop = self.cocClient.loop
+    
+    def handler_sigterm(self,num,frame):
+        print("Signal fin execution attrapé!!!!!!","\n"*10)
+        self.loop.stop()
+    
+    
     async def on_ready(self):
         print("\033[92m démarage du bot")
         await boucle_infinie_coc.demarage(config, self.connectionBDD,self.cocClient,self)
+        self.cocClient.loop.add_signal_handler(signal.SIGTERM,self.handler_sigterm)
         
     async def on_message(self,message):
         if message.author.bot or message.channel.guild== None or not message.content.startswith(config["Discord"]["prefix"]):
