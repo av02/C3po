@@ -3,6 +3,8 @@ import commandes.dispatch
 import database_outils
 from config import config
 import boucle_infinie_coc
+import signal
+
 
 class discordClient(discord.Client):
     
