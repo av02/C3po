@@ -23,7 +23,7 @@ class discordClient(discord.Client):
     async def on_ready(self):
         print("\033[92m démarage du bot")
         await boucle_infinie_coc.demarage(config, self.connectionBDD,self.cocClient,self)
-        self.cocClient.loop.add_signal_handler(signal.SIGTERM,self.handler_sigterm)
+        self.cocClient.loop.add_signal_handler(signal.SIGTERM,lambda a,b:self.handler_sigterm(a,b))
         
     async def on_message(self,message):
         if message.author.bot or message.channel.guild== None or not message.content.startswith(config["Discord"]["prefix"]):
