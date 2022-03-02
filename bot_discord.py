@@ -18,6 +18,8 @@ class discordClient(discord.Client):
     def handler_sigterm(self):
         print("\n"*10,"\033[91mSignal fin execution attrapé!!!!!!","\n"*10)
         self.loop.stop()
+        self.cocClient.close()
+        print("\033[92mtout est correctement arrété")
     
     
     async def on_ready(self):
