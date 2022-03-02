@@ -11,7 +11,7 @@ def handler_sigterm(arg1,arg2):
     print("FIN EXECUTION RECUE")
     
 print("l13 main")
-signal.signal(signal.SIGTERM,handler_sigterm)
+signal.signal(signal.SIGKILL,handler_sigterm)
 print("l15 main")
 def main():
     
