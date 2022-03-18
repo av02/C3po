@@ -17,6 +17,7 @@ config={"Coc":{"mail":os.environ.get("mail"),
                        "#2LLCPYV9P",#Naboo
                        "#2YU08J8UU",#E-Yoda
                        "#2LVCU2QQ8",#Hoth
+                       "#2YRRJGJUY",#L’étoile noire 
                        "#2LVCUJLU0"#E-Yoda 2
                       ],
         "liste_id_administratifs":[
