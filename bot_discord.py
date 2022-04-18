@@ -75,7 +75,7 @@ class discordClient(discord.Client):
         if commande == "SQL" and message.author.id==397116327887896576:
             return await message.channel.send("résultat:\n"+" ".join(map(
                                                                         str,
-                                                                        self.connectionBDD.appel_bdd(" ".join(args[1:])
+                                                                        self.connectionBDD.appel_bdd("\n".join(args[1:])
                                                                                                     )
                                                                          )   
                                                                       ) 
