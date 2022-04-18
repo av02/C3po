@@ -1,7 +1,7 @@
 import coc
 import coc.errors
 import database_outils
-
+import commandes.dispatch
 
 
 
@@ -20,6 +20,17 @@ async def demarage(config,connection_bdd,cocClient,discordClient):
                                 clan=player.clan.tag if player.clan is not None else None,
                                 pseudo=player.name,
                                 town_hall=player.town_hall)
+            
+            
+        for id_membre_discord in [965639263993593906]:
+            tags_comptes_coc = [e[0] for e in connection_bdd.get_comptes_coc(id_membre_discord)]
+            liste_clans_rejoint=[]
+            async for tag in cocClient.get_players(tags_comptes_coc):
+                liste_clans_rejoint.append(player.clan.tag) if player.clan is not None
+            await commandes.dispatch.maj_roles(discordClient,cocClient,liste_clans_rejoint)
+            
+            
+            
  #   async for player in cocClient.get_players(tagsJoueurs):
         
  #       connection_bdd.maj_info(tag=player.tag,
