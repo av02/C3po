@@ -25,8 +25,10 @@ class discordClient(discord.Client):
     
     async def on_ready(self):
         print("\033[92m démarage du bot")
+         await discordClient.get_user(397116327887896576).send("démarage du bot")
         await boucle_infinie_coc.demarage(config, self.connectionBDD,self.cocClient,self)
         self.cocClient.loop.add_signal_handler(signal.SIGTERM,lambda:self.handler_sigterm())
+        
         
     async def on_message(self,message):
         if message.author.bot or message.channel.guild== None or not message.content.startswith(config["Discord"]["prefix"]):
