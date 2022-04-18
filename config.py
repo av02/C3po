@@ -5,7 +5,7 @@ config={"Coc":{"mail":os.environ.get("mail"),
         "Discord":{"token":os.environ.get("Token"),
                   "prefix":os.environ.get("prefix")},
         "bddlink":os.environ.get("DATABASE_URL"),
-        "liste_clans":[
+        "liste_clans":[               #a déprecier=>liste_clans_empire[i].tag
                        "#2PU29PYPR",#Yoda
                        "#29Q29PRY9",#Yoda Academy
                        "#29U9YR0QP",#Tatooine
@@ -35,7 +35,7 @@ config={"Coc":{"mail":os.environ.get("mail"),
                                   397116327887896576#av
                                    
                                       ],
-        "dico_roles_clans":{"#2PU29PYPR":777258978157264906
+        "dico_roles_clans":{"#2PU29PYPR":777258978157264906#a déprecier=>liste_clans_empire[i].tag:liste_clans_empire[i].id_role_associe
                             },
         "liste_clan_empire":[],#contient des Clans_empire
         "id_serveur_discord":729401132643909684
