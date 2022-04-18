@@ -9,7 +9,6 @@ config={"Coc":{"mail":os.environ.get("mail"),
                        "#2PU29PYPR",#Yoda
                        "#29Q29PRY9",#Yoda Academy
                        "#29U9YR0QP",#Tatooine
-                       "#2LL0UCY89",#Endor
                        "#2LR9RP20J",#Ylesia
                        "#2YL9PLJR2",#Coruscant
                        "#2Y2UVR99P",#Kamino
