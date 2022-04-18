@@ -14,18 +14,20 @@ async def demarage(config,connection_bdd,cocClient,discordClient):
         try:
             profil = await cocClient.get_player(tag)
         except coc.errors.NotFound:
-        #if profil is None:
-            print("\n\n\n\n\n\nce tag fous la merde:",tag)
             await discordClient.get_user(397116327887896576).send(f"ce tag fous la merde:{tag}")
-    async for player in cocClient.get_players(tagsJoueurs):
-        
         connection_bdd.maj_info(tag=player.tag,
                                 clan=player.clan.tag if player.clan is not None else None,
                                 pseudo=player.name,
                                 town_hall=player.town_hall)
+ #   async for player in cocClient.get_players(tagsJoueurs):
+        
+ #       connection_bdd.maj_info(tag=player.tag,
+ #                               clan=player.clan.tag if player.clan is not None else None,
+ #                               pseudo=player.name,
+ #                               town_hall=player.town_hall)
 
 def boucle_infinie_coc(config,connection_bdd,discordClient,cocClient):
-    clan_tags = config["liste_clans"]
+    clan_tags = [e.tag for e in config["liste_clans_empire"]]
     tagsJoueurs = connection_bdd.get_all_tag()
     # connection client coc, non bloquant
     
