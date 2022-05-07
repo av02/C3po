@@ -68,7 +68,7 @@ async def unclaim(client_discord,
     
     #on verifie qu'on a 2 arguments, la commande, le tag 
     
-    if message.author.id in config["liste_id_administratifs"]:
+    if message.author.id in config["liste_sous_admins"]:
       try:
         connectionBDD.add_discord_id(tag,None,True)
       except ValueError:
